@@ -1,8 +1,10 @@
 # Changelog
 
-## 0.7.0 — Adaptive
-- Added adaptive workout assessment.
-- Added recovery and training stress scores.
-- Added fewer-workout and shorter-session options.
-- Added automatic set, load, cardio, and exercise reduction.
-- Added incomplete-workout follow-up.
+## 0.8.0 — Modern UI Foundation
+
+- Rebuilt visual system with a modern dark navy design.
+- Added atmospheric background gradients.
+- Added desktop sidebar navigation.
+- Added modern hero dashboard and compact metrics.
+- Improved cards, forms, modals, spacing, and responsive behavior.
+- Preserved adaptive training and all existing tracking features.
