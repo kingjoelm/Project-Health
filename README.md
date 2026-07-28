@@ -1,30 +1,26 @@
-# Project Health v0.12.1 — Cloud Connection
+# Project Health v0.12.2 — Cloud Cache Hotfix
 
-This package is preconfigured for the confirmed Project Health Supabase project and GitHub Pages URL.
+This fixes the Supabase connection issue caused by two problems:
 
-## Already configured
+1. The prior package contained a one-character typo in the Supabase project URL.
+2. The service worker cached `cloud/config.js`, so GitHub Pages could continue serving the old URL even after the file was corrected.
 
-- Supabase project URL
-- GitHub Pages site URL
-- Authentication redirect URL
-- Cloud identity and local-first sync code
-- Database schema and Row Level Security
+## Correct Supabase URL
 
-## Still required
+`https://sjjyrjztdgvqzuupftow.supabase.co`
 
-You must insert your browser-safe Supabase **Publishable key** locally.
+## Important
 
-Run:
+After uploading this version, clear the old service worker/site data once:
 
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\Configure-ProjectHealth-Cloud-v0.12.1.ps1
-.\Validate-ProjectHealth-Cloud-v0.12.1.ps1
-.\Install-ProjectHealth-v0.12.1.ps1
-```
+- Firefox: DevTools → Application → Service Workers → Unregister
+- Or browser settings → clear site data for `kingjoelm.github.io`
+- Then reopen Project Health
 
-The configuration script rejects Supabase Secret and service-role keys.
+`cloud/config.js` is no longer stored in the offline cache.
+
+Paste your complete browser-safe key beginning with `sb_publishable_` into `cloud/config.js`. Never use the Secret key.
 
 Recommended commit:
 
-`v0.12.1 "Cloud Connection" - Supabase Project Configuration & Safe Key Setup`
+`v0.12.2 "Cloud Cache Hotfix" - Correct Supabase URL & Bypass Cached Config`

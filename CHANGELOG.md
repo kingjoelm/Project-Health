@@ -1,11 +1,9 @@
 # Changelog
 
-## 0.12.1 — Cloud Connection
+## 0.12.2 — Cloud Cache Hotfix
 
-- Preconfigured the confirmed Supabase project URL.
-- Preserved the confirmed GitHub Pages authentication redirect.
-- Added a safe PowerShell Publishable Key configuration utility.
-- Added cloud-specific configuration validation.
-- Added explicit Secret Key rejection.
-- Updated cache and application version identifiers.
-- Added complete live-account and cross-device test instructions.
+- Corrected the Supabase project URL typo.
+- Removed cloud/config.js from the service-worker precache.
+- Added network-only loading for cloud/config.js.
+- Bumped cache and application versions.
+- Added instructions for clearing the stale service worker once.
