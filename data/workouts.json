@@ -1,0 +1,172 @@
+{
+  "monday": {
+    "name": "Push",
+    "focus": "Chest, shoulders, triceps",
+    "exercises": [
+      {
+        "id": "chest-press",
+        "name": "Machine Chest Press",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Keep shoulder blades back and lower the weight under control."
+      },
+      {
+        "id": "shoulder-press",
+        "name": "Machine Shoulder Press",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Keep ribs down and do not force the handles too low."
+      },
+      {
+        "id": "pec-deck",
+        "name": "Pec Deck",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Lead with your elbows and avoid shrugging."
+      },
+      {
+        "id": "triceps",
+        "name": "Cable Triceps Pressdown",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Keep elbows close to your sides."
+      }
+    ]
+  },
+  "tuesday": {
+    "name": "Pull",
+    "focus": "Back and biceps",
+    "exercises": [
+      {
+        "id": "lat-pulldown",
+        "name": "Lat Pulldown",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Pull toward the upper chest without leaning far back."
+      },
+      {
+        "id": "seated-row",
+        "name": "Seated Cable Row",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Finish with elbows back, not shoulders shrugged."
+      },
+      {
+        "id": "rear-delt",
+        "name": "Rear Delt Machine",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Use a light weight and move with control."
+      },
+      {
+        "id": "curl",
+        "name": "Machine or Cable Curl",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Keep upper arms still."
+      }
+    ]
+  },
+  "wednesday": {
+    "name": "Legs",
+    "focus": "Quads, hamstrings, glutes",
+    "exercises": [
+      {
+        "id": "leg-press",
+        "name": "Leg Press",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Keep your lower back supported and control the depth."
+      },
+      {
+        "id": "leg-curl",
+        "name": "Seated Leg Curl",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Pause briefly when the knees are bent."
+      },
+      {
+        "id": "leg-extension",
+        "name": "Leg Extension",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Do not swing the weight."
+      },
+      {
+        "id": "calf",
+        "name": "Calf Raise",
+        "sets": 3,
+        "reps": "12\u201320",
+        "tip": "Use a full comfortable range."
+      }
+    ]
+  },
+  "thursday": {
+    "name": "Upper Body",
+    "focus": "Balanced upper-body training",
+    "exercises": [
+      {
+        "id": "incline-press",
+        "name": "Incline Machine Press",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Keep shoulder blades supported."
+      },
+      {
+        "id": "row",
+        "name": "Chest-Supported Row",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Pull elbows toward your back pockets."
+      },
+      {
+        "id": "lateral",
+        "name": "Lateral Raise",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Use light weight and stop around shoulder height."
+      },
+      {
+        "id": "arms",
+        "name": "Cable Arms Superset",
+        "sets": 3,
+        "reps": "10\u201315",
+        "tip": "Move slowly and keep the joints comfortable."
+      }
+    ]
+  },
+  "friday": {
+    "name": "Full Body",
+    "focus": "Strength and conditioning",
+    "exercises": [
+      {
+        "id": "goblet",
+        "name": "Goblet Squat or Leg Press",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Choose the option that feels best on your joints."
+      },
+      {
+        "id": "press",
+        "name": "Machine Chest Press",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Use the same setup each week."
+      },
+      {
+        "id": "pulldown",
+        "name": "Lat Pulldown",
+        "sets": 3,
+        "reps": "8\u201312",
+        "tip": "Keep the movement controlled."
+      },
+      {
+        "id": "walk",
+        "name": "Treadmill Walk",
+        "sets": 1,
+        "reps": "10 minutes",
+        "tip": "Use a pace you can maintain."
+      }
+    ]
+  }
+}
