@@ -1,11 +1,8 @@
 # Changelog
 
-## 0.6.0 — Next Phase
-
-- Added progressive overload guidance.
-- Added Restaurant Mode.
-- Added evening reflection.
-- Added weight and consistency charts.
-- Added body measurement tracking.
-- Added OneDrive installer, release copy, backup, and validation scripts.
-- Preserved five-minute incline warm-up and fifteen-minute incline finisher.
+## 0.7.0 — Adaptive
+- Added adaptive workout assessment.
+- Added recovery and training stress scores.
+- Added fewer-workout and shorter-session options.
+- Added automatic set, load, cardio, and exercise reduction.
+- Added incomplete-workout follow-up.
