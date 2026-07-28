@@ -1,0 +1,20 @@
+Project Health v0.12.3 — Mobile Reload Loop Fix
+
+Upload both files to the ROOT of the GitHub repository, replacing the existing files:
+- app.js
+- service-worker.js
+
+Permanent changes:
+- The service worker no longer activates itself immediately on every installation.
+- The page reloads only after the user intentionally applies an available update.
+- A session guard prevents repeated controllerchange reloads.
+- Service-worker build/cache version was advanced to 123.
+
+After GitHub Pages finishes deploying:
+1. Open Project Health on the phone.
+2. If it still shows the old loop, remove the installed home-screen app once.
+3. Clear website data for kingjoelm.github.io once.
+4. Reopen the website in the browser.
+5. Install it to the home screen again only after it remains stable.
+
+Do not replace cloud/config.js.

@@ -77,10 +77,37 @@ async function installApp(){
 }
 function setupUpdateDetection(){
  if(!("serviceWorker"in navigator))return;
- navigator.serviceWorker.addEventListener("controllerchange",()=>{if(waitingServiceWorker)location.reload()});
- navigator.serviceWorker.getRegistration().then(reg=>{if(!reg)return;if(reg.waiting){waitingServiceWorker=reg.waiting;updateBanner.classList.add("show")}reg.addEventListener("updatefound",()=>{let worker=reg.installing;if(!worker)return;worker.addEventListener("statechange",()=>{if(worker.state==="installed"&&navigator.serviceWorker.controller){waitingServiceWorker=worker;updateBanner.classList.add("show")}})})})
+ navigator.serviceWorker.addEventListener("controllerchange",()=>{
+  if(sessionStorage.getItem("projectHealthApplyingUpdate")!=="1")return;
+  if(sessionStorage.getItem("projectHealthUpdateReloaded")==="1")return;
+  sessionStorage.setItem("projectHealthUpdateReloaded","1");
+  sessionStorage.removeItem("projectHealthApplyingUpdate");
+  location.reload();
+ });
+ navigator.serviceWorker.getRegistration().then(reg=>{
+  if(!reg)return;
+  if(reg.waiting){
+   waitingServiceWorker=reg.waiting;
+   updateBanner.classList.add("show");
+  }
+  reg.addEventListener("updatefound",()=>{
+   const worker=reg.installing;
+   if(!worker)return;
+   worker.addEventListener("statechange",()=>{
+    if(worker.state==="installed"&&navigator.serviceWorker.controller){
+     waitingServiceWorker=worker;
+     updateBanner.classList.add("show");
+    }
+   });
+  });
+ });
 }
-function applyAppUpdate(){if(waitingServiceWorker)waitingServiceWorker.postMessage({type:"SKIP_WAITING"});else location.reload()}
+function applyAppUpdate(){
+ if(!waitingServiceWorker)return;
+ sessionStorage.removeItem("projectHealthUpdateReloaded");
+ sessionStorage.setItem("projectHealthApplyingUpdate","1");
+ waitingServiceWorker.postMessage({type:"SKIP_WAITING"});
+}
 function askForLocation(action){pendingLocationAction=action;locationPermissionModal.classList.add("show")}
 function requestLocationPermission(){if(!navigator.geolocation)return alert("Location is not supported in this browser.");navigator.geolocation.getCurrentPosition(pos=>{locationPermissionModal.classList.remove("show");let action=pendingLocationAction;pendingLocationAction=null;if(action)action(pos.coords)},err=>{locationPermissionModal.classList.remove("show");alert("Location was not available: "+err.message)},{enableHighAccuracy:true,timeout:12000,maximumAge:30000})}
 function saveCurrentPlace(type){askForLocation(coords=>{let label=prompt("Name this workout place",type==="gym"?"My Gym":"Home Gym");if(!label)return;state.places=state.places||[];state.places.push({id:crypto.randomUUID(),type,label,latitude:coords.latitude,longitude:coords.longitude,radiusMeters:250,createdAt:new Date().toISOString()});save();renderSavedPlaces();showToast(`${label} saved`)})}
@@ -441,4 +468,4 @@ function onboardingBack(){if(obStep>0){obStep--;showObStep()}}
 function onboardingNext(){if(obStep===0&&!obName.value.trim())return alert("Enter your name.");if(obStep<3){obStep++;showObStep();return}state.profile={...state.profile,name:obName.value.trim(),goal:obGoal.value,experience:obExperience.value,location:obLocation.value,duration:obDuration.value,obstacle:obObstacle.value,foodStruggle:obFood.value,limitations:obLimitations.value.trim(),tone:chosenTone,onboarded:true};save();onboardingModal.classList.remove("show");init()}
 function exportData(){state.lastBackup=new Date().toISOString();save();if(window.lastBackupStatus)lastBackupStatus.textContent=new Date(state.lastBackup).toLocaleDateString();let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`project-health-v04-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();init();alert("Data imported.")}catch{alert("Import failed.")}};r.readAsText(f)}
-if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js?build=122").then(r=>r.update()).catch(()=>{});boot();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js?build=123").then(r=>setTimeout(()=>r.update().catch(()=>{}),3000)).catch(()=>{});boot();
