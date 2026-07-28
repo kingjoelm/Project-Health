@@ -1,5 +1,5 @@
 {
-  "name": "Project Health v0.13.0 Stable Cloud",
+  "name": "Project Health",
   "short_name": "Project Health",
   "start_url": "./index.html",
   "display": "standalone",
@@ -18,5 +18,6 @@
     }
   ],
   "id": "/Project-Health/",
-  "description": "Local-first health coaching with optional secure cloud accounts and sync."
+  "description": "Project Health AI Coach: daily briefing, workouts, nutrition, progress, recipes, programs, and secure cloud sync.",
+  "orientation": "portrait-primary"
 }

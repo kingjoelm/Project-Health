@@ -1,4 +1,4 @@
-let WORKOUTS={};const STORE="projectHealthV012";let prior=JSON.parse(localStorage.getItem("projectHealthV0111")||localStorage.getItem("projectHealthV011")||localStorage.getItem("projectHealthV0101")||localStorage.getItem("projectHealthV010")||localStorage.getItem("projectHealthV09")||localStorage.getItem("projectHealthV081")||localStorage.getItem("projectHealthV080")||localStorage.getItem("projectHealthV07")||localStorage.getItem("projectHealthV06")||localStorage.getItem("projectHealthV051")||localStorage.getItem("projectHealthV05")||localStorage.getItem("projectHealthV04")||"null");let profileDB=JSON.parse(localStorage.getItem("projectHealthProfilesV09")||"null")||null;let state=JSON.parse(localStorage.getItem(STORE)||"null")||prior||{profile:{name:"",goal:"Build consistency",days:"Monday–Friday",experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false},daily:{},sessions:[],meals:[],weights:[],victories:[],measurements:[],reflections:[],adaptivePlans:[]};state.adaptivePlans=state.adaptivePlans||[];state.measurements=state.measurements||[];state.reflections=state.reflections||[];state.profile={experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false,...state.profile};let weekOffset=0,foodOffset=0,selectedDate=null,activeMode="full",editingMealId=null,obStep=0,chosenTone=state.profile.tone||"Balanced",timerHandle=null,timerSeconds=0,guidedIndex=0,guidedItems=[],guidedEntries={},assessment={feel:"",time:"",effort:"",pain:""},activeAdaptivePlan=null,currentActivity=null,activityTimer=null,activeProfileId=localStorage.getItem("projectHealthActiveProfile")||"default",editingProgramId=null,programDraft=null,pickerTargetDay=null,deferredInstallPrompt=null,pendingLocationAction=null,waitingServiceWorker=null;
+let WORKOUTS={};const STORE="projectHealthV014";let prior=JSON.parse(localStorage.getItem("projectHealthV013")||localStorage.getItem("projectHealthV012")||localStorage.getItem("projectHealthV0111")||localStorage.getItem("projectHealthV011")||localStorage.getItem("projectHealthV0101")||localStorage.getItem("projectHealthV010")||localStorage.getItem("projectHealthV09")||localStorage.getItem("projectHealthV081")||localStorage.getItem("projectHealthV080")||localStorage.getItem("projectHealthV07")||localStorage.getItem("projectHealthV06")||localStorage.getItem("projectHealthV051")||localStorage.getItem("projectHealthV05")||localStorage.getItem("projectHealthV04")||"null");let profileDB=JSON.parse(localStorage.getItem("projectHealthProfilesV09")||"null")||null;let state=JSON.parse(localStorage.getItem(STORE)||"null")||prior||{profile:{name:"",goal:"Build consistency",days:"Monday–Friday",experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false},daily:{},sessions:[],meals:[],weights:[],victories:[],measurements:[],reflections:[],adaptivePlans:[]};state.adaptivePlans=state.adaptivePlans||[];state.measurements=state.measurements||[];state.reflections=state.reflections||[];state.profile={experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false,...state.profile};let weekOffset=0,foodOffset=0,selectedDate=null,activeMode="full",editingMealId=null,obStep=0,chosenTone=state.profile.tone||"Balanced",timerHandle=null,timerSeconds=0,guidedIndex=0,guidedItems=[],guidedEntries={},assessment={feel:"",time:"",effort:"",pain:""},activeAdaptivePlan=null,currentActivity=null,activityTimer=null,activeProfileId=localStorage.getItem("projectHealthActiveProfile")||"default",editingProgramId=null,programDraft=null,pickerTargetDay=null,deferredInstallPrompt=null,pendingLocationAction=null,waitingServiceWorker=null;
 const iso=d=>{let x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)},today=()=>iso(new Date());
 
 Object.defineProperties(window,{
@@ -7,7 +7,7 @@ Object.defineProperties(window,{
  activeProfileId:{get:()=>activeProfileId,set:v=>{activeProfileId=v}}
 });
 
-function normalizeProfileState(s){s.profile=s.profile||{name:"User",goal:"General health",onboarded:true};s.daily=s.daily||{};s.sessions=s.sessions||[];s.meals=s.meals||[];s.weights=s.weights||[];s.victories=s.victories||[];s.measurements=s.measurements||[];s.reflections=s.reflections||[];s.adaptivePlans=s.adaptivePlans||[];s.activities=s.activities||[];s.programs=s.programs||[];s.programMode=s.programMode||"coach";s.activeProgramId=s.activeProgramId||null;s.places=s.places||[];s.tester=s.tester||{};s.lastBackup=s.lastBackup||null;return s}
+function normalizeProfileState(s){s.profile=s.profile||{name:"User",goal:"General health",onboarded:true};s.daily=s.daily||{};s.sessions=s.sessions||[];s.meals=s.meals||[];s.weights=s.weights||[];s.victories=s.victories||[];s.measurements=s.measurements||[];s.reflections=s.reflections||[];s.adaptivePlans=s.adaptivePlans||[];s.activities=s.activities||[];s.programs=s.programs||[];s.programMode=s.programMode||"coach";s.activeProgramId=s.activeProgramId||null;s.places=s.places||[];s.mealPlans=s.mealPlans||[];s.tester=s.tester||{};s.lastBackup=s.lastBackup||null;return s}
 function ensureProfiles(){if(!profileDB){profileDB={active:"default",profiles:{default:{id:"default",name:state.profile?.name||"Primary User",goal:state.profile?.goal||"General health",state:normalizeProfileState(state)}}};localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB))}if(!profileDB.profiles[activeProfileId])activeProfileId=profileDB.active&&profileDB.profiles[profileDB.active]?profileDB.active:Object.keys(profileDB.profiles)[0];state=normalizeProfileState(profileDB.profiles[activeProfileId].state)}
 function save(){if(profileDB){profileDB.active=activeProfileId;profileDB.profiles[activeProfileId].state=state;localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB));localStorage.setItem("projectHealthActiveProfile",activeProfileId)}localStorage.setItem(STORE,JSON.stringify(state));window.ProjectHealthCloud?.scheduleSync?.()}
 const dayKey=d=>["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date(d+"T12:00:00").getDay()];
@@ -115,13 +115,13 @@ function renderSavedPlaces(){if(!window.savedPlaces)return;let places=state.plac
 function deletePlace(id){state.places=state.places.filter(p=>p.id!==id);save();renderSavedPlaces()}
 function distanceMeters(a,b){const R=6371000,toRad=x=>x*Math.PI/180,dLat=toRad(b.latitude-a.latitude),dLon=toRad(b.longitude-a.longitude),lat1=toRad(a.latitude),lat2=toRad(b.latitude);const h=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
 function checkWorkoutPlace(){if(!(state.places||[]).length)return alert("Save a gym or home-gym location first.");askForLocation(coords=>{let current={latitude:coords.latitude,longitude:coords.longitude},nearest=state.places.map(p=>({...p,distance:distanceMeters(current,p)})).sort((a,b)=>a.distance-b.distance)[0];if(nearest.distance<=nearest.radiusMeters){placeCheckResult.innerHTML=`You appear to be near <strong>${nearest.label}</strong> (${Math.round(nearest.distance)} m away). Ready to start? <button style="margin-top:8px" onclick="openAdaptiveAssessment()">Build My Workout</button>`}else placeCheckResult.textContent=`Nearest workout place: ${nearest.label}, about ${Math.round(nearest.distance)} m away.`})}
-async function copyDiagnostics(){let data={version:"0.13.0",testerId:state.tester?.id,profile:state.profile?.name,userAgent:navigator.userAgent,standalone:window.matchMedia("(display-mode: standalone)").matches,profiles:Object.keys(profileDB?.profiles||{}).length,activities:(state.activities||[]).length,sessions:(state.sessions||[]).length,programs:(state.programs||[]).length,lastBackup:state.lastBackup};let text=JSON.stringify(data,null,2);try{await navigator.clipboard.writeText(text);showToast("Diagnostics copied")}catch{alert(text)}}
+async function copyDiagnostics(){let data={version:"0.15.0",testerId:state.tester?.id,profile:state.profile?.name,userAgent:navigator.userAgent,standalone:window.matchMedia("(display-mode: standalone)").matches,profiles:Object.keys(profileDB?.profiles||{}).length,activities:(state.activities||[]).length,sessions:(state.sessions||[]).length,programs:(state.programs||[]).length,lastBackup:state.lastBackup};let text=JSON.stringify(data,null,2);try{await navigator.clipboard.writeText(text);showToast("Diagnostics copied")}catch{alert(text)}}
 function buildTesterPackage(){
  state.lastBackup=new Date().toISOString();save();
  if(window.lastBackupStatus)lastBackupStatus.textContent=new Date(state.lastBackup).toLocaleDateString();
  return {
    app:"Project Health",
-   version:"0.13.0",
+   version:"0.15.0",
    tester:state.tester,
    profile:state.profile,
    diagnostics:{
@@ -281,13 +281,34 @@ const activityTypes={
  bike:{title:"Bike",subtypes:["Outdoor ride","Stationary bike","Easy ride","Intervals"]},
  recovery:{title:"Recovery",subtypes:["Easy walk","Mobility","Breathing and stretch","Complete recovery"]}
 };
+
+function profileWeightKg(){
+ const latest=(state.weights||[]).slice().sort((a,b)=>(b.date||"").localeCompare(a.date||""))[0];
+ const pounds=Number(latest?.weight||latest?.value||180);
+ return Math.max(35,pounds*0.453592);
+}
+function activityMet(type,subtype){
+ const text=(subtype||"").toLowerCase();
+ if(type==="run") return text.includes("interval")?11.0:text.includes("tempo")?9.8:8.3;
+ if(type==="walk") return text.includes("brisk")||text.includes("incline")?4.8:3.5;
+ if(type==="bike") return text.includes("hard")||text.includes("interval")?8.5:6.0;
+ if(type==="stretch") return 2.3;
+ if(type==="recovery") return 2.0;
+ return 4.5;
+}
+function estimateActivityCalories(){
+ if(!currentActivity)return 0;
+ const met=activityMet(currentActivity.type,currentActivity.subtype);
+ return Math.max(0,Math.round(met*3.5*profileWeightKg()/200*(currentActivity.elapsed/60)));
+}
+
 function openActivity(type){currentActivity={type,elapsed:0,distance:0,running:false,startedAt:null};let cfg=activityTypes[type];activityEyebrow.textContent=type.toUpperCase();activityTitle.textContent=cfg.title;activitySubtype.innerHTML=cfg.subtypes.map(x=>`<option>${x}</option>`).join("");activitySetup.classList.remove("hide");activityTracker.classList.add("hide");activityModal.classList.add("show")}
 function closeActivity(){if(currentActivity?.running&&!confirm("Close without saving this activity?"))return;clearInterval(activityTimer);activityModal.classList.remove("show")}
-function startActivity(){currentActivity.subtype=activitySubtype.value;currentActivity.goal=activityGoal.value==="custom"?30:Number(activityGoal.value);currentActivity.distanceGoal=Number(activityDistanceGoal.value||0);currentActivity.running=true;currentActivity.startedAt=Date.now();activitySetup.classList.add("hide");activityTracker.classList.remove("hide");activityGoalDisplay.textContent=currentActivity.goal;activityCoachText.textContent=currentActivity.type==="run"?"Start easier than you think you need to.":"The hardest part is starting. Keep the pace sustainable.";activityTimer=setInterval(tickActivity,1000)}
-function tickActivity(){if(!currentActivity?.running)return;currentActivity.elapsed++;let m=Math.floor(currentActivity.elapsed/60),s=currentActivity.elapsed%60;activityTime.textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;if(m>=currentActivity.goal)activityCoachText.textContent="Goal reached. Finish when you are ready—more is optional."}
+function startActivity(){currentActivity.subtype=activitySubtype.value;currentActivity.goal=activityGoal.value==="custom"?30:Number(activityGoal.value);currentActivity.distanceGoal=Number(activityDistanceGoal.value||0);currentActivity.running=true;currentActivity.startedAt=Date.now();activitySetup.classList.add("hide");activityTracker.classList.remove("hide");activityGoalDisplay.textContent=currentActivity.goal;if(window.activityCalories)activityCalories.textContent="0";activityCoachText.textContent=currentActivity.type==="run"?"Start easier than you think you need to.":"The hardest part is starting. Keep the pace sustainable.";activityTimer=setInterval(tickActivity,1000)}
+function tickActivity(){if(window.activityCalories)activityCalories.textContent=estimateActivityCalories();if(!currentActivity?.running)return;currentActivity.elapsed++;let m=Math.floor(currentActivity.elapsed/60),s=currentActivity.elapsed%60;activityTime.textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;if(m>=currentActivity.goal)activityCoachText.textContent="Goal reached. Finish when you are ready—more is optional."}
 function pauseActivity(){currentActivity.running=!currentActivity.running;activityPause.textContent=currentActivity.running?"Pause":"Resume"}
 function updateActivityDistance(v){currentActivity.distance=Number(v||0);activityDistance.textContent=currentActivity.distance.toFixed(2);let mins=currentActivity.elapsed/60;if(currentActivity.distance>0&&mins>0)activityPace.textContent=(mins/currentActivity.distance).toFixed(1)}
-function finishActivity(){clearInterval(activityTimer);let minutes=Math.max(1,Math.round(currentActivity.elapsed/60));let record={id:crypto.randomUUID(),date:today(),type:currentActivity.type,subtype:currentActivity.subtype,minutes,distance:Number(currentActivity.distance||0),goal:currentActivity.goal,completedAt:new Date().toISOString()};state.activities=state.activities||[];state.activities.push(record);save();activityModal.classList.remove("show");renderHealthSummary();updateMomentum();alert(`${activityTypes[currentActivity.type].title} saved: ${minutes} minutes.`);currentActivity=null}
+function finishActivity(){clearInterval(activityTimer);let minutes=Math.max(1,Math.round(currentActivity.elapsed/60));let record={id:crypto.randomUUID(),date:today(),type:currentActivity.type,subtype:currentActivity.subtype,minutes,distance:Number(currentActivity.distance||0),calories:estimateActivityCalories(),goal:currentActivity.goal,completedAt:new Date().toISOString()};state.activities=state.activities||[];state.activities.push(record);save();activityModal.classList.remove("show");renderHealthSummary();updateMomentum();alert(`${activityTypes[currentActivity.type].title} saved: ${minutes} minutes.`);currentActivity=null}
 function renderHealthSummary(){let acts=(state.activities||[]).filter(a=>a.date===today()),mins=acts.reduce((a,x)=>a+x.minutes,0),d=daily();if(window.healthMovement)healthMovement.textContent=mins+" min";if(window.healthWater)healthWater.textContent=d.water||0;if(window.healthMeals)healthMeals.textContent=state.meals.filter(m=>m.date===today()).length;let p=state.adaptivePlans.find(x=>x.date===today())||buildAdaptivePlan({date:today()});if(window.healthRecovery)healthRecovery.textContent=p.score}
 
 function coach(){if(state.programMode==="custom"&&state.activeProgramId){let p=state.programs.find(x=>x.id===state.activeProgramId);if(p&&window.coachContext)coachContext.textContent=`Following ${p.name} • Coach PH guidance`; }
@@ -455,7 +476,7 @@ function saveMeasurements(){
 }
 function saveWeight(){let value=Number(weightInput.value);if(!value)return alert("Enter a valid weight.");state.weights.unshift({date:today(),value});save();weightInput.value="";renderProgress()}
 function saveProfile(){state.profile={...state.profile,name:profileName.value.trim(),goal:profileGoal.value,days:profileDays.value.trim(),onboarded:true};save();init();alert("Profile saved.")}
-async function copyFeedback(){let report=`Project Health Beta v0.4\nCategory: ${feedbackCategory.value}\nDevice: ${navigator.userAgent}\nDate: ${new Date().toLocaleString()}\nFeedback: ${feedbackText.value.trim()}`;if(!feedbackText.value.trim())return alert("Enter feedback first.");try{await navigator.clipboard.writeText(report);feedbackResult.textContent="Feedback copied. Paste it into a text or email to Joel.";feedbackResult.classList.remove("hide")}catch(e){feedbackResult.textContent=report;feedbackResult.classList.remove("hide")}}
+async function copyFeedback(){let report=`Project Health Beta v0.15.0\nCategory: ${feedbackCategory.value}\nDevice: ${navigator.userAgent}\nDate: ${new Date().toLocaleString()}\nFeedback: ${feedbackText.value.trim()}`;if(!feedbackText.value.trim())return alert("Enter feedback first.");try{await navigator.clipboard.writeText(report);feedbackResult.textContent="Feedback copied. Paste it into a text or email to Joel.";feedbackResult.classList.remove("hide")}catch(e){feedbackResult.textContent=report;feedbackResult.classList.remove("hide")}}
 function allExercises(){let seen=new Map();Object.values(WORKOUTS).forEach(w=>w.exercises.forEach(e=>{if(!seen.has(e.id))seen.set(e.id,e)}));return [...seen.values()]}
 function renderLibraryPreview(){let el=document.getElementById("libraryPreview");if(!el||!Object.keys(WORKOUTS).length)return;el.innerHTML=allExercises().slice(0,4).map(e=>`<div class="library-card" onclick="openExercise('${e.id}')"><img src="assets/exercises/${e.id}.jpg" alt="${e.name}"><div><strong>${e.name}</strong><span class="muted small">${e.muscles}</span></div></div>`).join("")}
 function openLibrary(){renderLibrary();libraryModal.classList.add("show")}
@@ -466,6 +487,139 @@ function pickTone(btn){document.querySelectorAll("[data-tone]").forEach(x=>x.cla
 function showObStep(){document.querySelectorAll(".onboarding-step").forEach(x=>x.classList.toggle("active",Number(x.dataset.step)===obStep));obBack.style.visibility=obStep===0?"hidden":"visible";obNext.textContent=obStep===3?"Start Project Health":"Continue"}
 function onboardingBack(){if(obStep>0){obStep--;showObStep()}}
 function onboardingNext(){if(obStep===0&&!obName.value.trim())return alert("Enter your name.");if(obStep<3){obStep++;showObStep();return}state.profile={...state.profile,name:obName.value.trim(),goal:obGoal.value,experience:obExperience.value,location:obLocation.value,duration:obDuration.value,obstacle:obObstacle.value,foodStruggle:obFood.value,limitations:obLimitations.value.trim(),tone:chosenTone,onboarded:true};save();onboardingModal.classList.remove("show");init()}
-function exportData(){state.lastBackup=new Date().toISOString();save();if(window.lastBackupStatus)lastBackupStatus.textContent=new Date(state.lastBackup).toLocaleDateString();let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`project-health-v04-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
+function exportData(){state.lastBackup=new Date().toISOString();save();if(window.lastBackupStatus)lastBackupStatus.textContent=new Date(state.lastBackup).toLocaleDateString();let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`project-health-v015-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();init();alert("Data imported.")}catch{alert("Import failed.")}};r.readAsText(f)}
 if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js?build=130").then(r=>setTimeout(()=>r.update().catch(()=>{}),3000)).catch(()=>{});boot();
+
+const COACH_RECIPES={
+ fish:{
+  title:"Lemon Garlic Fish with Rice & Vegetables",emoji:"🐟",calories:590,protein:42,carbs:66,fat:16,
+  ingredients:["white fish fillets","rice","broccoli or mixed vegetables","lemon","garlic","olive oil","salt and pepper"],
+  steps:["Start the rice according to the package directions.","Season the fish with garlic, lemon, salt, and pepper.","Cook the fish in a lightly oiled pan for 3–5 minutes per side, until it flakes easily.","Steam or sauté the vegetables until tender-crisp.","Serve the fish over rice with vegetables and fresh lemon."]
+ },
+ chicken:{
+  title:"High-Protein Chicken Rice Bowl",emoji:"🍗",calories:610,protein:49,carbs:68,fat:15,
+  ingredients:["chicken breast","rice","bell pepper","onion","spinach","olive oil","garlic seasoning"],
+  steps:["Cook the rice.","Slice and season the chicken.","Cook chicken in a skillet until fully done.","Sauté the vegetables in the same pan.","Build the bowl with rice, chicken, and vegetables."]
+ },
+ beef:{
+  title:"Lean Beef & Vegetable Bowl",emoji:"🥩",calories:640,protein:45,carbs:58,fat:23,
+  ingredients:["lean ground beef","rice or potatoes","mixed vegetables","onion","garlic","low-sodium seasoning"],
+  steps:["Cook the rice or potatoes.","Brown the beef with onion and garlic.","Drain excess fat if needed.","Add vegetables and cook until tender.","Serve together and portion evenly."]
+ },
+ vegetarian:{
+  title:"Protein-Packed Chickpea Rice Bowl",emoji:"🥗",calories:560,protein:22,carbs:88,fat:14,
+  ingredients:["chickpeas","rice or quinoa","mixed vegetables","spinach","lemon","olive oil","seasoning"],
+  steps:["Cook the rice or quinoa.","Rinse and season the chickpeas.","Roast or sauté chickpeas and vegetables.","Add spinach until wilted.","Finish with lemon and divide into servings."]
+ },
+ breakfast:{
+  title:"Egg & Oat Power Breakfast",emoji:"🍳",calories:510,protein:31,carbs:52,fat:20,
+  ingredients:["eggs","oats","berries or banana","Greek yogurt","cinnamon"],
+  steps:["Cook the oats with water or milk.","Scramble or boil the eggs.","Top oats with fruit and cinnamon.","Serve with Greek yogurt and eggs."]
+ }
+};
+function selectCoachRecipe(prompt){
+ const p=(prompt||"").toLowerCase();
+ if(/fish|salmon|tilapia|cod|seafood/.test(p))return COACH_RECIPES.fish;
+ if(/chicken|turkey/.test(p))return COACH_RECIPES.chicken;
+ if(/beef|steak|burger/.test(p))return COACH_RECIPES.beef;
+ if(/breakfast|egg|oat/.test(p))return COACH_RECIPES.breakfast;
+ if(/vegetarian|meatless|chickpea|beans|tofu/.test(p))return COACH_RECIPES.vegetarian;
+ return COACH_RECIPES.chicken;
+}
+function generateCoachMealPlan(){
+ const prompt=(window.mealPlanPrompt?.value||"").trim();
+ if(!prompt)return alert("Tell Coach PH what you want to make.");
+ const base=selectCoachRecipe(prompt),servings=Number(mealPlanServings.value||2),time=Number(mealPlanTime.value||30);
+ const recipe={...base,id:crypto.randomUUID(),prompt,servings,time,createdAt:new Date().toISOString()};
+ state.mealPlans=state.mealPlans||[];state.mealPlans.unshift(recipe);save();
+ const totalCalories=base.calories*servings;
+ coachMealResult.innerHTML=`<div class="recipe-card">
+  <div class="top" style="margin:0"><div><div class="eyebrow">${base.emoji} COACH PH RECIPE</div><h3>${base.title}</h3></div><span class="pill">${time} min</span></div>
+  <div class="recipe-meta"><span>${base.calories} cal/serving</span><span>${base.protein}g protein</span><span>${base.carbs}g carbs</span><span>${base.fat}g fat</span><span>${servings} servings</span></div>
+  <h3>Ingredients</h3><div class="grocery-list">${base.ingredients.map(x=>`<div class="grocery-item">✓ ${x}</div>`).join("")}</div>
+  <h3 style="margin-top:14px">Directions</h3><ol class="recipe-steps">${base.steps.map(x=>`<li>${x}</li>`).join("")}</ol>
+  <div class="grid"><button onclick="addCoachRecipeToMeals('${recipe.id}')">Add to Today's Meals</button><button class="secondary" onclick="copyCoachGroceryList('${recipe.id}')">Copy Grocery List</button></div>
+  <div class="muted small" style="margin-top:9px">Nutrition is an estimate. Adjust portions and ingredients for allergies, medical needs, and personal goals.</div>
+ </div>`;
+}
+function addCoachRecipeToMeals(id){
+ const r=(state.mealPlans||[]).find(x=>x.id===id);if(!r)return;
+ state.meals.push({id:crypto.randomUUID(),date:today(),type:"Dinner",description:r.title,plan:"Planned with Coach PH",time:new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}),calories:r.calories,protein:r.protein,recipeId:r.id});
+ save();renderTodayMeals();renderFood();updateMomentum();alert("Recipe added to today's meals.");
+}
+function copyCoachGroceryList(id){
+ const r=(state.mealPlans||[]).find(x=>x.id===id);if(!r)return;
+ const text=`${r.title}\n\nGrocery list (${r.servings} servings):\n- ${r.ingredients.join("\n- ")}`;
+ navigator.clipboard?.writeText(text).then(()=>alert("Grocery list copied.")).catch(()=>prompt("Copy this grocery list:",text));
+}
+
+
+
+/* Project Health v0.15.0 — AI Coach Experience
+   Additive migration: retains projectHealthV014 and projectHealthProfilesV09. */
+function ensureV15State(){
+ state.profile=state.profile||{};
+ if(!state.profile.coachMode)state.profile.coachMode=({"Lose weight":"Weight Loss","Gain strength":"Muscle Building"}[state.profile.goal]||"General Wellness");
+ if(typeof state.profile.coachMemoryEnabled!=="boolean")state.profile.coachMemoryEnabled=true;
+ if(typeof state.profile.coachMemory!=="string")state.profile.coachMemory="";
+ state.coachChat=Array.isArray(state.coachChat)?state.coachChat:[];
+ state.coachBriefings=Array.isArray(state.coachBriefings)?state.coachBriefings:[];
+}
+function v15TodayActivities(){return (state.activities||[]).filter(x=>x.date===today())}
+function v15TodayMeals(){return (state.meals||[]).filter(x=>x.date===today())}
+function v15HealthScore(){
+ let d=daily(),water=Math.min(1,(Number(d.water)||0)/8),meals=Math.min(1,v15TodayMeals().length/3),move=Math.min(1,v15TodayActivities().reduce((a,x)=>a+(Number(x.minutes)||0),0)/30),check=(d.energy||d.sleep)?1:.45;
+ return Math.round(42+((water+meals+move+check)/4)*53)
+}
+function v15LatestWeight(){let w=(state.weights||[])[0];return w?`${w.value} lb`:"—"}
+function v15CoachModePlan(){
+ const plans={
+  "Weight Loss":["Build one filling meal around protein and vegetables.","A 20-minute walk is enough to protect momentum."],
+  "Muscle Building":["Prioritize protein and complete the repeatable version of strength training.","Recovery is part of the program, not time away from it."],
+  "Heart Health":["Choose steady movement and a fiber-rich meal today.","Keep intensity comfortable unless a clinician has cleared harder work."],
+  "Mental Wellness":["Use daylight, gentle movement, and one honest check-in.","The goal is to feel more capable, not punished."],
+  "Diabetes Support":["Pair carbohydrates with protein and fiber, and consider gentle movement after meals.","Follow your clinician's plan for medication and glucose decisions."],
+  "General Wellness":["Start with water, plan the next meal, and move for 20 minutes.","Consistency beats an intense day you cannot repeat."]};
+ return plans[state.profile.coachMode]||plans["General Wellness"]
+}
+function renderV15Briefing(){
+ ensureV15State();let d=daily(),acts=v15TodayActivities(),mins=acts.reduce((a,x)=>a+(Number(x.minutes)||0),0),plan=v15CoachModePlan();
+ if(window.v15HealthScore)v15HealthScore.textContent=v15HealthScore();
+ if(window.v15BriefGreeting)v15BriefGreeting.textContent=`${greeting()}${state.profile.name?", "+state.profile.name:""}.`;
+ if(window.v15BriefMessage)v15BriefMessage.textContent=plan[0];
+ if(window.v15BriefWater)v15BriefWater.textContent=`${Number(d.water)||0}/8`;
+ if(window.v15BriefMeals)v15BriefMeals.textContent=v15TodayMeals().length;
+ if(window.v15BriefMovement)v15BriefMovement.textContent=`${mins} min`;
+ if(window.v15BriefWeight)v15BriefWeight.textContent=v15LatestWeight();
+ if(window.v15CoachCorner)v15CoachCorner.textContent=mins?"Movement logged. Support that win with water and a useful meal.":plan[1];
+}
+function loadCoachPreferences(){
+ ensureV15State();if(window.coachModeSetting)coachModeSetting.value=state.profile.coachMode;if(window.coachMemorySetting)coachMemorySetting.value=state.profile.coachMemory||"";if(window.coachMemoryEnabled)coachMemoryEnabled.checked=!!state.profile.coachMemoryEnabled;
+}
+function saveCoachPreferences(){
+ ensureV15State();state.profile.coachMode=coachModeSetting.value;state.profile.coachMemory=coachMemorySetting.value.trim();state.profile.coachMemoryEnabled=coachMemoryEnabled.checked;save();renderV15Experience();showToast("Coach preferences saved")
+}
+function clearCoachMemory(){ensureV15State();if(!confirm("Clear saved Coach PH preferences and conversation history?"))return;state.profile.coachMemory="";state.coachChat=[];save();renderV15Experience();showToast("Coach memory cleared")}
+function v15CoachMemory(){return state.profile.coachMemoryEnabled&&state.profile.coachMemory?`\n\nSaved preference considered: ${state.profile.coachMemory}`:""}
+function v15CoachAnswer(q){
+ ensureV15State();const t=(q||"").toLowerCase(),plan=v15CoachModePlan(),mode=state.profile.coachMode,mem=v15CoachMemory(),d=daily(),mins=v15TodayActivities().reduce((a,x)=>a+(Number(x.minutes)||0),0);
+ if(/brief|start my day|priorit/.test(t))return `${greeting()}${state.profile.name?", "+state.profile.name:""}.\n\nToday's health score is ${v15HealthScore()}.\n• Water: ${Number(d.water)||0}/8 bottles\n• Meals logged: ${v15TodayMeals().length}\n• Movement: ${mins} minutes\n• Coach mode: ${mode}\n\nYour next useful action: ${plan[0]}${mem}`;
+ if(/eat|meal|recipe|food|grocery/.test(t)){let r=selectCoachRecipe(q);return `Try ${r.title}.\n\nA practical serving is built around protein, a controlled portion of carbohydrate, and vegetables. The recipe tool below can create the ingredients, directions, estimated macros, and grocery list.\n\nEstimated per serving: ${r.calories} calories and ${r.protein}g protein.${mem}`}
+ if(/workout|exercise|train|walk|run/.test(t)){let p=buildAdaptivePlan({date:today(),feel:(d.energy||"").toLowerCase().includes("tired")?"tired":"good",time:30,effort:"moderate",pain:d.pain||""});return `For ${mode}, I recommend the ${p.mode} version of ${p.workout}.\n\n${p.exercises.length} exercises, ${p.warmup}-minute warm-up, and ${p.finisher}-minute finisher. Reason: ${p.reason}.\n\nUse the Adjust Today's Plan tool before starting if pain, time, or energy changed.${mem}`}
+ if(/reflect|journal/.test(t))return `Answer these three questions:\n\n1. What did you do well today?\n2. What made the healthy choice harder?\n3. What can you make easier tomorrow?${mem}`;
+ if(/week|review|progress/.test(t)){let start=mondayOf(new Date()),sessions=(state.sessions||[]).filter(x=>new Date(x.date+"T12:00:00")>=start).length,acts=(state.activities||[]).filter(x=>new Date(x.date+"T12:00:00")>=start).length;return `This week's review:\n\n• Strength sessions: ${sessions}\n• Other activities: ${acts}\n• Total records saved: ${(state.sessions||[]).length+(state.activities||[]).length+(state.meals||[]).length}\n\nThe strongest next target is one action small enough to repeat next week.${mem}`}
+ if(/motivat|give up|behind/.test(t))return `You are not behind. The next decision still counts. Do one useful thing now—water, a short walk, or planning your next meal—and let that action restart momentum.${mem}`;
+ return `I can help turn that into a practical next step. In ${mode} mode, I would begin with: ${plan[0]} Tell me whether you want help with nutrition, movement, recovery, reflection, or planning.${mem}`
+}
+function renderCoachChat(){
+ ensureV15State();if(window.v15CoachWelcome)v15CoachWelcome.textContent=`How can I help${state.profile.name?", "+state.profile.name:""}?`;if(window.v15CoachModeLabel)v15CoachModeLabel.textContent=`${state.profile.coachMode} mode`;
+ if(!state.coachChat.length)state.coachChat.push({role:"coach",text:`${greeting()}${state.profile.name?", "+state.profile.name:""}. How can I help today?`,at:new Date().toISOString()});
+ if(window.coachChatThread){coachChatThread.innerHTML=state.coachChat.slice(-50).map(m=>`<div class="coach-chat-message ${m.role}">${String(m.text).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}</div>`).join("");coachChatThread.scrollTop=coachChatThread.scrollHeight}
+}
+function sendCoachPrompt(text){if(window.coachChatInput)coachChatInput.value=text;sendCoachMessage()}
+function sendCoachMessage(){ensureV15State();let q=(window.coachChatInput?.value||"").trim();if(!q)return;state.coachChat.push({role:"user",text:q,at:new Date().toISOString()});coachChatInput.value="";renderCoachChat();setTimeout(()=>{state.coachChat.push({role:"coach",text:v15CoachAnswer(q),at:new Date().toISOString()});save();renderCoachChat()},220)}
+function renderV15Experience(){ensureV15State();renderV15Briefing();loadCoachPreferences();renderCoachChat()}
+const showScreenV14=showScreen;showScreen=function(id){showScreenV14(id);if(id==="today")renderV15Briefing();if(id==="programs")renderCoachChat();if(id==="more")loadCoachPreferences()};
+const initV14=init;init=function(){ensureV15State();initV14();renderV15Experience()};
+ensureV15State();save();setTimeout(renderV15Experience,0);

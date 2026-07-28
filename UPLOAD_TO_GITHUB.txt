@@ -1,15 +1,13 @@
-PROJECT HEALTH v0.13.0 — GITHUB UPLOAD
+PROJECT HEALTH v0.14.0
 
-1. Open the Project-Health GitHub repository.
-2. Upload every file and folder contained in this ZIP to the repository root.
-3. Replace files when prompted and commit the upload.
-4. Wait for GitHub Pages deployment to finish.
-5. On a phone that previously looped, remove the installed app and clear kingjoelm.github.io website data one final time.
-6. Reopen https://kingjoelm.github.io/Project-Health/ in the browser.
+Upload ALL files and folders from this package into the ROOT of the GitHub Project-Health repository.
+Replace existing files.
 
-Cloud is already configured with:
-Project ID: sjiyrjztdgvazuupftow
-URL: https://sjiyrjztdgvazuupftow.supabase.co
-Redirect: https://kingjoelm.github.io/Project-Health/
+No Supabase edits are required.
+The correct cloud URL, publishable key, and cloud-enabled setting are already preserved.
 
-Do not replace cloud/config.js with an older copy.
+After deployment:
+- Open the site once in the browser.
+- Confirm the bottom tabs show Home, Fitness, Nutrition, Progress, Coach.
+- Open Nutrition and test: "Today make fish with rice and vegetables."
+- Start a walking activity and confirm estimated calories increase.

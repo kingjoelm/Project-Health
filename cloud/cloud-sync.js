@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "0.13.0";
+  const VERSION = "0.15.0";
   const cfg = window.PROJECT_HEALTH_CLOUD || {};
   const LAST_SYNC_KEY = "projectHealthLastCloudSync";
   const RESTORE_RELOAD_KEY = "projectHealthCloudRestoreReloaded";

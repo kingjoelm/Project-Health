@@ -1,27 +1,34 @@
 {
-  "release": "0.13.0",
-  "javascript_checks": [
-    {
-      "file": "app.js",
+  "release": "0.15.0",
+  "base_release": "0.14.0",
+  "original_files_preserved": 67,
+  "data_store_key": "projectHealthV014",
+  "profile_store_key": "projectHealthProfilesV09",
+  "cloud_url_preserved": true,
+  "cloud_publishable_key_preserved": true,
+  "features": [
+    "daily briefing",
+    "dedicated Coach PH chat",
+    "coach modes",
+    "user-controlled coach memory",
+    "all v0.14 features and assets"
+  ],
+  "javascript_checks": {
+    "app.js": {
       "ok": true,
       "error": ""
     },
-    {
-      "file": "service-worker.js",
+    "service-worker.js": {
       "ok": true,
       "error": ""
     },
-    {
-      "file": "cloud/cloud-sync.js",
+    "cloud/cloud-sync.js": {
       "ok": true,
       "error": ""
     },
-    {
-      "file": "cloud/config.js",
+    "cloud/config.js": {
       "ok": true,
       "error": ""
     }
-  ],
-  "supabase_project_id": "sjiyrjztdgvazuupftow",
-  "github_pages": "https://kingjoelm.github.io/Project-Health/"
+  }
 }
