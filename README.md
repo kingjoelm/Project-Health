@@ -1,34 +1,32 @@
-# Project Health v0.8.0 — Modern UI Foundation
+# Project Health v0.8.1 — Guided Workout
 
-This is Sprint 1 of the private-beta build.
+## Fixed
+- Replaced all repeated exercise images.
+- Added one unique generated gym image for every exercise.
+- Removed screenshot text from exercise images.
+- Standardized all images to the same 16:9 dimensions.
 
-## New in v0.8.0
-
-- Complete modern dark visual system
-- Atmospheric background gradients
-- Desktop sidebar navigation
-- Modern mobile bottom navigation
-- Glass-style cards and elevated panels
-- New dashboard hero
-- Compact readiness metrics
-- Better typography, spacing, and responsive layout
-- Updated recovery score placement
-- Preserved Coach PH, adaptive training, food tracking, weekly workouts, charts, and exercise library
+## New guided workout flow
+- Warm-up
+- One exercise at a time
+- Set-by-set logging
+- Automatic rest timer
+- Previous-performance display
+- Coach PH adaptive load recommendation
+- Previous and next controls
+- Incline finisher
+- Workout summary
+- Honest partial-workout saving
+- Automatic lower-stress next workout when completion is below 70%
 
 ## Install into OneDrive
-
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\Install-ProjectHealth-v0.8.0.ps1
-.\Validate-ProjectHealth-v0.8.0.ps1
+.\Install-ProjectHealth-v0.8.1.ps1
+.\Validate-ProjectHealth-v0.8.1.ps1
 ```
 
-Default root:
-
-`C:\Users\Ironman\OneDrive\Project Health`
-
-Upload everything inside the `deploy` folder to GitHub.
+Upload everything inside the OneDrive `Project Health\deploy` folder to GitHub.
 
 Recommended commit:
-
-`v0.8.0 "Modern UI" - Private Beta Visual Foundation`
+`v0.8.1 "Guided Workout" - Unique Exercise Images & Session Flow`

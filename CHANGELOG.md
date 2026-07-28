@@ -1,10 +1,8 @@
 # Changelog
 
-## 0.8.0 — Modern UI Foundation
-
-- Rebuilt visual system with a modern dark navy design.
-- Added atmospheric background gradients.
-- Added desktop sidebar navigation.
-- Added modern hero dashboard and compact metrics.
-- Improved cards, forms, modals, spacing, and responsive behavior.
-- Preserved adaptive training and all existing tracking features.
+## 0.8.1 — Guided Workout
+- Replaced repeated and mismatched workout pictures with unique exercise-specific imagery.
+- Added guided one-step-at-a-time workout sessions.
+- Added workout navigation and completion progress.
+- Added previous performance and adaptive load guidance.
+- Added workout summary and partial-completion handling.
