@@ -60,7 +60,7 @@ Paste the Project URL and publishable/anon key.
 
 ## 5. Deploy
 
-Run the OneDrive installer, then upload the contents of the OneDrive `deploy` folder to GitHub.
+Upload the complete v0.13.0 release contents directly to the root of the GitHub repository.
 
 ## 6. Test in this order
 

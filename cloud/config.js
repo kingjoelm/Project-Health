@@ -1,8 +1,4 @@
-// Project Health Cloud configuration.
-// Generated for the Project Health Supabase project.
-//
-// Run Configure-ProjectHealth-Cloud-v0.12.1.ps1 to safely insert the
-// browser-safe Publishable Key. Never use the Secret Key here.
+// Project Health Cloud configuration — browser-safe values only.
 window.PROJECT_HEALTH_CLOUD = {
   enabled: true,
   supabaseUrl: "https://sjiyrjztdgvazuupftow.supabase.co",

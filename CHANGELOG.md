@@ -1,4 +1,15 @@
-# Changelog
+# Project Health Changelog
+
+## 0.13.0 — Stable Cloud
+
+- Correct Supabase project configuration embedded and enabled.
+- Permanent mobile service-worker reload-loop correction.
+- Duplicate authentication reconciliation removed.
+- Cloud timestamps compared before automatic restore.
+- One-time guarded refresh after cloud restore.
+- Manual Restore From Cloud now asks before replacing device data.
+- Cloud config bypasses the service-worker cache.
+- Core scripts cache-busted to build 130.
 
 ## 0.12.2 — Cloud Cache Hotfix
 

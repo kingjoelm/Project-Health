@@ -1,26 +1,28 @@
-# Project Health v0.12.2 — Cloud Cache Hotfix
+# Project Health v0.13.0 — Stable Cloud
 
-This fixes the Supabase connection issue caused by two problems:
+GitHub-ready release with Supabase account creation, cross-device sync, mobile service-worker stability, and guarded one-time cloud restore.
 
-1. The prior package contained a one-character typo in the Supabase project URL.
-2. The service worker cached `cloud/config.js`, so GitHub Pages could continue serving the old URL even after the file was corrected.
+## Deploy
 
-## Correct Supabase URL
+Upload **all files and folders inside this release** to the root of the `Project-Health` GitHub repository, replacing existing files. Keep the folder structure intact.
 
-`https://sjjyrjztdgvqzuupftow.supabase.co`
+The cloud configuration is already enabled for project `sjiyrjztdgvazuupftow`. The included key is the browser-safe Supabase publishable key, not a secret/service-role key.
 
-## Important
+## First mobile launch after deployment
 
-After uploading this version, clear the old service worker/site data once:
+Because older builds installed a looping service worker, perform this once on any affected phone:
 
-- Firefox: DevTools → Application → Service Workers → Unregister
-- Or browser settings → clear site data for `kingjoelm.github.io`
-- Then reopen Project Health
+1. Remove the Project Health home-screen app if installed.
+2. Clear website data for `kingjoelm.github.io`.
+3. Open the GitHub Pages site in the normal browser.
+4. Confirm it remains stable, then reinstall it to the home screen.
 
-`cloud/config.js` is no longer stored in the offline cache.
+## Main fixes
 
-Paste your complete browser-safe key beginning with `sb_publishable_` into `cloud/config.js`. Never use the Secret key.
-
-Recommended commit:
-
-`v0.12.2 "Cloud Cache Hotfix" - Correct Supabase URL & Bypass Cached Config`
+- Stops automatic service-worker activation/reload loops.
+- Reloads only after an intentional update or completed restore.
+- Prevents duplicate cloud-load calls during authentication startup.
+- Compares Supabase `updated_at` with the device's last sync before restoring.
+- Writes the cloud timestamp locally before the single restore refresh.
+- Keeps `cloud/config.js` network-only so old project URLs cannot remain cached.
+- Uses cache-busted v0.13.0 core scripts.
