@@ -1,0 +1,56 @@
+[
+  {
+    "id": "plank",
+    "name": "Plank",
+    "target": "Core",
+    "sets": 3,
+    "reps": "30\u201345 sec",
+    "image": "exercise-images/plank.svg",
+    "steps": [
+      "Place elbows directly beneath your shoulders.",
+      "Brace your stomach and squeeze your glutes.",
+      "Keep your head, hips and heels in one straight line."
+    ],
+    "mistakes": [
+      "Do not allow your lower back to sag.",
+      "Do not raise your hips too high.",
+      "Stop for sharp shoulder or lower-back pain."
+    ]
+  },
+  {
+    "id": "chest",
+    "name": "Machine Chest Press",
+    "target": "Chest, shoulders and triceps",
+    "sets": 3,
+    "reps": "10\u201312",
+    "image": "exercise-images/chest-press.svg",
+    "steps": [
+      "Adjust the seat so the handles line up with mid-chest.",
+      "Keep your feet flat and your back supported.",
+      "Press forward smoothly, then return slowly."
+    ],
+    "mistakes": [
+      "Do not shrug your shoulders.",
+      "Do not bounce the weight stack.",
+      "Do not lock your elbows hard."
+    ]
+  },
+  {
+    "id": "pulldown",
+    "name": "Lat Pulldown",
+    "target": "Back and biceps",
+    "sets": 3,
+    "reps": "10\u201312",
+    "image": "exercise-images/lat-pulldown.svg",
+    "steps": [
+      "Secure your thighs under the pad.",
+      "Grip slightly wider than shoulder width.",
+      "Pull the bar toward your upper chest and return slowly."
+    ],
+    "mistakes": [
+      "Do not pull behind your neck.",
+      "Do not swing backward.",
+      "Do not use momentum."
+    ]
+  }
+]
