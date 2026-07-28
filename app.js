@@ -1,11 +1,18 @@
-let WORKOUTS={};const STORE="projectHealthV011";let prior=JSON.parse(localStorage.getItem("projectHealthV0101")||localStorage.getItem("projectHealthV010")||localStorage.getItem("projectHealthV09")||localStorage.getItem("projectHealthV081")||localStorage.getItem("projectHealthV080")||localStorage.getItem("projectHealthV07")||localStorage.getItem("projectHealthV06")||localStorage.getItem("projectHealthV051")||localStorage.getItem("projectHealthV05")||localStorage.getItem("projectHealthV04")||"null");let profileDB=JSON.parse(localStorage.getItem("projectHealthProfilesV09")||"null")||null;let state=JSON.parse(localStorage.getItem(STORE)||"null")||prior||{profile:{name:"",goal:"Build consistency",days:"Monday–Friday",experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false},daily:{},sessions:[],meals:[],weights:[],victories:[],measurements:[],reflections:[],adaptivePlans:[]};state.adaptivePlans=state.adaptivePlans||[];state.measurements=state.measurements||[];state.reflections=state.reflections||[];state.profile={experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false,...state.profile};let weekOffset=0,foodOffset=0,selectedDate=null,activeMode="full",editingMealId=null,obStep=0,chosenTone=state.profile.tone||"Balanced",timerHandle=null,timerSeconds=0,guidedIndex=0,guidedItems=[],guidedEntries={},assessment={feel:"",time:"",effort:"",pain:""},activeAdaptivePlan=null,currentActivity=null,activityTimer=null,activeProfileId=localStorage.getItem("projectHealthActiveProfile")||"default",editingProgramId=null,programDraft=null,pickerTargetDay=null,deferredInstallPrompt=null,pendingLocationAction=null,waitingServiceWorker=null;
+let WORKOUTS={};const STORE="projectHealthV012";let prior=JSON.parse(localStorage.getItem("projectHealthV0111")||localStorage.getItem("projectHealthV011")||localStorage.getItem("projectHealthV0101")||localStorage.getItem("projectHealthV010")||localStorage.getItem("projectHealthV09")||localStorage.getItem("projectHealthV081")||localStorage.getItem("projectHealthV080")||localStorage.getItem("projectHealthV07")||localStorage.getItem("projectHealthV06")||localStorage.getItem("projectHealthV051")||localStorage.getItem("projectHealthV05")||localStorage.getItem("projectHealthV04")||"null");let profileDB=JSON.parse(localStorage.getItem("projectHealthProfilesV09")||"null")||null;let state=JSON.parse(localStorage.getItem(STORE)||"null")||prior||{profile:{name:"",goal:"Build consistency",days:"Monday–Friday",experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false},daily:{},sessions:[],meals:[],weights:[],victories:[],measurements:[],reflections:[],adaptivePlans:[]};state.adaptivePlans=state.adaptivePlans||[];state.measurements=state.measurements||[];state.reflections=state.reflections||[];state.profile={experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false,...state.profile};let weekOffset=0,foodOffset=0,selectedDate=null,activeMode="full",editingMealId=null,obStep=0,chosenTone=state.profile.tone||"Balanced",timerHandle=null,timerSeconds=0,guidedIndex=0,guidedItems=[],guidedEntries={},assessment={feel:"",time:"",effort:"",pain:""},activeAdaptivePlan=null,currentActivity=null,activityTimer=null,activeProfileId=localStorage.getItem("projectHealthActiveProfile")||"default",editingProgramId=null,programDraft=null,pickerTargetDay=null,deferredInstallPrompt=null,pendingLocationAction=null,waitingServiceWorker=null;
 const iso=d=>{let x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)},today=()=>iso(new Date());
+
+Object.defineProperties(window,{
+ state:{get:()=>state,set:v=>{state=normalizeProfileState(v)}},
+ profileDB:{get:()=>profileDB,set:v=>{profileDB=v}},
+ activeProfileId:{get:()=>activeProfileId,set:v=>{activeProfileId=v}}
+});
+
 function normalizeProfileState(s){s.profile=s.profile||{name:"User",goal:"General health",onboarded:true};s.daily=s.daily||{};s.sessions=s.sessions||[];s.meals=s.meals||[];s.weights=s.weights||[];s.victories=s.victories||[];s.measurements=s.measurements||[];s.reflections=s.reflections||[];s.adaptivePlans=s.adaptivePlans||[];s.activities=s.activities||[];s.programs=s.programs||[];s.programMode=s.programMode||"coach";s.activeProgramId=s.activeProgramId||null;s.places=s.places||[];s.tester=s.tester||{};s.lastBackup=s.lastBackup||null;return s}
 function ensureProfiles(){if(!profileDB){profileDB={active:"default",profiles:{default:{id:"default",name:state.profile?.name||"Primary User",goal:state.profile?.goal||"General health",state:normalizeProfileState(state)}}};localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB))}if(!profileDB.profiles[activeProfileId])activeProfileId=profileDB.active&&profileDB.profiles[profileDB.active]?profileDB.active:Object.keys(profileDB.profiles)[0];state=normalizeProfileState(profileDB.profiles[activeProfileId].state)}
-function save(){if(profileDB){profileDB.active=activeProfileId;profileDB.profiles[activeProfileId].state=state;localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB));localStorage.setItem("projectHealthActiveProfile",activeProfileId)}localStorage.setItem(STORE,JSON.stringify(state))}
+function save(){if(profileDB){profileDB.active=activeProfileId;profileDB.profiles[activeProfileId].state=state;localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB));localStorage.setItem("projectHealthActiveProfile",activeProfileId)}localStorage.setItem(STORE,JSON.stringify(state));window.ProjectHealthCloud?.scheduleSync?.()}
 const dayKey=d=>["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date(d+"T12:00:00").getDay()];
 function daily(k=today()){state.daily[k] ||= {water:0};return state.daily[k]}
-async function boot(){ensureProfiles();try{WORKOUTS=await fetch("data/workouts.json?build=110",{cache:"no-store"}).then(r=>r.json())}catch(e){alert("Workout data could not load.");return}init();bindProgramControls();initTesterBeta();if(!state.profile.onboarded)setTimeout(()=>onboardingModal.classList.add("show"),250)}
+async function boot(){ensureProfiles();try{WORKOUTS=await fetch("data/workouts.json?build=120",{cache:"no-store"}).then(r=>r.json())}catch(e){alert("Workout data could not load.");return}init();bindProgramControls();initTesterBeta();window.ProjectHealthCloud?.initialize?.();if(!state.profile.onboarded)setTimeout(()=>onboardingModal.classList.add("show"),250)}
 function greeting(){const h=new Date().getHours();return h<12?"Good morning":h<17?"Good afternoon":"Good evening"}
 function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("nav button,.side-links button").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));if(id==="week")renderWeek();if(id==="food")renderFood();if(id==="progress")renderProgress();if(id==="programs")renderPrograms();if(id==="more")renderLibraryPreview();window.scrollTo(0,0)}
 function init(){dateLabel.textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});greetingEl=document.getElementById("greeting");greetingEl.textContent=`${greeting()}${state.profile.name?", "+state.profile.name:""}`;let w=workoutForDate(today());todayWorkout.textContent=w.name;todayFocus.textContent=w.focus;todayMinutes.textContent=`${w.minutes} min`;let d=daily();sleep.value=d.sleep||"";energy.value=d.energy||"";pain.value=d.pain||"";victory.value=d.victory||"";reflectionHelped.value=d.reflection?.helped||"";reflectionObstacle.value=d.reflection?.obstacle||"";reflectionTomorrow.value=d.reflection?.tomorrow||"";waterCount.textContent=d.water||0;if(window.heroSleep)heroSleep.textContent=d.sleep||"—";if(window.heroEnergy)heroEnergy.textContent=d.energy||"—";if(window.heroWater)heroWater.textContent=d.water||0;profileName.value=state.profile.name||"";profileGoal.value=state.profile.goal||"Build consistency";profileDays.value=state.profile.days||"";coach();renderTodayMeals();renderTodayWeekPreview();renderLibraryPreview();updateMomentum();renderAdaptiveStatus();renderProfileSwitcher();renderHealthSummary()}
@@ -43,6 +50,10 @@ function initTesterBeta(){
  if(!state.tester.id)state.tester.id=makeTesterId();
  testerIdDisplay.textContent=state.tester.id;testerIdBadge.textContent=state.tester.name||state.tester.id;
  lastBackupStatus.textContent=state.lastBackup?new Date(state.lastBackup).toLocaleDateString():"Never";
+ if(window.exportSupportText){
+   let supportsShare=!!(navigator.share&&navigator.canShare);
+   exportSupportText.textContent=supportsShare?"This device can share the tester file directly.":"This browser will download a JSON tester file.";
+ }
  renderSavedPlaces();
  if(!state.tester.consentAccepted)setTimeout(()=>testerConsentModal.classList.add("show"),250);
  setupInstallPrompt();setupUpdateDetection();
@@ -77,11 +88,76 @@ function renderSavedPlaces(){if(!window.savedPlaces)return;let places=state.plac
 function deletePlace(id){state.places=state.places.filter(p=>p.id!==id);save();renderSavedPlaces()}
 function distanceMeters(a,b){const R=6371000,toRad=x=>x*Math.PI/180,dLat=toRad(b.latitude-a.latitude),dLon=toRad(b.longitude-a.longitude),lat1=toRad(a.latitude),lat2=toRad(b.latitude);const h=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
 function checkWorkoutPlace(){if(!(state.places||[]).length)return alert("Save a gym or home-gym location first.");askForLocation(coords=>{let current={latitude:coords.latitude,longitude:coords.longitude},nearest=state.places.map(p=>({...p,distance:distanceMeters(current,p)})).sort((a,b)=>a.distance-b.distance)[0];if(nearest.distance<=nearest.radiusMeters){placeCheckResult.innerHTML=`You appear to be near <strong>${nearest.label}</strong> (${Math.round(nearest.distance)} m away). Ready to start? <button style="margin-top:8px" onclick="openAdaptiveAssessment()">Build My Workout</button>`}else placeCheckResult.textContent=`Nearest workout place: ${nearest.label}, about ${Math.round(nearest.distance)} m away.`})}
-async function copyDiagnostics(){let data={version:"0.11",testerId:state.tester?.id,profile:state.profile?.name,userAgent:navigator.userAgent,standalone:window.matchMedia("(display-mode: standalone)").matches,profiles:Object.keys(profileDB?.profiles||{}).length,activities:(state.activities||[]).length,sessions:(state.sessions||[]).length,programs:(state.programs||[]).length,lastBackup:state.lastBackup};let text=JSON.stringify(data,null,2);try{await navigator.clipboard.writeText(text);showToast("Diagnostics copied")}catch{alert(text)}}
-function exportTesterPackage(){
- state.lastBackup=new Date().toISOString();save();lastBackupStatus.textContent=new Date(state.lastBackup).toLocaleDateString();
- let payload={app:"Project Health",version:"0.11",tester:state.tester,profile:state.profile,diagnostics:{userAgent:navigator.userAgent,exportedAt:new Date().toISOString()},data:state};
- let b=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`project-health-tester-${state.tester.id}-${today()}.json`;a.click();URL.revokeObjectURL(a.href);showToast("Tester package exported")
+async function copyDiagnostics(){let data={version:"0.12",testerId:state.tester?.id,profile:state.profile?.name,userAgent:navigator.userAgent,standalone:window.matchMedia("(display-mode: standalone)").matches,profiles:Object.keys(profileDB?.profiles||{}).length,activities:(state.activities||[]).length,sessions:(state.sessions||[]).length,programs:(state.programs||[]).length,lastBackup:state.lastBackup};let text=JSON.stringify(data,null,2);try{await navigator.clipboard.writeText(text);showToast("Diagnostics copied")}catch{alert(text)}}
+function buildTesterPackage(){
+ state.lastBackup=new Date().toISOString();save();
+ if(window.lastBackupStatus)lastBackupStatus.textContent=new Date(state.lastBackup).toLocaleDateString();
+ return {
+   app:"Project Health",
+   version:"0.12",
+   tester:state.tester,
+   profile:state.profile,
+   diagnostics:{
+     userAgent:navigator.userAgent,
+     platform:navigator.platform||"",
+     language:navigator.language||"",
+     standalone:window.matchMedia("(display-mode: standalone)").matches,
+     exportedAt:new Date().toISOString()
+   },
+   data:state
+ };
+}
+function setExportStatus(message,type=""){
+ if(window.testerExportStatus){testerExportStatus.textContent=message;testerExportStatus.className=`muted small ${type?`export-${type}`:""}`}
+ if(window.exportSupportText){exportSupportText.textContent=message;exportSupportText.className=`muted small ${type?`export-${type}`:""}`}
+}
+async function exportTesterPackage(){
+ try{
+   setExportStatus("Preparing tester package...");
+   const payload=buildTesterPackage();
+   const json=JSON.stringify(payload,null,2);
+   const filename=`project-health-tester-${state.tester?.id||"unknown"}-${today()}.json`;
+   const file=new File([json],filename,{type:"application/json"});
+   if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+     try{
+       await navigator.share({title:"Project Health Tester Package",text:"Project Health beta tester export",files:[file]});
+       setExportStatus("Tester package shared successfully.","success");
+       showToast("Tester package shared");
+       return;
+     }catch(err){
+       if(err?.name==="AbortError"){setExportStatus("Share canceled. You can try again or use Copy Tester Package.","warning");return}
+     }
+   }
+   const blob=new Blob([json],{type:"application/json;charset=utf-8"});
+   const url=URL.createObjectURL(blob);
+   const a=document.createElement("a");
+   a.href=url;
+   a.download=filename;
+   a.style.display="none";
+   document.body.appendChild(a);
+   a.click();
+   setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},2500);
+   setExportStatus(`Download started: ${filename}`,"success");
+   showToast("Tester package download started");
+ }catch(err){
+   console.error("Tester export failed",err);
+   setExportStatus("Export failed. Use Copy Tester Package below, then paste it into a message or text file.","error");
+   alert("Tester export failed: "+(err?.message||"Unknown error"));
+ }
+}
+async function copyTesterPackage(){
+ try{
+   const json=JSON.stringify(buildTesterPackage(),null,2);
+   await navigator.clipboard.writeText(json);
+   setExportStatus("Tester package copied to clipboard.","success");
+   showToast("Tester package copied");
+ }catch(err){
+   console.error("Copy tester package failed",err);
+   const json=JSON.stringify(buildTesterPackage(),null,2);
+   const w=window.open();
+   if(w){w.document.write(`<pre style="white-space:pre-wrap;font-family:monospace">${json.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</pre>`);setExportStatus("Package opened in a new tab. Select all and copy it.","warning")}
+   else{setExportStatus("Clipboard access was blocked. Try the download again in Chrome, Edge, or Safari.","error")}
+ }
 }
 
 function showToast(message){if(!window.actionToast)return;actionToast.textContent=message;actionToast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>actionToast.classList.remove("show"),2200)}
@@ -365,4 +441,4 @@ function onboardingBack(){if(obStep>0){obStep--;showObStep()}}
 function onboardingNext(){if(obStep===0&&!obName.value.trim())return alert("Enter your name.");if(obStep<3){obStep++;showObStep();return}state.profile={...state.profile,name:obName.value.trim(),goal:obGoal.value,experience:obExperience.value,location:obLocation.value,duration:obDuration.value,obstacle:obObstacle.value,foodStruggle:obFood.value,limitations:obLimitations.value.trim(),tone:chosenTone,onboarded:true};save();onboardingModal.classList.remove("show");init()}
 function exportData(){state.lastBackup=new Date().toISOString();save();if(window.lastBackupStatus)lastBackupStatus.textContent=new Date(state.lastBackup).toLocaleDateString();let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`project-health-v04-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();init();alert("Data imported.")}catch{alert("Import failed.")}};r.readAsText(f)}
-if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js?build=110").then(r=>r.update()).catch(()=>{});boot();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js?build=120").then(r=>r.update()).catch(()=>{});boot();

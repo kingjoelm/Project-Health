@@ -1,42 +1,40 @@
-# Project Health v0.11 — Tester Beta
+# Project Health v0.12 — Cloud Identity
 
-This release is designed for a small invite-only tester group.
+This release adds the first secure account and cloud-sync foundation.
 
 ## Added
 
-- Tester consent and safety acknowledgement
-- Unique tester ID
-- Tester display name
-- Tester package export with app data and diagnostics
-- Install-to-device guidance
-- PWA install prompt where supported
-- Update available banner
-- Backup-date tracking
-- Copyable diagnostics
-- Saved gym and home-gym locations
-- On-demand location checking
-- Nearby workout-place prompt
+- Email/password registration
+- Email/password sign-in
+- Local-device sign-out
+- Password-reset email
+- Persistent browser sessions
+- Local-first automatic sync
+- Manual Sync Now
+- Restore From Cloud
+- Secure beta-feedback submission
+- Delete Cloud Records
+- Supabase SQL schema
+- Row Level Security policies
+- Cloud configuration file
+- Offline/local fallback when cloud is not configured or unavailable
 
-## Location limitation
+## Important
 
-The browser app can save a workout place and check proximity only when the user requests it while the app is open.
+Cloud features remain disabled until you create a Supabase project, run `cloud/supabase-schema.sql`, and fill in `cloud/config.js`.
 
-Reliable background arrival detection and automatic geofence notifications require a future native/mobile app, background location permission, and secure backend.
+Do not place a Supabase service_role key in the browser app.
 
-## Beta limitation
-
-Records remain local to each tester's browser. Cloud accounts and central data collection are not included yet.
-
-## Install
+## OneDrive install
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\Install-ProjectHealth-v0.11.ps1
-.\Validate-ProjectHealth-v0.11.ps1
+.\Install-ProjectHealth-v0.12.ps1
+.\Validate-ProjectHealth-v0.12.ps1
 ```
 
-Upload everything inside `Project Health\deploy` to GitHub.
+Read `CLOUD_SETUP.md` before inviting cloud-account testers.
 
 Recommended commit:
 
-`v0.11 "Tester Beta" - Consent, Install, Diagnostics & Workout Places`
+`v0.12 "Cloud Identity" - Secure Accounts, RLS & Local-First Sync`

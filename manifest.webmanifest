@@ -1,5 +1,5 @@
 {
-  "name": "Project Health v0.11 Tester Beta",
+  "name": "Project Health v0.12 Cloud Identity",
   "short_name": "Project Health",
   "start_url": "./index.html",
   "display": "standalone",
@@ -18,5 +18,5 @@
     }
   ],
   "id": "/Project-Health/",
-  "description": "Adaptive health, activity, nutrition, and workout coaching."
+  "description": "Local-first health coaching with optional secure cloud accounts and sync."
 }
