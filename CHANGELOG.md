@@ -1,10 +1,8 @@
 # Changelog
 
-## 0.10.0 — Custom Programs
+## 0.10.1 — Programs Hotfix
 
-- Added custom workout program builder.
-- Added Coach, Custom, Hybrid, and Activity-first modes.
-- Added editable workout days, exercises, sets, reps, and rest.
-- Added starter templates.
-- Added program activation, duplication, and deletion.
-- Added Coach PH program structure review.
+- Fixed non-responsive Programs controls.
+- Added robust program-state migration.
+- Added visible mode selection and action confirmations.
+- Connected active custom programs to weekly planning and guided workouts.

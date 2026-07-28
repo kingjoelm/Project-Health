@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173b6c"><link rel="manifest" href="manifest.webmanifest">
-<title>Project Health v0.10</title>
+<title>Project Health v0.10.1</title>
 <style>
 :root{
 --navy:#07111f;--navy2:#0c1b2e;--panel:#102238;--panel2:#132a45;--blue:#2d7dff;--blue2:#66a6ff;
@@ -130,10 +130,13 @@ border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 26px 6
 .template-chip{display:inline-flex;padding:8px 11px;border-radius:999px;background:rgba(45,125,255,.12);border:1px solid rgba(90,151,255,.22);margin:4px;cursor:pointer}
 .template-chip:hover{background:rgba(45,125,255,.22)}
 @media(max-width:720px){.program-grid{grid-template-columns:1fr}.builder-row{grid-template-columns:1fr 1fr}.builder-row .wide{grid-column:1/-1}.builder-exercise{grid-template-columns:58px 1fr auto}}
+
+.mode-card{transition:.18s transform,.18s border-color,.18s background}.mode-card:hover{transform:translateY(-2px);border-color:rgba(90,151,255,.55)}.mode-card.selected:after{content:"✓ Selected";display:inline-block;margin-top:8px;color:#6fe0a4;font-size:12px;font-weight:850}
+.action-toast{position:fixed;right:18px;bottom:90px;background:#102c4b;border:1px solid rgba(90,151,255,.35);color:white;border-radius:14px;padding:12px 16px;z-index:100;box-shadow:0 20px 50px rgba(0,0,0,.4);opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s}.action-toast.show{opacity:1;transform:translateY(0)}
 </style></head>
 <body><div class="app-shell"><aside class="desktop-sidebar"><div style="display:flex;flex-direction:column;height:100%"><div><div class="brand"><div class="brand-mark">PH</div><div><strong>PROJECT HEALTH</strong><span>Stronger every day</span></div></div><div class="side-links"><button class="active" data-screen="today" onclick="showScreen('today')">⌂ Dashboard</button><button data-screen="week" onclick="showScreen('week')">◫ Weekly Plan</button><button data-screen="food" onclick="showScreen('food')">◉ Nutrition</button><button data-screen="progress" onclick="showScreen('progress')">↗ Progress</button><button data-screen="programs" onclick="showScreen('programs')">◈ Programs</button><button data-screen="more" onclick="showScreen('more')">⚙ Settings</button></div></div><div class="side-score"><div class="muted small">RECOVERY SCORE</div><div style="font-size:42px;font-weight:900" id="sidebarRecovery">--</div><div class="muted small">Coach PH adjusts daily</div></div></div></aside><div class="main-wrap"><main>
 <section id="today" class="screen active">
-<div class="topbar-modern"><div><div class="eyebrow" id="dateLabel"></div><h1 id="greeting">Today</h1></div><div class="profile-switcher"><select id="profileSwitcher" onchange="switchProfile(this.value)"></select><button class="ghost" style="width:auto" onclick="openProfileManager()">Profiles</button><div class="pill">Private Beta 0.10</div></div></div>
+<div class="topbar-modern"><div><div class="eyebrow" id="dateLabel"></div><h1 id="greeting">Today</h1></div><div class="profile-switcher"><select id="profileSwitcher" onchange="switchProfile(this.value)"></select><button class="ghost" style="width:auto" onclick="openProfileManager()">Profiles</button><div class="pill">Private Beta 0.10.1</div></div></div>
 <div class="hero-modern"><div class="hero-panel"><div class="eyebrow">TODAY IS YOURS</div><h1 style="font-size:38px;margin-top:8px">Build momentum without forcing perfection.</h1><p class="muted" style="max-width:680px">Coach PH uses your energy, recovery, pain, and recent completion to shape today’s plan.</p><div class="metric-strip"><div class="mini-metric"><span>Sleep</span><strong id="heroSleep">—</strong></div><div class="mini-metric"><span>Energy</span><strong id="heroEnergy">—</strong></div><div class="mini-metric"><span>Water</span><strong id="heroWater">0</strong></div><div class="mini-metric"><span>Momentum</span><strong id="heroMomentum">0%</strong></div></div></div><div class="card glass"><div class="eyebrow">COACH PH</div><h2>Your next best decision</h2><p class="muted">Open today’s plan, make it fit your real life, and complete the version you can repeat.</p><button onclick="openAdaptiveAssessment()">Adjust today’s plan</button></div></div>
 <div class="card"><div class="section-title"><div><div class="eyebrow">CHOOSE YOUR PATH</div><h2>What would help today?</h2></div><span class="pill">Any movement counts</span></div>
 <div class="activity-grid">
@@ -182,15 +185,15 @@ border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 26px 6
 
 
 <section id="programs" class="screen">
-<div class="topbar-modern"><div><div class="eyebrow">YOUR TRAINING</div><h1>Programs</h1></div><button style="width:auto" onclick="openProgramBuilder()">+ New Program</button></div>
+<div class="topbar-modern"><div><div class="eyebrow">YOUR TRAINING</div><h1>Programs</h1></div><button id="newProgramButton" style="width:auto" onclick="openProgramBuilder()">+ New Program</button></div>
 <div class="card"><div class="section-title"><div><h2>How should Coach PH work?</h2><div class="muted">Choose how much control you want.</div></div></div>
-<div class="program-grid" id="programModeCards">
+<div class="program-grid" id="programModeCards" aria-label="Training mode selection">
 <div class="mode-card" data-mode="coach" onclick="setProgramMode('coach')"><h3>Coach Mode</h3><p class="muted">Coach PH builds and adjusts the full routine.</p></div>
 <div class="mode-card" data-mode="custom" onclick="setProgramMode('custom')"><h3>My Program</h3><p class="muted">You build the routine. Coach PH reviews and guides it.</p></div>
 <div class="mode-card" data-mode="hybrid" onclick="setProgramMode('hybrid')"><h3>Hybrid Mode</h3><p class="muted">You choose the core lifts. Coach PH adds warm-ups, recovery, and smart adjustments.</p></div>
 <div class="mode-card" data-mode="activity" onclick="setProgramMode('activity')"><h3>Activity First</h3><p class="muted">Walking, running, cycling, or mobility stays primary.</p></div>
 </div></div>
-<div class="card"><div class="section-title"><div><h2>My Programs</h2><div class="muted">Build, duplicate, activate, or edit routines.</div></div><button class="ghost" style="width:auto" onclick="openProgramBuilder()">Create</button></div><div id="programList"></div></div>
+<div class="card"><div class="section-title"><div><h2>My Programs</h2><div class="muted">Build, duplicate, activate, or edit routines.</div></div><button id="createProgramButton" class="ghost" style="width:auto" onclick="openProgramBuilder()">Create</button></div><div id="programStatus" class="muted small" style="margin-bottom:10px"></div><div id="programList"></div></div>
 <div class="card"><h2>Starter Templates</h2><div class="muted">Install a starting point and change anything.</div><div style="margin-top:10px"><span class="template-chip" onclick="installTemplate('ppl')">Push / Pull / Legs</span><span class="template-chip" onclick="installTemplate('upperlower')">Upper / Lower</span><span class="template-chip" onclick="installTemplate('fullbody')">3-Day Full Body</span><span class="template-chip" onclick="installTemplate('planet')">Planet Fitness Machines</span><span class="template-chip" onclick="installTemplate('beginner')">Beginner Strength</span></div></div>
 </section>
 
@@ -199,7 +202,7 @@ border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 26px 6
 <div class="card"><label>Name</label><input id="profileName"><label>Primary goal</label><select id="profileGoal"><option>Build consistency</option><option>Lose weight</option><option>Gain strength</option><option>Improve energy</option><option>Improve general health</option></select><label>Preferred training days</label><input id="profileDays" placeholder="Monday–Friday"><button style="margin-top:12px" onclick="saveProfile()">Save Profile</button></div>
 <div class="card"><h2>Send Feedback</h2><label>Category</label><select id="feedbackCategory"><option>Bug</option><option>Confusing</option><option>Missing feature</option><option>Workout issue</option><option>Food logging issue</option><option>Design feedback</option><option>Other</option></select><label>What happened or what should improve?</label><textarea id="feedbackText" placeholder="Tell us what you noticed."></textarea><button style="margin-top:12px" onclick="copyFeedback()">Copy Feedback Report</button><div id="feedbackResult" class="feedback-note hide"></div></div>
 <div class="card"><div class="top"><div><h2>Exercise Library</h2><div class="muted">Images, setup, instructions, and alternatives.</div></div><button class="ghost" style="width:auto" onclick="openLibrary()">Browse</button></div><div class="library-grid" id="libraryPreview"></div></div><div class="card"><h2>Backup</h2><div class="grid"><button onclick="exportData()">Export Data</button><label class="btn" style="text-align:center;margin:0">Import Data<input class="hide" type="file" accept=".json" onchange="importData(event)"></label></div></div>
-<div class="version">Project Health Beta v0.10 “Custom Programs”</div>
+<div class="version">Project Health Beta v0.10.1 “Programs Hotfix”</div>
 </section>
 </main>
 
@@ -253,4 +256,4 @@ border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 26px 6
 <div class="grid" style="margin-top:16px"><button class="ghost" id="obBack" onclick="onboardingBack()">Back</button><button id="obNext" onclick="onboardingNext()">Continue</button></div></div></div>
 
 <nav><div class="inner"><button class="active" data-screen="today" onclick="showScreen('today')">Today</button><button data-screen="week" onclick="showScreen('week')">Week</button><button data-screen="food" onclick="showScreen('food')">Food</button><button data-screen="progress" onclick="showScreen('progress')">Progress</button><button data-screen="programs" onclick="showScreen('programs')">Programs</button><button data-screen="more" onclick="showScreen('more')">More</button></div></nav>
-<script src="app.js"></script></body></html>
+<script src="app.js"></script><div id="actionToast" class="action-toast"></div></body></html>
