@@ -1,4 +1,14 @@
-const CACHE='project-health-v04';const ASSETS=["./", "./index.html", "./app.js", "./manifest.webmanifest", "./data/workouts.json", "./assets/icons/icon-192.svg", "./assets/icons/icon-512.svg", "./assets/exercises/chest-press.svg", "./assets/exercises/shoulder-press.svg", "./assets/exercises/pec-deck.svg", "./assets/exercises/triceps-pressdown.svg", "./assets/exercises/lat-pulldown.svg", "./assets/exercises/seated-row.svg", "./assets/exercises/rear-delt.svg", "./assets/exercises/cable-curl.svg", "./assets/exercises/leg-press.svg", "./assets/exercises/leg-curl.svg", "./assets/exercises/leg-extension.svg", "./assets/exercises/calf-raise.svg", "./assets/exercises/incline-press.svg", "./assets/exercises/chest-supported-row.svg", "./assets/exercises/lateral-raise.svg", "./assets/exercises/arms-superset.svg", "./assets/exercises/goblet-squat.svg", "./assets/exercises/treadmill-walk.svg", "./assets/exercises/mobility.svg"];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x))))));
-self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+const CACHE='project-health-v060-2026-07-28';
+const ASSETS=["./", "./index.html", "./app.js", "./manifest.webmanifest", "./data/workouts.json", "./assets/icons/icon-192.svg", "./assets/icons/icon-512.svg", "./assets/exercises/shoulder-press.jpg", "./assets/exercises/seated-row.jpg", "./assets/exercises/leg-press.jpg", "./assets/exercises/triceps-pressdown.jpg", "./assets/exercises/walk.jpg", "./assets/exercises/arms.jpg", "./assets/exercises/leg-curl.jpg", "./assets/exercises/calf-raise.jpg", "./assets/exercises/incline-press.jpg", "./assets/exercises/pec-deck.jpg", "./assets/exercises/goblet-squat.jpg", "./assets/exercises/chest-supported-row.jpg", "./assets/exercises/cable-curl.jpg", "./assets/exercises/lateral-raise.jpg", "./assets/exercises/push.jpg", "./assets/exercises/treadmill-walk.jpg", "./assets/exercises/rear-delt.jpg", "./assets/exercises/legs.jpg", "./assets/exercises/arms-superset.jpg", "./assets/exercises/mobility.jpg", "./assets/exercises/lat-pulldown.jpg", "./assets/exercises/chest-press.jpg", "./assets/exercises/leg-extension.jpg", "./assets/exercises/pull.jpg"];
+self.addEventListener('install',event=>{self.skipWaiting();event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))}); 
+self.addEventListener('activate',event=>{event.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))]))});
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET')return;
+  const url=new URL(event.request.url);
+  const fresh=/\.(html|js|json|webmanifest)$/.test(url.pathname)||url.pathname.endsWith('/Project-Health/');
+  if(fresh){
+    event.respondWith(fetch(event.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(event.request,copy));return r}).catch(()=>caches.match(event.request).then(r=>r||caches.match('./index.html'))));
+  }else{
+    event.respondWith(caches.match(event.request).then(r=>r||fetch(event.request).then(resp=>{const copy=resp.clone();caches.open(CACHE).then(c=>c.put(event.request,copy));return resp})));
+  }
+});

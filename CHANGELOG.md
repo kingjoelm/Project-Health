@@ -1,14 +1,11 @@
 # Changelog
 
-## 0.4.0 — Guidance
+## 0.6.0 — Next Phase
 
-- Rebuilt navigation: Today, Week, Food, Progress, More.
-- Added weekly past and upcoming workout browsing.
-- Added exercise illustrations and detailed instructions.
-- Added per-set weight and repetition logging.
-- Restored full meal and snack logging with editing and deletion.
-- Added hunger, fullness, and planning awareness.
-- Replaced green theme with navy and blue.
-- Added feedback reporting and version identification.
-- Added correct time-of-day greeting.
-- Improved offline cache versioning.
+- Added progressive overload guidance.
+- Added Restaurant Mode.
+- Added evening reflection.
+- Added weight and consistency charts.
+- Added body measurement tracking.
+- Added OneDrive installer, release copy, backup, and validation scripts.
+- Preserved five-minute incline warm-up and fifteen-minute incline finisher.

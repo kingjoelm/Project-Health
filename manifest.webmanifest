@@ -1,5 +1,5 @@
 {
-  "name": "Project Health",
+  "name": "Project Health v0.6",
   "short_name": "Project Health",
   "start_url": "./index.html",
   "display": "standalone",
@@ -16,5 +16,6 @@
       "sizes": "512x512",
       "type": "image/svg+xml"
     }
-  ]
+  ],
+  "id": "/Project-Health/"
 }

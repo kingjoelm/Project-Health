@@ -2,7 +2,7 @@
   "monday": {
     "name": "Push",
     "focus": "Chest, shoulders, triceps",
-    "minutes": 45,
+    "minutes": 65,
     "exercises": [
       {
         "id": "chest-press",
@@ -64,12 +64,26 @@
         "mistakes": "Leaning heavily or swinging.",
         "alternative": "Machine triceps extension."
       }
-    ]
+    ],
+    "warmup": {
+      "name": "5-Minute Incline Walk",
+      "minutes": 5,
+      "incline": "5\u20136%",
+      "speed": "Comfortable brisk pace",
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+    },
+    "finisher": {
+      "name": "15-Minute Incline Finish",
+      "minutes": 15,
+      "incline": "4\u201310%",
+      "speed": "Steady pace you can sustain",
+      "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
+    }
   },
   "tuesday": {
     "name": "Pull",
     "focus": "Back and biceps",
-    "minutes": 45,
+    "minutes": 65,
     "exercises": [
       {
         "id": "lat-pulldown",
@@ -131,12 +145,26 @@
         "mistakes": "Swinging or leaning back.",
         "alternative": "Machine curl."
       }
-    ]
+    ],
+    "warmup": {
+      "name": "5-Minute Incline Walk",
+      "minutes": 5,
+      "incline": "5\u20136%",
+      "speed": "Comfortable brisk pace",
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+    },
+    "finisher": {
+      "name": "15-Minute Incline Finish",
+      "minutes": 15,
+      "incline": "4\u201310%",
+      "speed": "Steady pace you can sustain",
+      "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
+    }
   },
   "wednesday": {
     "name": "Legs",
     "focus": "Quads, hamstrings, glutes",
-    "minutes": 50,
+    "minutes": 70,
     "exercises": [
       {
         "id": "leg-press",
@@ -198,12 +226,26 @@
         "mistakes": "Bouncing through the reps.",
         "alternative": "Standing bodyweight calf raise."
       }
-    ]
+    ],
+    "warmup": {
+      "name": "5-Minute Incline Walk",
+      "minutes": 5,
+      "incline": "5\u20136%",
+      "speed": "Comfortable brisk pace",
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+    },
+    "finisher": {
+      "name": "15-Minute Incline Finish",
+      "minutes": 15,
+      "incline": "4\u201310%",
+      "speed": "Steady pace you can sustain",
+      "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
+    }
   },
   "thursday": {
     "name": "Upper Body",
     "focus": "Balanced upper-body training",
-    "minutes": 45,
+    "minutes": 65,
     "exercises": [
       {
         "id": "incline-press",
@@ -265,12 +307,26 @@
         "mistakes": "Rushing form.",
         "alternative": "Machine curl and extension."
       }
-    ]
+    ],
+    "warmup": {
+      "name": "5-Minute Incline Walk",
+      "minutes": 5,
+      "incline": "5\u20136%",
+      "speed": "Comfortable brisk pace",
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+    },
+    "finisher": {
+      "name": "15-Minute Incline Finish",
+      "minutes": 15,
+      "incline": "4\u201310%",
+      "speed": "Steady pace you can sustain",
+      "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
+    }
   },
   "friday": {
     "name": "Full Body",
     "focus": "Strength and conditioning",
-    "minutes": 45,
+    "minutes": 65,
     "exercises": [
       {
         "id": "goblet-squat",
@@ -332,7 +388,21 @@
         "mistakes": "Holding the rails heavily.",
         "alternative": "Bike or elliptical."
       }
-    ]
+    ],
+    "warmup": {
+      "name": "5-Minute Incline Walk",
+      "minutes": 5,
+      "incline": "5\u20136%",
+      "speed": "Comfortable brisk pace",
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+    },
+    "finisher": {
+      "name": "15-Minute Incline Finish",
+      "minutes": 15,
+      "incline": "4\u201310%",
+      "speed": "Steady pace you can sustain",
+      "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
+    }
   },
   "saturday": {
     "name": "Active Recovery",
@@ -369,7 +439,9 @@
         "mistakes": "Stretching into pain.",
         "alternative": "Short easy walk."
       }
-    ]
+    ],
+    "warmup": null,
+    "finisher": null
   },
   "sunday": {
     "name": "Recovery",
@@ -391,6 +463,8 @@
         "mistakes": "Feeling guilty for resting.",
         "alternative": "Complete rest."
       }
-    ]
+    ],
+    "warmup": null,
+    "finisher": null
   }
 }

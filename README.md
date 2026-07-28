@@ -1,26 +1,45 @@
-# Project Health v0.4 — Guidance
+# Project Health v0.6 — Next Phase
 
-A mobile-first behavior-change coaching and gym-tracking beta.
+This package is designed to live in OneDrive as the working source for Project Health.
 
-## New in v0.4
+## New in v0.6
 
-- Navy and blue visual system
-- Weekly workout calendar with past, current, and upcoming workouts
-- Clickable workout previews
-- Original exercise illustrations
-- Setup, movement instructions, mistakes, muscles, and alternatives
-- Individual weight and repetition tracking for every set
-- Full, short, minimum, and recovery modes
-- Complete meal and snack journal
-- Hunger, fullness, and planned/unplanned tracking
-- Edit and delete food entries
-- Correct time-of-day greeting
-- Feedback report generator
-- Beta version label
-- Improved progress summary
+- Progressive overload suggestions using prior set history
+- Restaurant Mode with one-change coaching
+- Evening reflection and tomorrow planning
+- Weight trend chart
+- Eight-week workout consistency chart
+- Body measurement tracking
+- Existing Coach PH guidance, weekly workouts, exercise photos, detailed instructions, 5-minute incline warm-up, 15-minute incline finisher, meal logging, rest timer, and feedback system retained
 
-## Deploy
+## Recommended OneDrive structure
 
-Upload all files and folders to the repository root, replacing the previous version. GitHub Pages will rebuild automatically.
+Project Health/
+- deploy/
+- releases/v0.6/
+- backups/
+- Install-ProjectHealth-v0.6.ps1
+- Validate-ProjectHealth-v0.6.ps1
 
-Because the service worker caches files, users may need to refresh twice or close and reopen the installed app after deployment.
+## Install into OneDrive
+
+Open PowerShell in the extracted release folder:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\Install-ProjectHealth-v0.6.ps1
+.\Validate-ProjectHealth-v0.6.ps1
+```
+
+The default target is:
+
+`C:\Users\<your-user>\OneDrive\Project Health`
+
+To use another path:
+
+```powershell
+.\Install-ProjectHealth-v0.6.ps1 -ProjectRoot "C:\Your\Exact\OneDrive\Project Health"
+.\Validate-ProjectHealth-v0.6.ps1 -ProjectRoot "C:\Your\Exact\OneDrive\Project Health"
+```
+
+Then upload everything inside `Project Health\deploy` to the GitHub repository root.
