@@ -1,12 +1,12 @@
-let WORKOUTS={};const STORE="projectHealthV09";let prior=JSON.parse(localStorage.getItem("projectHealthV081")||localStorage.getItem("projectHealthV080")||localStorage.getItem("projectHealthV07")||localStorage.getItem("projectHealthV06")||localStorage.getItem("projectHealthV051")||localStorage.getItem("projectHealthV05")||localStorage.getItem("projectHealthV04")||"null");let profileDB=JSON.parse(localStorage.getItem("projectHealthProfilesV09")||"null")||null;let state=JSON.parse(localStorage.getItem(STORE)||"null")||prior||{profile:{name:"",goal:"Build consistency",days:"Monday–Friday",experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false},daily:{},sessions:[],meals:[],weights:[],victories:[],measurements:[],reflections:[],adaptivePlans:[]};state.adaptivePlans=state.adaptivePlans||[];state.measurements=state.measurements||[];state.reflections=state.reflections||[];state.profile={experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false,...state.profile};let weekOffset=0,foodOffset=0,selectedDate=null,activeMode="full",editingMealId=null,obStep=0,chosenTone=state.profile.tone||"Balanced",timerHandle=null,timerSeconds=0,guidedIndex=0,guidedItems=[],guidedEntries={},assessment={feel:"",time:"",effort:"",pain:""},activeAdaptivePlan=null,currentActivity=null,activityTimer=null,activeProfileId=localStorage.getItem("projectHealthActiveProfile")||"default";
+let WORKOUTS={};const STORE="projectHealthV010";let prior=JSON.parse(localStorage.getItem("projectHealthV09")||localStorage.getItem("projectHealthV081")||localStorage.getItem("projectHealthV080")||localStorage.getItem("projectHealthV07")||localStorage.getItem("projectHealthV06")||localStorage.getItem("projectHealthV051")||localStorage.getItem("projectHealthV05")||localStorage.getItem("projectHealthV04")||"null");let profileDB=JSON.parse(localStorage.getItem("projectHealthProfilesV09")||"null")||null;let state=JSON.parse(localStorage.getItem(STORE)||"null")||prior||{profile:{name:"",goal:"Build consistency",days:"Monday–Friday",experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false},daily:{},sessions:[],meals:[],weights:[],victories:[],measurements:[],reflections:[],adaptivePlans:[]};state.adaptivePlans=state.adaptivePlans||[];state.measurements=state.measurements||[];state.reflections=state.reflections||[];state.profile={experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:false,...state.profile};let weekOffset=0,foodOffset=0,selectedDate=null,activeMode="full",editingMealId=null,obStep=0,chosenTone=state.profile.tone||"Balanced",timerHandle=null,timerSeconds=0,guidedIndex=0,guidedItems=[],guidedEntries={},assessment={feel:"",time:"",effort:"",pain:""},activeAdaptivePlan=null,currentActivity=null,activityTimer=null,activeProfileId=localStorage.getItem("projectHealthActiveProfile")||"default",editingProgramId=null,programDraft=null,pickerTargetDay=null;
 const iso=d=>{let x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)},today=()=>iso(new Date());
-function ensureProfiles(){if(!profileDB){profileDB={active:"default",profiles:{default:{id:"default",name:state.profile?.name||"Primary User",goal:state.profile?.goal||"General health",state}}};localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB))}if(!profileDB.profiles[activeProfileId])activeProfileId=Object.keys(profileDB.profiles)[0];state=profileDB.profiles[activeProfileId].state;state.activities=state.activities||[]}
+function ensureProfiles(){if(!profileDB){profileDB={active:"default",profiles:{default:{id:"default",name:state.profile?.name||"Primary User",goal:state.profile?.goal||"General health",state}}};localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB))}if(!profileDB.profiles[activeProfileId])activeProfileId=Object.keys(profileDB.profiles)[0];state=profileDB.profiles[activeProfileId].state;state.activities=state.activities||[];state.programs=state.programs||[];state.programMode=state.programMode||"coach";state.activeProgramId=state.activeProgramId||null}
 function save(){if(profileDB){profileDB.active=activeProfileId;profileDB.profiles[activeProfileId].state=state;localStorage.setItem("projectHealthProfilesV09",JSON.stringify(profileDB));localStorage.setItem("projectHealthActiveProfile",activeProfileId)}localStorage.setItem(STORE,JSON.stringify(state))}
 const dayKey=d=>["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date(d+"T12:00:00").getDay()];
 function daily(k=today()){state.daily[k] ||= {water:0};return state.daily[k]}
-async function boot(){ensureProfiles();try{WORKOUTS=await fetch("data/workouts.json?build=90",{cache:"no-store"}).then(r=>r.json())}catch(e){alert("Workout data could not load.");return}init();if(!state.profile.onboarded)setTimeout(()=>onboardingModal.classList.add("show"),250)}
+async function boot(){ensureProfiles();try{WORKOUTS=await fetch("data/workouts.json?build=100",{cache:"no-store"}).then(r=>r.json())}catch(e){alert("Workout data could not load.");return}init();if(!state.profile.onboarded)setTimeout(()=>onboardingModal.classList.add("show"),250)}
 function greeting(){const h=new Date().getHours();return h<12?"Good morning":h<17?"Good afternoon":"Good evening"}
-function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("nav button,.side-links button").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));if(id==="week")renderWeek();if(id==="food")renderFood();if(id==="progress")renderProgress();if(id==="more")renderLibraryPreview();window.scrollTo(0,0)}
+function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("nav button,.side-links button").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));if(id==="week")renderWeek();if(id==="food")renderFood();if(id==="progress")renderProgress();if(id==="programs")renderPrograms();if(id==="more")renderLibraryPreview();window.scrollTo(0,0)}
 function init(){dateLabel.textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});greetingEl=document.getElementById("greeting");greetingEl.textContent=`${greeting()}${state.profile.name?", "+state.profile.name:""}`;let w=WORKOUTS[dayKey(today())];todayWorkout.textContent=w.name;todayFocus.textContent=w.focus;todayMinutes.textContent=`${w.minutes} min`;let d=daily();sleep.value=d.sleep||"";energy.value=d.energy||"";pain.value=d.pain||"";victory.value=d.victory||"";reflectionHelped.value=d.reflection?.helped||"";reflectionObstacle.value=d.reflection?.obstacle||"";reflectionTomorrow.value=d.reflection?.tomorrow||"";waterCount.textContent=d.water||0;if(window.heroSleep)heroSleep.textContent=d.sleep||"—";if(window.heroEnergy)heroEnergy.textContent=d.energy||"—";if(window.heroWater)heroWater.textContent=d.water||0;profileName.value=state.profile.name||"";profileGoal.value=state.profile.goal||"Build consistency";profileDays.value=state.profile.days||"";coach();renderTodayMeals();renderTodayWeekPreview();renderLibraryPreview();updateMomentum();renderAdaptiveStatus();renderProfileSwitcher();renderHealthSummary()}
 
 function completionRate(days=10){const cutoff=new Date();cutoff.setDate(cutoff.getDate()-days);const recent=state.sessions.filter(s=>new Date(s.date+"T12:00:00")>=cutoff);if(!recent.length)return 1;let total=0,done=0;recent.forEach(s=>(s.entries||[]).forEach(e=>(e.sets||[]).forEach(set=>{total++;if(set.done)done++})));return total?done/total:1}
@@ -27,6 +27,86 @@ function closeProfileManager(){profileModal.classList.remove("show")}
 function renderProfileList(){profileList.innerHTML=Object.values(profileDB.profiles).map(p=>`<div class="plan-row"><div><strong>${p.name}</strong><div class="muted small">${p.goal||p.state.profile?.goal||"General health"}</div></div><div><button class="secondary" style="width:auto" onclick="switchProfile('${p.id}');closeProfileManager()">Use</button>${Object.keys(profileDB.profiles).length>1?` <button class="danger" style="width:auto" onclick="deleteProfile('${p.id}')">Delete</button>`:""}</div></div>`).join("")}
 function createProfile(){let name=newProfileName.value.trim();if(!name)return alert("Enter a name.");let id="p_"+Date.now(),base={profile:{name,goal:newProfileGoal.value,days:"Monday–Friday",experience:"New to the gym",location:"Commercial gym",duration:"30–45 minutes",obstacle:"Staying consistent",foodStruggle:"Portions",limitations:"",tone:"Balanced",onboarded:true},daily:{},sessions:[],meals:[],weights:[],victories:[],measurements:[],reflections:[],adaptivePlans:[],activities:[]};profileDB.profiles[id]={id,name,goal:newProfileGoal.value,state:base};activeProfileId=id;state=base;save();newProfileName.value="";renderProfileSwitcher();renderProfileList();init()}
 function deleteProfile(id){if(id===activeProfileId)return alert("Switch profiles before deleting this one.");if(confirm("Delete this local profile and its data?")){delete profileDB.profiles[id];save();renderProfileList();renderProfileSwitcher()}}
+
+function setProgramMode(mode){state.programMode=mode;save();renderPrograms();coach()}
+function renderPrograms(){
+ document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("selected",x.dataset.mode===state.programMode));
+ if(!state.programs.length){programList.innerHTML=`<div class="empty-state"><strong>No custom programs yet</strong><div class="muted">Create your routine or install a starter template.</div></div>`;return}
+ programList.innerHTML=state.programs.map(p=>`<div class="program-card ${p.id===state.activeProgramId?"active":""}"><div class="top" style="margin:0"><div><div class="eyebrow">${p.id===state.activeProgramId?"ACTIVE PROGRAM":"CUSTOM PROGRAM"}</div><h3>${p.name}</h3><div class="muted small">${p.days.length} workout days • ${p.goal}</div></div><span class="pill">${p.mode||"custom"}</span></div><div class="meal-actions"><button class="secondary" onclick="activateProgram('${p.id}')">${p.id===state.activeProgramId?"Active":"Use Program"}</button><button class="ghost" onclick="editProgram('${p.id}')">Edit</button><button class="ghost" onclick="duplicateProgram('${p.id}')">Duplicate</button><button class="danger" onclick="deleteProgram('${p.id}')">Delete</button></div></div>`).join("")
+}
+function openProgramBuilder(programId=null){
+ editingProgramId=programId;
+ let existing=state.programs.find(p=>p.id===programId);
+ programDraft=existing?JSON.parse(JSON.stringify(existing)):{id:"prog_"+Date.now(),name:"",goal:"General strength",mode:state.programMode==="coach"?"custom":state.programMode,days:[]};
+ programModalTitle.textContent=existing?"Edit Program":"Create Program";
+ programName.value=programDraft.name;programGoal.value=programDraft.goal;
+ renderProgramDays();reviewProgramDraft();programModal.classList.add("show")
+}
+function closeProgramBuilder(){programModal.classList.remove("show");programDraft=null;editingProgramId=null}
+function addProgramDay(){programDraft.days.push({id:"day_"+Date.now(),name:`Day ${programDraft.days.length+1}`,weekday:"Unscheduled",exercises:[]});renderProgramDays();reviewProgramDraft()}
+function removeProgramDay(id){programDraft.days=programDraft.days.filter(d=>d.id!==id);renderProgramDays();reviewProgramDraft()}
+function updateProgramDay(id,key,val){let d=programDraft.days.find(x=>x.id===id);if(d)d[key]=val;reviewProgramDraft()}
+function renderProgramDays(){
+ if(!programDraft.days.length){programDays.innerHTML=`<div class="empty-state"><strong>Add your first workout day</strong><div class="muted">Example: Push, Pull, Legs, Upper, Lower, or Full Body.</div></div>`;return}
+ programDays.innerHTML=programDraft.days.map((d,di)=>`<div class="builder-day"><div class="builder-row"><div class="wide"><label>Day name</label><input value="${d.name}" oninput="updateProgramDay('${d.id}','name',this.value)"></div><div><label>Schedule</label><select onchange="updateProgramDay('${d.id}','weekday',this.value)">${["Unscheduled","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].map(x=>`<option ${x===d.weekday?"selected":""}>${x}</option>`).join("")}</select></div><div><label>Exercises</label><input value="${d.exercises.length}" disabled></div><button class="danger" onclick="removeProgramDay('${d.id}')">Remove</button></div><div>${d.exercises.map((e,ei)=>`<div class="builder-exercise"><img src="assets/exercises/${e.id}.jpg"><div><strong>${e.name}</strong><div class="muted small">${e.sets} sets × ${e.reps} • Rest ${e.rest}s</div></div><div><button class="ghost" style="width:auto" onclick="editProgramExercise('${d.id}',${ei})">Edit</button> <button class="danger" style="width:auto" onclick="removeProgramExercise('${d.id}',${ei})">×</button></div></div>`).join("")||`<div class="muted small" style="padding:8px 0">No exercises added.</div>`}</div><button class="secondary" onclick="openExercisePicker('${d.id}')">+ Add Exercise</button></div>`).join("")
+}
+function openExercisePicker(dayId){pickerTargetDay=dayId;pickerSearch.value="";renderExercisePicker();exercisePickerModal.classList.add("show")}
+function closeExercisePicker(){exercisePickerModal.classList.remove("show");pickerTargetDay=null}
+function renderExercisePicker(){let q=(pickerSearch.value||"").toLowerCase();let list=allExercises().filter(e=>(e.name+" "+e.muscles).toLowerCase().includes(q));exercisePickerGrid.innerHTML=list.map(e=>`<div class="library-card" onclick="addExerciseToProgram('${e.id}')"><img src="assets/exercises/${e.id}.jpg"><div><strong>${e.name}</strong><span class="muted small">${e.muscles}</span></div></div>`).join("")}
+function addExerciseToProgram(id){let src=allExercises().find(e=>e.id===id),day=programDraft.days.find(d=>d.id===pickerTargetDay);if(!src||!day)return;day.exercises.push({id:src.id,name:src.name,sets:src.sets||3,reps:src.reps||"8–12",rest:60,notes:""});closeExercisePicker();renderProgramDays();reviewProgramDraft()}
+function editProgramExercise(dayId,index){let day=programDraft.days.find(d=>d.id===dayId),e=day.exercises[index];let sets=prompt("Sets",e.sets);if(sets===null)return;let reps=prompt("Rep range",e.reps);if(reps===null)return;let rest=prompt("Rest seconds",e.rest);if(rest===null)return;e.sets=Math.max(1,Number(sets)||e.sets);e.reps=reps;e.rest=Math.max(15,Number(rest)||60);renderProgramDays();reviewProgramDraft()}
+function removeProgramExercise(dayId,index){let day=programDraft.days.find(d=>d.id===dayId);day.exercises.splice(index,1);renderProgramDays();reviewProgramDraft()}
+function reviewProgramDraft(){
+ if(!programDraft){return}
+ let days=programDraft.days,totalExercises=days.reduce((a,d)=>a+d.exercises.length,0),totalSets=days.reduce((a,d)=>a+d.exercises.reduce((s,e)=>s+Number(e.sets||0),0),0),notes=[];
+ if(days.length===0)notes.push("Add at least one workout day.");
+ if(days.length>0&&days.length<2)notes.push("One day can work, but two or more days usually make progression easier.");
+ if(totalExercises>0&&totalSets/days.length>24)notes.push("Average session volume is high. Consider fewer sets or splitting the work.");
+ let names=days.flatMap(d=>d.exercises.map(e=>e.name.toLowerCase()));
+ if(names.length&&!names.some(n=>n.includes("row")||n.includes("pulldown")))notes.push("No clear pulling movement found.");
+ if(names.length&&!names.some(n=>n.includes("press")))notes.push("No clear pressing movement found.");
+ if(names.length&&!names.some(n=>n.includes("leg")||n.includes("squat")))notes.push("No clear lower-body movement found.");
+ if(!notes.length)notes.push("The structure looks balanced enough to begin testing. Coach PH will refine it from actual performance.");
+ programCoachReview.textContent=`${days.length} days • ${totalExercises} exercises • ${totalSets} weekly sets. ${notes.join(" ")}`
+}
+function saveProgram(){
+ programDraft.name=programName.value.trim();programDraft.goal=programGoal.value;
+ if(!programDraft.name)return alert("Name the program.");
+ if(!programDraft.days.length)return alert("Add at least one workout day.");
+ if(editingProgramId)state.programs=state.programs.map(p=>p.id===editingProgramId?programDraft:p);else state.programs.push(programDraft);
+ if(!state.activeProgramId)state.activeProgramId=programDraft.id;
+ save();closeProgramBuilder();renderPrograms();alert("Program saved.")
+}
+function editProgram(id){openProgramBuilder(id)}
+function activateProgram(id){state.activeProgramId=id;state.programMode=state.programMode==="coach"?"custom":state.programMode;save();renderPrograms();alert("Program activated. Coach PH will use it when planning strength sessions.")}
+function duplicateProgram(id){let p=state.programs.find(x=>x.id===id);if(!p)return;let c=JSON.parse(JSON.stringify(p));c.id="prog_"+Date.now();c.name=p.name+" Copy";state.programs.push(c);save();renderPrograms()}
+function deleteProgram(id){if(!confirm("Delete this program?"))return;state.programs=state.programs.filter(p=>p.id!==id);if(state.activeProgramId===id)state.activeProgramId=null;save();renderPrograms()}
+function installTemplate(type){
+ let templates={
+ ppl:{name:"Push / Pull / Legs",goal:"Muscle gain",days:[
+ {name:"Push",weekday:"Monday",ids:["chest-press","shoulder-press","pec-deck","triceps-pressdown"]},
+ {name:"Pull",weekday:"Wednesday",ids:["lat-pulldown","seated-row","rear-delt","cable-curl"]},
+ {name:"Legs",weekday:"Friday",ids:["leg-press","leg-curl","leg-extension","calf-raise"]}]},
+ upperlower:{name:"Upper / Lower",goal:"General strength",days:[
+ {name:"Upper A",weekday:"Monday",ids:["chest-press","seated-row","shoulder-press","cable-curl"]},
+ {name:"Lower A",weekday:"Tuesday",ids:["leg-press","leg-curl","calf-raise"]},
+ {name:"Upper B",weekday:"Thursday",ids:["incline-press","lat-pulldown","lateral-raise","triceps-pressdown"]},
+ {name:"Lower B",weekday:"Friday",ids:["goblet-squat","leg-extension","leg-curl"]}]},
+ fullbody:{name:"3-Day Full Body",goal:"General health",days:[
+ {name:"Full Body A",weekday:"Monday",ids:["goblet-squat","chest-press","lat-pulldown"]},
+ {name:"Full Body B",weekday:"Wednesday",ids:["leg-press","shoulder-press","seated-row"]},
+ {name:"Full Body C",weekday:"Friday",ids:["leg-curl","incline-press","chest-supported-row"]}]},
+ planet:{name:"Planet Fitness Machines",goal:"General health",days:[
+ {name:"Machine Day A",weekday:"Monday",ids:["chest-press","lat-pulldown","leg-press","cable-curl"]},
+ {name:"Machine Day B",weekday:"Thursday",ids:["shoulder-press","seated-row","leg-curl","triceps-pressdown"]}]},
+ beginner:{name:"Beginner Strength",goal:"General strength",days:[
+ {name:"Strength A",weekday:"Monday",ids:["goblet-squat","chest-press","seated-row"]},
+ {name:"Strength B",weekday:"Thursday",ids:["leg-press","shoulder-press","lat-pulldown"]}]}
+ };
+ let t=templates[type],all=allExercises(),program={id:"prog_"+Date.now(),name:t.name,goal:t.goal,mode:"hybrid",days:t.days.map((d,i)=>({id:"day_"+Date.now()+"_"+i,name:d.name,weekday:d.weekday,exercises:d.ids.map(id=>{let e=all.find(x=>x.id===id);return{id:e.id,name:e.name,sets:e.sets||3,reps:e.reps||"8–12",rest:60,notes:""}})}))};
+ state.programs.push(program);if(!state.activeProgramId)state.activeProgramId=program.id;save();renderPrograms();alert(`${t.name} installed.`)
+}
+
 const activityTypes={
  walk:{title:"Walk",subtypes:["Outdoor walk","Treadmill walk","Easy walk","Brisk walk","Incline walk"]},
  run:{title:"Run",subtypes:["Easy run","Tempo run","Intervals","Long run","Race or time trial"]},
@@ -43,7 +123,7 @@ function updateActivityDistance(v){currentActivity.distance=Number(v||0);activit
 function finishActivity(){clearInterval(activityTimer);let minutes=Math.max(1,Math.round(currentActivity.elapsed/60));let record={id:crypto.randomUUID(),date:today(),type:currentActivity.type,subtype:currentActivity.subtype,minutes,distance:Number(currentActivity.distance||0),goal:currentActivity.goal,completedAt:new Date().toISOString()};state.activities=state.activities||[];state.activities.push(record);save();activityModal.classList.remove("show");renderHealthSummary();updateMomentum();alert(`${activityTypes[currentActivity.type].title} saved: ${minutes} minutes.`);currentActivity=null}
 function renderHealthSummary(){let acts=(state.activities||[]).filter(a=>a.date===today()),mins=acts.reduce((a,x)=>a+x.minutes,0),d=daily();if(window.healthMovement)healthMovement.textContent=mins+" min";if(window.healthWater)healthWater.textContent=d.water||0;if(window.healthMeals)healthMeals.textContent=state.meals.filter(m=>m.date===today()).length;let p=state.adaptivePlans.find(x=>x.date===today())||buildAdaptivePlan({date:today()});if(window.healthRecovery)healthRecovery.textContent=p.score}
 
-function coach(){
+function coach(){if(state.programMode==="custom"&&state.activeProgramId){let p=state.programs.find(x=>x.id===state.activeProgramId);if(p&&window.coachContext)coachContext.textContent=`Following ${p.name} • Coach PH guidance`; }
  let d=daily(),hasWorkout=state.sessions.some(x=>x.date===today()),mealCountToday=state.meals.filter(m=>m.date===today()).length,water=d.water||0;
  let msg=`You do not need a perfect day. Complete the version of today that fits your real life.`,focus="Protect the habit",focusText="Start with the next useful action, not the whole day.",action="workout",badges=[];
  if(d.life){msg="Life happened. The goal now is not to catch up—it is to keep the connection with your plan.";focus="Minimum-day win";focusText="Five minutes of movement, one honest meal log, or water can protect momentum.";action="minimum";badges.push("Life happened")}
@@ -221,4 +301,4 @@ function onboardingBack(){if(obStep>0){obStep--;showObStep()}}
 function onboardingNext(){if(obStep===0&&!obName.value.trim())return alert("Enter your name.");if(obStep<3){obStep++;showObStep();return}state.profile={...state.profile,name:obName.value.trim(),goal:obGoal.value,experience:obExperience.value,location:obLocation.value,duration:obDuration.value,obstacle:obObstacle.value,foodStruggle:obFood.value,limitations:obLimitations.value.trim(),tone:chosenTone,onboarded:true};save();onboardingModal.classList.remove("show");init()}
 function exportData(){let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`project-health-v04-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();init();alert("Data imported.")}catch{alert("Import failed.")}};r.readAsText(f)}
-if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js?build=90").then(r=>r.update()).catch(()=>{});boot();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js?build=100").then(r=>r.update()).catch(()=>{});boot();

@@ -1,10 +1,10 @@
 # Changelog
 
-## 0.9.0 — Private Beta
+## 0.10.0 — Custom Programs
 
-- Added walking, running, biking, mobility, and recovery modes.
-- Added timers, distance, pace, and activity goals.
-- Added a combined daily health dashboard.
-- Added multiple local profiles with isolated data.
-- Added activity contribution to momentum and Coach PH tracking.
-- Added clear local-storage disclosure for beta testers.
+- Added custom workout program builder.
+- Added Coach, Custom, Hybrid, and Activity-first modes.
+- Added editable workout days, exercises, sets, reps, and rest.
+- Added starter templates.
+- Added program activation, duplication, and deletion.
+- Added Coach PH program structure review.
