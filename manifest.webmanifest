@@ -1,5 +1,5 @@
 {
-  "name": "Project Health v0.10.1 Programs Hotfix",
+  "name": "Project Health v0.11 Tester Beta",
   "short_name": "Project Health",
   "start_url": "./index.html",
   "display": "standalone",
@@ -17,5 +17,6 @@
       "type": "image/svg+xml"
     }
   ],
-  "id": "/Project-Health/"
+  "id": "/Project-Health/",
+  "description": "Adaptive health, activity, nutrition, and workout coaching."
 }

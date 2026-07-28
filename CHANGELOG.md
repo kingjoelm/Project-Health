@@ -1,8 +1,12 @@
 # Changelog
 
-## 0.10.1 — Programs Hotfix
+## 0.11.0 — Tester Beta
 
-- Fixed non-responsive Programs controls.
-- Added robust program-state migration.
-- Added visible mode selection and action confirmations.
-- Connected active custom programs to weekly planning and guided workouts.
+- Added private-beta consent flow.
+- Added tester identity and diagnostics.
+- Added tester-package export.
+- Added install guidance and update detection.
+- Added backup status.
+- Added saved gym and home-gym locations.
+- Added user-initiated proximity checks.
+- Documented browser geolocation limitations.

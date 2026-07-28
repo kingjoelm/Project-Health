@@ -1,35 +1,42 @@
-# Project Health v0.10.1 — Programs Hotfix
+# Project Health v0.11 — Tester Beta
 
-This hotfix repairs the non-responsive Programs page and connects active custom routines to the workout calendar.
+This release is designed for a small invite-only tester group.
 
-## Fixed
+## Added
 
-- New Program button now reliably opens the builder
-- Create button now reliably opens the builder
-- Mode cards show a clear selected state
-- Starter templates install with visible confirmation
-- Existing v0.9 profiles are normalized so missing program fields do not break the page
-- Switching profiles initializes program data correctly
-- Added visible action confirmations
+- Tester consent and safety acknowledgement
+- Unique tester ID
+- Tester display name
+- Tester package export with app data and diagnostics
+- Install-to-device guidance
+- PWA install prompt where supported
+- Update available banner
+- Backup-date tracking
+- Copyable diagnostics
+- Saved gym and home-gym locations
+- On-demand location checking
+- Nearby workout-place prompt
 
-## Integration added
+## Location limitation
 
-- Activated custom or hybrid programs now appear in the weekly plan
-- Scheduled custom workout days replace the default workout for that day
-- Starting a scheduled day opens the custom exercise list
-- Custom sets, reps, and rest settings carry into the guided workout
-- Coach PH still supplies warm-up, optional finisher, load guidance, and partial-completion adjustments
+The browser app can save a workout place and check proximity only when the user requests it while the app is open.
+
+Reliable background arrival detection and automatic geofence notifications require a future native/mobile app, background location permission, and secure backend.
+
+## Beta limitation
+
+Records remain local to each tester's browser. Cloud accounts and central data collection are not included yet.
 
 ## Install
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\Install-ProjectHealth-v0.10.1.ps1
-.\Validate-ProjectHealth-v0.10.1.ps1
+.\Install-ProjectHealth-v0.11.ps1
+.\Validate-ProjectHealth-v0.11.ps1
 ```
 
-Upload everything inside the OneDrive `Project Health\deploy` folder to GitHub.
+Upload everything inside `Project Health\deploy` to GitHub.
 
 Recommended commit:
 
-`v0.10.1 "Programs Hotfix" - Functional Builder & Calendar Integration`
+`v0.11 "Tester Beta" - Consent, Install, Diagnostics & Workout Places`

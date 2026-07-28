@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173b6c"><link rel="manifest" href="manifest.webmanifest">
-<title>Project Health v0.10.1</title>
+<title>Project Health v0.11</title>
 <style>
 :root{
 --navy:#07111f;--navy2:#0c1b2e;--panel:#102238;--panel2:#132a45;--blue:#2d7dff;--blue2:#66a6ff;
@@ -133,10 +133,22 @@ border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 26px 6
 
 .mode-card{transition:.18s transform,.18s border-color,.18s background}.mode-card:hover{transform:translateY(-2px);border-color:rgba(90,151,255,.55)}.mode-card.selected:after{content:"✓ Selected";display:inline-block;margin-top:8px;color:#6fe0a4;font-size:12px;font-weight:850}
 .action-toast{position:fixed;right:18px;bottom:90px;background:#102c4b;border:1px solid rgba(90,151,255,.35);color:white;border-radius:14px;padding:12px 16px;z-index:100;box-shadow:0 20px 50px rgba(0,0,0,.4);opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s}.action-toast.show{opacity:1;transform:translateY(0)}
+
+.tester-banner{background:linear-gradient(135deg,rgba(32,91,156,.62),rgba(15,39,67,.94));border:1px solid rgba(90,151,255,.28);border-radius:18px;padding:14px;margin:12px 0}
+.permission-card{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0}
+.place-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.place-row:first-child{border-top:0}
+.diagnostic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.diagnostic{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:12px}
+.update-banner{display:none;background:#14355b;border:1px solid rgba(90,151,255,.35);border-radius:14px;padding:12px;margin:10px 0}.update-banner.show{display:block}
+.consent-list{display:grid;gap:8px}.consent-item{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:12px}.consent-item input{width:auto;margin-top:3px}
+.install-card{background:linear-gradient(135deg,rgba(64,201,133,.1),rgba(45,125,255,.1));border:1px solid rgba(64,201,133,.22)}
+@media(max-width:620px){.diagnostic-grid{grid-template-columns:1fr}.place-row{grid-template-columns:1fr}}
 </style></head>
 <body><div class="app-shell"><aside class="desktop-sidebar"><div style="display:flex;flex-direction:column;height:100%"><div><div class="brand"><div class="brand-mark">PH</div><div><strong>PROJECT HEALTH</strong><span>Stronger every day</span></div></div><div class="side-links"><button class="active" data-screen="today" onclick="showScreen('today')">⌂ Dashboard</button><button data-screen="week" onclick="showScreen('week')">◫ Weekly Plan</button><button data-screen="food" onclick="showScreen('food')">◉ Nutrition</button><button data-screen="progress" onclick="showScreen('progress')">↗ Progress</button><button data-screen="programs" onclick="showScreen('programs')">◈ Programs</button><button data-screen="more" onclick="showScreen('more')">⚙ Settings</button></div></div><div class="side-score"><div class="muted small">RECOVERY SCORE</div><div style="font-size:42px;font-weight:900" id="sidebarRecovery">--</div><div class="muted small">Coach PH adjusts daily</div></div></div></aside><div class="main-wrap"><main>
 <section id="today" class="screen active">
-<div class="topbar-modern"><div><div class="eyebrow" id="dateLabel"></div><h1 id="greeting">Today</h1></div><div class="profile-switcher"><select id="profileSwitcher" onchange="switchProfile(this.value)"></select><button class="ghost" style="width:auto" onclick="openProfileManager()">Profiles</button><div class="pill">Private Beta 0.10.1</div></div></div>
+<div class="topbar-modern"><div><div class="eyebrow" id="dateLabel"></div><h1 id="greeting">Today</h1></div><div class="profile-switcher"><select id="profileSwitcher" onchange="switchProfile(this.value)"></select><button class="ghost" style="width:auto" onclick="openProfileManager()">Profiles</button><div class="pill">Tester Beta 0.11</div></div></div>
+<div class="tester-banner"><div class="top" style="margin:0"><div><div class="eyebrow">TESTER BETA</div><h3>Help shape Project Health</h3><div class="muted">Use it normally, then report anything confusing, broken, or missing.</div></div><span class="pill" id="testerIdBadge">Tester</span></div><div class="grid"><button class="secondary" onclick="showScreen('more');setTimeout(()=>document.getElementById('feedbackText')?.focus(),150)">Send Feedback</button><button class="ghost" onclick="exportTesterPackage()">Export Tester Package</button></div></div>
+<div id="updateBanner" class="update-banner"><strong>Update available</strong><div class="muted small">Refresh to load the latest Project Health build.</div><button style="margin-top:8px" onclick="applyAppUpdate()">Update Now</button></div>
 <div class="hero-modern"><div class="hero-panel"><div class="eyebrow">TODAY IS YOURS</div><h1 style="font-size:38px;margin-top:8px">Build momentum without forcing perfection.</h1><p class="muted" style="max-width:680px">Coach PH uses your energy, recovery, pain, and recent completion to shape today’s plan.</p><div class="metric-strip"><div class="mini-metric"><span>Sleep</span><strong id="heroSleep">—</strong></div><div class="mini-metric"><span>Energy</span><strong id="heroEnergy">—</strong></div><div class="mini-metric"><span>Water</span><strong id="heroWater">0</strong></div><div class="mini-metric"><span>Momentum</span><strong id="heroMomentum">0%</strong></div></div></div><div class="card glass"><div class="eyebrow">COACH PH</div><h2>Your next best decision</h2><p class="muted">Open today’s plan, make it fit your real life, and complete the version you can repeat.</p><button onclick="openAdaptiveAssessment()">Adjust today’s plan</button></div></div>
 <div class="card"><div class="section-title"><div><div class="eyebrow">CHOOSE YOUR PATH</div><h2>What would help today?</h2></div><span class="pill">Any movement counts</span></div>
 <div class="activity-grid">
@@ -201,8 +213,14 @@ border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 26px 6
 <div class="top"><div><div class="muted">PROFILE & SETTINGS</div><h1>More</h1></div></div>
 <div class="card"><label>Name</label><input id="profileName"><label>Primary goal</label><select id="profileGoal"><option>Build consistency</option><option>Lose weight</option><option>Gain strength</option><option>Improve energy</option><option>Improve general health</option></select><label>Preferred training days</label><input id="profileDays" placeholder="Monday–Friday"><button style="margin-top:12px" onclick="saveProfile()">Save Profile</button></div>
 <div class="card"><h2>Send Feedback</h2><label>Category</label><select id="feedbackCategory"><option>Bug</option><option>Confusing</option><option>Missing feature</option><option>Workout issue</option><option>Food logging issue</option><option>Design feedback</option><option>Other</option></select><label>What happened or what should improve?</label><textarea id="feedbackText" placeholder="Tell us what you noticed."></textarea><button style="margin-top:12px" onclick="copyFeedback()">Copy Feedback Report</button><div id="feedbackResult" class="feedback-note hide"></div></div>
-<div class="card"><div class="top"><div><h2>Exercise Library</h2><div class="muted">Images, setup, instructions, and alternatives.</div></div><button class="ghost" style="width:auto" onclick="openLibrary()">Browse</button></div><div class="library-grid" id="libraryPreview"></div></div><div class="card"><h2>Backup</h2><div class="grid"><button onclick="exportData()">Export Data</button><label class="btn" style="text-align:center;margin:0">Import Data<input class="hide" type="file" accept=".json" onchange="importData(event)"></label></div></div>
-<div class="version">Project Health Beta v0.10.1 “Programs Hotfix”</div>
+<div class="card"><div class="top"><div><h2>Exercise Library</h2><div class="muted">Images, setup, instructions, and alternatives.</div></div><button class="ghost" style="width:auto" onclick="openLibrary()">Browse</button></div><div class="library-grid" id="libraryPreview"></div></div>
+<div class="card install-card"><div class="top"><div><div class="eyebrow">INSTALL</div><h2>Add Project Health to your device</h2><div class="muted">Installing gives it an app icon and a cleaner full-screen experience.</div></div></div><button id="installAppButton" onclick="installApp()">Install Project Health</button><div id="installHelp" class="muted small" style="margin-top:8px"></div></div>
+
+<div class="card"><div class="eyebrow">WORKOUT PLACES</div><h2>Gym and home-gym locations</h2><p class="muted">Save places where you train. Project Health can check whether you are nearby when the app is open.</p><div class="notice">Automatic arrival detection in the background is planned for a future native/mobile phase. A normal website cannot reliably monitor location after it is closed.</div><div id="savedPlaces"></div><div class="grid"><button class="secondary" onclick="saveCurrentPlace('gym')">Save Current Location as Gym</button><button class="secondary" onclick="saveCurrentPlace('home-gym')">Save Current Location as Home Gym</button></div><button class="ghost" style="margin-top:8px" onclick="checkWorkoutPlace()">Check If I’m Near a Workout Place</button><div id="placeCheckResult" class="muted small" style="margin-top:8px"></div></div>
+
+<div class="card"><div class="eyebrow">TESTER & DIAGNOSTICS</div><h2>Beta information</h2><div class="diagnostic-grid"><div class="diagnostic"><span class="muted small">TESTER ID</span><strong id="testerIdDisplay"></strong></div><div class="diagnostic"><span class="muted small">APP VERSION</span><strong>0.11</strong></div><div class="diagnostic"><span class="muted small">STORAGE</span><strong id="storageStatus">Local browser</strong></div><div class="diagnostic"><span class="muted small">LAST BACKUP</span><strong id="lastBackupStatus">Never</strong></div></div><button class="secondary" style="margin-top:10px" onclick="copyDiagnostics()">Copy Diagnostics</button></div>
+<div class="card"><h2>Backup</h2><div class="grid"><button onclick="exportData()">Export Data</button><label class="btn" style="text-align:center;margin:0">Import Data<input class="hide" type="file" accept=".json" onchange="importData(event)"></label></div></div>
+<div class="version">Project Health Beta v0.11 “Tester Beta”</div>
 </section>
 </main>
 
@@ -219,6 +237,16 @@ border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 26px 6
 <button onclick="applyAdaptivePlan()">Use this plan</button></div></div>
 
 
+
+
+<div id="testerConsentModal" class="modal"><div class="modal-card"><div class="eyebrow">PRIVATE TESTER BETA</div><h1>Before you begin</h1><p class="muted">Project Health is being tested. It is not medical advice and should not replace a physician, physical therapist, dietitian, or emergency service.</p><div class="consent-list">
+<label class="consent-item"><input id="consentBeta" type="checkbox"><span>I understand this is an unfinished beta and may contain errors.</span></label>
+<label class="consent-item"><input id="consentHealth" type="checkbox"><span>I will stop exercising and seek appropriate help if I experience severe pain, chest pain, faintness, or concerning symptoms.</span></label>
+<label class="consent-item"><input id="consentStorage" type="checkbox"><span>I understand my records are currently stored on this device and may be lost if browser data is cleared.</span></label>
+<label class="consent-item"><input id="consentFeedback" type="checkbox"><span>I agree to provide honest feedback about bugs and usability.</span></label>
+</div><label>Tester display name</label><input id="testerDisplayName" placeholder="Name or nickname"><button style="margin-top:12px" onclick="acceptTesterConsent()">Enter Tester Beta</button></div></div>
+
+<div id="locationPermissionModal" class="modal"><div class="modal-card"><button class="ghost modal-close" onclick="locationPermissionModal.classList.remove('show')">Close</button><div class="eyebrow">LOCATION PERMISSION</div><h1>Use your location?</h1><p class="muted">Project Health uses location only when you ask it to save or check a workout place. This browser version does not continuously track you.</p><div class="permission-card"><strong>What it can do now</strong><div class="muted">Save a gym or home-gym coordinate and check whether you are nearby while the app is open.</div></div><div class="permission-card"><strong>What it cannot do yet</strong><div class="muted">Reliably detect arrivals in the background or send automatic geofence notifications after the website is closed.</div></div><button onclick="requestLocationPermission()">Allow Location for This Check</button></div></div>
 
 <div id="programModal" class="modal"><div class="modal-card"><button class="ghost modal-close" onclick="closeProgramBuilder()">Close</button><div class="eyebrow">PROGRAM BUILDER</div><h1 id="programModalTitle">Create Program</h1>
 <label>Program name</label><input id="programName" placeholder="Example: My 4-Day Split">
