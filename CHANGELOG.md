@@ -1,8 +1,10 @@
 # Changelog
 
-## 0.8.1 — Guided Workout
-- Replaced repeated and mismatched workout pictures with unique exercise-specific imagery.
-- Added guided one-step-at-a-time workout sessions.
-- Added workout navigation and completion progress.
-- Added previous performance and adaptive load guidance.
-- Added workout summary and partial-completion handling.
+## 0.9.0 — Private Beta
+
+- Added walking, running, biking, mobility, and recovery modes.
+- Added timers, distance, pace, and activity goals.
+- Added a combined daily health dashboard.
+- Added multiple local profiles with isolated data.
+- Added activity contribution to momentum and Coach PH tracking.
+- Added clear local-storage disclosure for beta testers.
