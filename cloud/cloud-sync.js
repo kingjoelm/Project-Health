@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const VERSION = "0.12";
+  const VERSION = "0.12.1";
   const cfg = window.PROJECT_HEALTH_CLOUD || {};
   const cloud = {
     client: null,

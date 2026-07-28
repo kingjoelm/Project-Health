@@ -1,40 +1,30 @@
-# Project Health v0.12 — Cloud Identity
+# Project Health v0.12.1 — Cloud Connection
 
-This release adds the first secure account and cloud-sync foundation.
+This package is preconfigured for the confirmed Project Health Supabase project and GitHub Pages URL.
 
-## Added
+## Already configured
 
-- Email/password registration
-- Email/password sign-in
-- Local-device sign-out
-- Password-reset email
-- Persistent browser sessions
-- Local-first automatic sync
-- Manual Sync Now
-- Restore From Cloud
-- Secure beta-feedback submission
-- Delete Cloud Records
-- Supabase SQL schema
-- Row Level Security policies
-- Cloud configuration file
-- Offline/local fallback when cloud is not configured or unavailable
+- Supabase project URL
+- GitHub Pages site URL
+- Authentication redirect URL
+- Cloud identity and local-first sync code
+- Database schema and Row Level Security
 
-## Important
+## Still required
 
-Cloud features remain disabled until you create a Supabase project, run `cloud/supabase-schema.sql`, and fill in `cloud/config.js`.
+You must insert your browser-safe Supabase **Publishable key** locally.
 
-Do not place a Supabase service_role key in the browser app.
-
-## OneDrive install
+Run:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\Install-ProjectHealth-v0.12.ps1
-.\Validate-ProjectHealth-v0.12.ps1
+.\Configure-ProjectHealth-Cloud-v0.12.1.ps1
+.\Validate-ProjectHealth-Cloud-v0.12.1.ps1
+.\Install-ProjectHealth-v0.12.1.ps1
 ```
 
-Read `CLOUD_SETUP.md` before inviting cloud-account testers.
+The configuration script rejects Supabase Secret and service-role keys.
 
 Recommended commit:
 
-`v0.12 "Cloud Identity" - Secure Accounts, RLS & Local-First Sync`
+`v0.12.1 "Cloud Connection" - Supabase Project Configuration & Safe Key Setup`
