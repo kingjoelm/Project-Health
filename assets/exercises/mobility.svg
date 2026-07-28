@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+<rect width="220" height="220" rx="28" fill="#eef3fb"/>
+<g fill="none" stroke="#173b6c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="55" r="15"/><path d="M100 70v48m0-28-42-22m42 22 42-22m-42 50-36 38m36-38 36 38"/><path d="M48 58c20-20 84-20 104 0"/></g>
+<text x="110" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#173b6c">Mobility</text>
+</svg>

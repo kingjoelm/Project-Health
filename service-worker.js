@@ -1,5 +1,4 @@
-const CACHE='project-health-v03';
-const ASSETS=['./','./index.html','./app.js','./manifest.webmanifest','./assets/icons/icon-192.svg','./assets/icons/icon-512.svg'];
+const CACHE='project-health-v04';const ASSETS=["./", "./index.html", "./app.js", "./manifest.webmanifest", "./data/workouts.json", "./assets/icons/icon-192.svg", "./assets/icons/icon-512.svg", "./assets/exercises/chest-press.svg", "./assets/exercises/shoulder-press.svg", "./assets/exercises/pec-deck.svg", "./assets/exercises/triceps-pressdown.svg", "./assets/exercises/lat-pulldown.svg", "./assets/exercises/seated-row.svg", "./assets/exercises/rear-delt.svg", "./assets/exercises/cable-curl.svg", "./assets/exercises/leg-press.svg", "./assets/exercises/leg-curl.svg", "./assets/exercises/leg-extension.svg", "./assets/exercises/calf-raise.svg", "./assets/exercises/incline-press.svg", "./assets/exercises/chest-supported-row.svg", "./assets/exercises/lateral-raise.svg", "./assets/exercises/arms-superset.svg", "./assets/exercises/goblet-squat.svg", "./assets/exercises/treadmill-walk.svg", "./assets/exercises/mobility.svg"];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x))))));
 self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));

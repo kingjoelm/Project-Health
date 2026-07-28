@@ -2,170 +2,394 @@
   "monday": {
     "name": "Push",
     "focus": "Chest, shoulders, triceps",
+    "minutes": 45,
     "exercises": [
       {
         "id": "chest-press",
         "name": "Machine Chest Press",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Keep shoulder blades back and lower the weight under control."
+        "muscles": "Chest, triceps, front shoulders",
+        "setup": "Adjust the seat so the handles line up with mid-chest. Keep feet flat and shoulder blades supported.",
+        "steps": [
+          "Grip the handles with wrists straight.",
+          "Press forward without locking the elbows.",
+          "Pause briefly, then return under control."
+        ],
+        "mistakes": "Shrugging, bouncing the weight, or letting elbows travel too far behind the body.",
+        "alternative": "Incline push-up or dumbbell press."
       },
       {
         "id": "shoulder-press",
         "name": "Machine Shoulder Press",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Keep ribs down and do not force the handles too low."
+        "muscles": "Shoulders and triceps",
+        "setup": "Adjust the seat so the handles begin near ear level. Keep ribs down.",
+        "steps": [
+          "Brace your midsection.",
+          "Press upward smoothly.",
+          "Lower until the elbows are comfortably below shoulder height."
+        ],
+        "mistakes": "Arching the lower back or forcing a painful range.",
+        "alternative": "Neutral-grip dumbbell press."
       },
       {
         "id": "pec-deck",
         "name": "Pec Deck",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Lead with your elbows and avoid shrugging."
+        "muscles": "Chest",
+        "setup": "Set the seat so elbows are just below shoulder height.",
+        "steps": [
+          "Keep the chest tall.",
+          "Bring the pads together without slamming them.",
+          "Return slowly until you feel a comfortable stretch."
+        ],
+        "mistakes": "Shrugging or using momentum.",
+        "alternative": "Cable fly."
       },
       {
-        "id": "triceps",
+        "id": "triceps-pressdown",
         "name": "Cable Triceps Pressdown",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Keep elbows close to your sides."
+        "muscles": "Triceps",
+        "setup": "Set the cable high and stand close to the stack.",
+        "steps": [
+          "Pin elbows near your sides.",
+          "Press the handle down.",
+          "Return without letting elbows drift forward."
+        ],
+        "mistakes": "Leaning heavily or swinging.",
+        "alternative": "Machine triceps extension."
       }
     ]
   },
   "tuesday": {
     "name": "Pull",
     "focus": "Back and biceps",
+    "minutes": 45,
     "exercises": [
       {
         "id": "lat-pulldown",
         "name": "Lat Pulldown",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Pull toward the upper chest without leaning far back."
+        "muscles": "Lats and upper back",
+        "setup": "Secure thighs under the pad and use a comfortable grip.",
+        "steps": [
+          "Lift the chest slightly.",
+          "Pull the bar toward the upper chest.",
+          "Control the return overhead."
+        ],
+        "mistakes": "Leaning far back or pulling behind the neck.",
+        "alternative": "Assisted pull-up."
       },
       {
         "id": "seated-row",
         "name": "Seated Cable Row",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Finish with elbows back, not shoulders shrugged."
+        "muscles": "Mid-back and biceps",
+        "setup": "Sit tall with knees slightly bent.",
+        "steps": [
+          "Start with shoulders relaxed.",
+          "Pull elbows toward your back pockets.",
+          "Return without rounding forward."
+        ],
+        "mistakes": "Jerking the torso or shrugging.",
+        "alternative": "Chest-supported row."
       },
       {
         "id": "rear-delt",
         "name": "Rear Delt Machine",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Use a light weight and move with control."
+        "muscles": "Rear shoulders and upper back",
+        "setup": "Face the machine and set handles near shoulder height.",
+        "steps": [
+          "Keep arms slightly bent.",
+          "Open the arms until aligned with the body.",
+          "Return slowly."
+        ],
+        "mistakes": "Using too much weight.",
+        "alternative": "Cable rear-delt fly."
       },
       {
-        "id": "curl",
-        "name": "Machine or Cable Curl",
+        "id": "cable-curl",
+        "name": "Cable Curl",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Keep upper arms still."
+        "muscles": "Biceps",
+        "setup": "Stand tall with the cable low.",
+        "steps": [
+          "Keep elbows still.",
+          "Curl the handle toward the shoulders.",
+          "Lower under control."
+        ],
+        "mistakes": "Swinging or leaning back.",
+        "alternative": "Machine curl."
       }
     ]
   },
   "wednesday": {
     "name": "Legs",
     "focus": "Quads, hamstrings, glutes",
+    "minutes": 50,
     "exercises": [
       {
         "id": "leg-press",
         "name": "Leg Press",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Keep your lower back supported and control the depth."
+        "muscles": "Quads, glutes, hamstrings",
+        "setup": "Place feet shoulder-width on the platform and keep the lower back supported.",
+        "steps": [
+          "Release the safety.",
+          "Lower to a comfortable depth.",
+          "Press through the whole foot without locking knees."
+        ],
+        "mistakes": "Lower back rounding or knees collapsing inward.",
+        "alternative": "Goblet squat."
       },
       {
         "id": "leg-curl",
         "name": "Seated Leg Curl",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Pause briefly when the knees are bent."
+        "muscles": "Hamstrings",
+        "setup": "Align the knee joint with the machine pivot.",
+        "steps": [
+          "Brace against the pad.",
+          "Curl the heels down and back.",
+          "Return slowly."
+        ],
+        "mistakes": "Lifting the hips or rushing.",
+        "alternative": "Lying leg curl."
       },
       {
         "id": "leg-extension",
         "name": "Leg Extension",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Do not swing the weight."
+        "muscles": "Quads",
+        "setup": "Align knees with the pivot and pad above the ankles.",
+        "steps": [
+          "Extend the knees smoothly.",
+          "Pause without locking hard.",
+          "Lower under control."
+        ],
+        "mistakes": "Kicking or slamming the stack.",
+        "alternative": "Bodyweight sit-to-stand."
       },
       {
-        "id": "calf",
+        "id": "calf-raise",
         "name": "Calf Raise",
         "sets": 3,
         "reps": "12\u201320",
-        "tip": "Use a full comfortable range."
+        "muscles": "Calves",
+        "setup": "Use a stable machine or platform.",
+        "steps": [
+          "Lower heels comfortably.",
+          "Rise onto the balls of the feet.",
+          "Pause, then lower slowly."
+        ],
+        "mistakes": "Bouncing through the reps.",
+        "alternative": "Standing bodyweight calf raise."
       }
     ]
   },
   "thursday": {
     "name": "Upper Body",
     "focus": "Balanced upper-body training",
+    "minutes": 45,
     "exercises": [
       {
         "id": "incline-press",
         "name": "Incline Machine Press",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Keep shoulder blades supported."
+        "muscles": "Upper chest, shoulders, triceps",
+        "setup": "Set the seat so handles line up below the collarbone.",
+        "steps": [
+          "Keep shoulder blades supported.",
+          "Press smoothly.",
+          "Return under control."
+        ],
+        "mistakes": "Overarching the back.",
+        "alternative": "Incline dumbbell press."
       },
       {
-        "id": "row",
+        "id": "chest-supported-row",
         "name": "Chest-Supported Row",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Pull elbows toward your back pockets."
+        "muscles": "Mid-back and biceps",
+        "setup": "Set the chest pad so arms reach comfortably.",
+        "steps": [
+          "Keep chest against the pad.",
+          "Pull elbows back.",
+          "Lower slowly."
+        ],
+        "mistakes": "Lifting off the pad.",
+        "alternative": "Seated cable row."
       },
       {
-        "id": "lateral",
+        "id": "lateral-raise",
         "name": "Lateral Raise",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Use light weight and stop around shoulder height."
+        "muscles": "Side shoulders",
+        "setup": "Choose a light weight and stand tall.",
+        "steps": [
+          "Raise arms slightly forward of the body.",
+          "Stop near shoulder height.",
+          "Lower slowly."
+        ],
+        "mistakes": "Swinging or shrugging.",
+        "alternative": "Machine lateral raise."
       },
       {
-        "id": "arms",
+        "id": "arms-superset",
         "name": "Cable Arms Superset",
         "sets": 3,
         "reps": "10\u201315",
-        "tip": "Move slowly and keep the joints comfortable."
+        "muscles": "Biceps and triceps",
+        "setup": "Use one curl and one pressdown attachment.",
+        "steps": [
+          "Complete curls with still elbows.",
+          "Move to pressdowns.",
+          "Rest after both movements."
+        ],
+        "mistakes": "Rushing form.",
+        "alternative": "Machine curl and extension."
       }
     ]
   },
   "friday": {
     "name": "Full Body",
     "focus": "Strength and conditioning",
+    "minutes": 45,
     "exercises": [
       {
-        "id": "goblet",
+        "id": "goblet-squat",
         "name": "Goblet Squat or Leg Press",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Choose the option that feels best on your joints."
+        "muscles": "Legs and glutes",
+        "setup": "Hold one dumbbell at the chest or use the leg press.",
+        "steps": [
+          "Brace the trunk.",
+          "Sit down between the hips.",
+          "Stand through the whole foot."
+        ],
+        "mistakes": "Knees collapsing inward.",
+        "alternative": "Leg press."
       },
       {
-        "id": "press",
+        "id": "chest-press",
         "name": "Machine Chest Press",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Use the same setup each week."
+        "muscles": "Chest and triceps",
+        "setup": "Handles at mid-chest, feet flat.",
+        "steps": [
+          "Press smoothly.",
+          "Pause.",
+          "Return under control."
+        ],
+        "mistakes": "Shrugging.",
+        "alternative": "Incline push-up."
       },
       {
-        "id": "pulldown",
+        "id": "lat-pulldown",
         "name": "Lat Pulldown",
         "sets": 3,
         "reps": "8\u201312",
-        "tip": "Keep the movement controlled."
+        "muscles": "Back and biceps",
+        "setup": "Secure thighs and grip comfortably.",
+        "steps": [
+          "Pull to upper chest.",
+          "Keep ribs controlled.",
+          "Return slowly."
+        ],
+        "mistakes": "Pulling behind neck.",
+        "alternative": "Assisted pull-up."
       },
       {
-        "id": "walk",
+        "id": "treadmill-walk",
         "name": "Treadmill Walk",
         "sets": 1,
         "reps": "10 minutes",
-        "tip": "Use a pace you can maintain."
+        "muscles": "Cardiovascular conditioning",
+        "setup": "Start at an easy pace.",
+        "steps": [
+          "Walk tall.",
+          "Use a pace you can sustain.",
+          "Cool down gradually."
+        ],
+        "mistakes": "Holding the rails heavily.",
+        "alternative": "Bike or elliptical."
+      }
+    ]
+  },
+  "saturday": {
+    "name": "Active Recovery",
+    "focus": "Walking and mobility",
+    "minutes": 25,
+    "exercises": [
+      {
+        "id": "treadmill-walk",
+        "name": "Easy Walk",
+        "sets": 1,
+        "reps": "15\u201320 minutes",
+        "muscles": "Recovery and conditioning",
+        "setup": "Choose a conversational pace.",
+        "steps": [
+          "Walk tall.",
+          "Breathe normally.",
+          "Finish feeling better than you started."
+        ],
+        "mistakes": "Turning recovery into a hard workout.",
+        "alternative": "Easy bike."
+      },
+      {
+        "id": "mobility",
+        "name": "Gentle Mobility",
+        "sets": 1,
+        "reps": "5 minutes",
+        "muscles": "Comfortable movement",
+        "setup": "Use open floor space.",
+        "steps": [
+          "Move shoulders, hips, and ankles gently.",
+          "Avoid forcing range.",
+          "Breathe slowly."
+        ],
+        "mistakes": "Stretching into pain.",
+        "alternative": "Short easy walk."
+      }
+    ]
+  },
+  "sunday": {
+    "name": "Recovery",
+    "focus": "Rest and prepare",
+    "minutes": 10,
+    "exercises": [
+      {
+        "id": "mobility",
+        "name": "Optional Mobility",
+        "sets": 1,
+        "reps": "5\u201310 minutes",
+        "muscles": "Recovery",
+        "setup": "Choose only movements that feel good.",
+        "steps": [
+          "Move gently.",
+          "Stop if pain increases.",
+          "Prepare for the week."
+        ],
+        "mistakes": "Feeling guilty for resting.",
+        "alternative": "Complete rest."
       }
     ]
   }

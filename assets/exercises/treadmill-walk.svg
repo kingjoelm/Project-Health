@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+<rect width="220" height="220" rx="28" fill="#eef3fb"/>
+<g fill="none" stroke="#173b6c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><circle cx="92" cy="55" r="15"/><path d="M92 70l-5 47m5-29 31 20m-36 9-30 42m30-42 33 39"/><path d="M30 175h150"/><rect x="26" y="160" width="158" height="22" rx="11"/></g>
+<text x="110" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#173b6c">Treadmill Walk</text>
+</svg>

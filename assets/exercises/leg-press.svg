@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+<rect width="220" height="220" rx="28" fill="#eef3fb"/>
+<g fill="none" stroke="#173b6c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><rect x="40" y="45" width="75" height="12" rx="6" transform="rotate(-20 40 45)"/><rect x="130" y="30" width="14" height="110" rx="6"/><circle cx="82" cy="92" r="15"/><path d="M82 107l20 30m-20-30-24 26m44 4 30-18m-30 18-16 35m-28-39-10 39"/></g>
+<text x="110" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#173b6c">Leg Press</text>
+</svg>

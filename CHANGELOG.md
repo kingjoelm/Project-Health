@@ -1,18 +1,14 @@
 # Changelog
 
-## 0.3.0
+## 0.4.0 — Guidance
 
-- Added Coach PH foundation documents.
-- Added Today dashboard.
-- Added readiness check-in.
-- Added full, short, minimum, and recovery modes.
-- Added Monday through Friday starter workouts.
-- Added previous-weight reminders.
-- Added water logging.
-- Added honest food logging.
-- Added daily victory logging.
-- Added momentum calculation.
-- Added profile and Life Happened check-in.
-- Added weight and history views.
-- Added JSON backup and restore.
-- Added offline PWA files.
+- Rebuilt navigation: Today, Week, Food, Progress, More.
+- Added weekly past and upcoming workout browsing.
+- Added exercise illustrations and detailed instructions.
+- Added per-set weight and repetition logging.
+- Restored full meal and snack logging with editing and deletion.
+- Added hunger, fullness, and planning awareness.
+- Replaced green theme with navy and blue.
+- Added feedback reporting and version identification.
+- Added correct time-of-day greeting.
+- Improved offline cache versioning.

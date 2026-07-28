@@ -1,163 +1,39 @@
-const DEFAULT_WORKOUTS = {
-monday:{name:"Push",focus:"Chest, shoulders, triceps",exercises:[
-{name:"Machine Chest Press",sets:3,reps:"8–12",tip:"Keep shoulder blades back and lower the weight under control."},
-{name:"Machine Shoulder Press",sets:3,reps:"8–12",tip:"Keep ribs down and do not force the handles too low."},
-{name:"Pec Deck",sets:3,reps:"10–15",tip:"Lead with your elbows and avoid shrugging."},
-{name:"Cable Triceps Pressdown",sets:3,reps:"10–15",tip:"Keep elbows close to your sides."}]},
-tuesday:{name:"Pull",focus:"Back and biceps",exercises:[
-{name:"Lat Pulldown",sets:3,reps:"8–12",tip:"Pull toward the upper chest without leaning far back."},
-{name:"Seated Cable Row",sets:3,reps:"8–12",tip:"Finish with elbows back, not shoulders shrugged."},
-{name:"Rear Delt Machine",sets:3,reps:"10–15",tip:"Use a light weight and move with control."},
-{name:"Machine or Cable Curl",sets:3,reps:"10–15",tip:"Keep upper arms still."}]},
-wednesday:{name:"Legs",focus:"Quads, hamstrings, glutes",exercises:[
-{name:"Leg Press",sets:3,reps:"8–12",tip:"Keep your lower back supported and control the depth."},
-{name:"Seated Leg Curl",sets:3,reps:"10–15",tip:"Pause briefly when the knees are bent."},
-{name:"Leg Extension",sets:3,reps:"10–15",tip:"Do not swing the weight."},
-{name:"Calf Raise",sets:3,reps:"12–20",tip:"Use a full comfortable range."}]},
-thursday:{name:"Upper Body",focus:"Balanced upper-body training",exercises:[
-{name:"Incline Machine Press",sets:3,reps:"8–12",tip:"Keep shoulder blades supported."},
-{name:"Chest-Supported Row",sets:3,reps:"8–12",tip:"Pull elbows toward your back pockets."},
-{name:"Lateral Raise",sets:3,reps:"10–15",tip:"Use light weight and stop around shoulder height."},
-{name:"Cable Arms Superset",sets:3,reps:"10–15",tip:"Move slowly and keep the joints comfortable."}]},
-friday:{name:"Full Body",focus:"Strength and conditioning",exercises:[
-{name:"Goblet Squat or Leg Press",sets:3,reps:"8–12",tip:"Choose the option that feels best on your joints."},
-{name:"Machine Chest Press",sets:3,reps:"8–12",tip:"Use the same setup each week."},
-{name:"Lat Pulldown",sets:3,reps:"8–12",tip:"Keep the movement controlled."},
-{name:"Treadmill Walk",sets:1,reps:"10 minutes",tip:"Use a pace you can maintain."}]},
-saturday:{name:"Active Recovery",focus:"Walking and mobility",exercises:[
-{name:"Easy Walk",sets:1,reps:"15–30 minutes",tip:"Use a conversational pace."},
-{name:"Gentle Mobility",sets:1,reps:"5 minutes",tip:"Move only through comfortable ranges."}]},
-sunday:{name:"Recovery",focus:"Rest and prepare",exercises:[
-{name:"Optional Easy Walk",sets:1,reps:"5–20 minutes",tip:"Today is about recovery, not proving anything."}]}
-};
-
-const key="projectHealthV03";
-let state=JSON.parse(localStorage.getItem(key)||"null")||{
-profile:{name:"Joel",goal:"Build consistency",obstacle:"Work schedule",days:"Monday–Friday"},
-daily:{},workouts:[],weights:[],victories:[]
-};
-let activeMode="full";
-const todayKey=()=>new Date().toISOString().slice(0,10);
-const dayName=()=>["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date().getDay()];
-const save=()=>localStorage.setItem(key,JSON.stringify(state));
-
-function daily(){const d=todayKey();state.daily[d] ||= {water:0,sodas:0};return state.daily[d]}
-
-function showScreen(id){
- document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));
- document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));
- if(id==="workout") renderWorkout();
- if(id==="progress") renderProgress();
- window.scrollTo({top:0,behavior:"smooth"});
-}
-function coachMessage(){
- const d=daily(), name=state.profile.name||"";
- let msg=`Good morning${name?", "+name:""}. You do not need a perfect day. Choose the next useful step.`;
- if(d.lifeReason) msg=`Life happened today. Protect the habit with something manageable. Five minutes still counts.`;
- else if(d.energy==="Exhausted"||d.sleep==="Under 4 hours") msg="Recovery is low today. Choose the short workout, a five-minute minimum, or recovery. All three are valid.";
- else if(d.victory) msg=`Yesterday's mindset continues today: ${d.victory}`;
- document.getElementById("coachMessage").textContent=msg;
-}
-function init(){
- const n=new Date();
- document.getElementById("dateLabel").textContent=n.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
- document.getElementById("greeting").textContent=`Good morning${state.profile.name?", "+state.profile.name:""}`;
- const w=DEFAULT_WORKOUTS[dayName()];
- document.getElementById("todayWorkout").textContent=w.name;
- document.getElementById("todayFocus").textContent=w.focus;
- const d=daily();
- ["sleep","energy","pain","sodas","mealNote","victory"].forEach(id=>{if(document.getElementById(id)&&d[id]!=null)document.getElementById(id).value=d[id]});
- document.getElementById("waterCount").textContent=d.water||0;
- document.getElementById("profileName").value=state.profile.name||"";
- document.getElementById("profileGoal").value=state.profile.goal||"Build consistency";
- document.getElementById("profileObstacle").value=state.profile.obstacle||"Work schedule";
- document.getElementById("profileDays").value=state.profile.days||"";
- coachMessage();updateMomentum();renderWorkout();
-}
-function saveCheckin(){
- const d=daily();d.sleep=sleep.value;d.energy=energy.value;d.pain=pain.value.trim();save();coachMessage();
- alert("Check-in saved. Coach PH adjusted today's recommendation.");
-}
-function addWater(){const d=daily();d.water=Math.min(20,(d.water||0)+1);save();waterCount.textContent=d.water;updateMomentum()}
-function saveFood(){
- const d=daily();d.sodas=Number(sodas.value||0);d.mealNote=mealNote.value.trim();
- foodSuggestion.textContent=d.sodas>0?`Thanks for logging honestly. Tomorrow, aim for ${Math.max(0,d.sodas-1)} sugary drink${Math.max(0,d.sodas-1)===1?"":"s"}.`:"Nice work. Keep the focus simple and repeatable.";
- save();updateMomentum();
-}
-function saveVictory(){
- const v=victory.value.trim();if(!v)return alert("Write one thing you are proud of.");
- daily().victory=v;
- state.victories=state.victories.filter(x=>x.date!==todayKey());
- state.victories.unshift({date:todayKey(),text:v});
- save();updateMomentum();alert("Victory saved. It counts.");
-}
-function startMode(mode){activeMode=mode;showScreen("workout")}
-function renderWorkout(){
- const w=DEFAULT_WORKOUTS[dayName()];
- workoutTitle.textContent=`${w.name} — ${activeMode[0].toUpperCase()+activeMode.slice(1)}`;
- let ex=[...w.exercises];
- if(activeMode==="short") ex=ex.slice(0,Math.min(3,ex.length));
- if(activeMode==="minimum") ex=[{name:"Five-Minute Walk",sets:1,reps:"5 minutes",tip:"The goal is to protect the habit, not exhaust yourself."}];
- if(activeMode==="recovery") ex=[{name:"Easy Walk or Mobility",sets:1,reps:"5–15 minutes",tip:"Move gently and stop if anything hurts."}];
- const hist=state.workouts.slice().reverse();
- exerciseList.innerHTML=ex.map((e,i)=>{
-   const last=[...hist].reverse().find(s=>s.entries&&s.entries.some(x=>x.name===e.name));
-   const lastEntry=last?.entries?.find(x=>x.name===e.name);
-   return `<div class="exercise">
-    <div class="exercise-head"><div><h3>${i+1}. ${e.name}</h3><div class="muted">${e.sets} set${e.sets>1?"s":""} × ${e.reps}</div></div><div class="pill">${lastEntry?.weight?`Last: ${lastEntry.weight}`:"New"}</div></div>
-    <div class="small" style="margin:8px 0">${e.tip}</div>
-    <div class="setline"><div><label>Weight</label><input data-name="${e.name}" class="weight" placeholder="lb"></div><div><label>Completed sets</label><input data-name="${e.name}" class="sets" type="number" min="0" max="${e.sets}" value="${e.sets}"></div></div>
-   </div>`;
- }).join("");
- workoutCoach.textContent=activeMode==="minimum"?"Five minutes is enough to keep the promise you made to yourself.":activeMode==="recovery"?"Recovery is training when it is chosen on purpose.":"Use a weight you can control. Leave one or two good repetitions in reserve.";
-}
-function completeWorkout(){
- const entries=[...document.querySelectorAll(".exercise")].map((el,i)=>({
-   name:el.querySelector(".weight")?.dataset.name||el.querySelector("h3").textContent,
-   weight:el.querySelector(".weight")?.value||"",
-   completedSets:Number(el.querySelector(".sets")?.value||0)
- }));
- state.workouts.push({date:todayKey(),mode:activeMode,day:dayName(),entries});
- daily().workoutCompleted=true;daily().workoutMode=activeMode;save();updateMomentum();
- alert("Workout saved. You completed what you chose today.");
- showScreen("today");
-}
-function updateMomentum(){
- const d=daily();let score=0;
- if(d.sleep||d.energy)score+=20;
- if((d.water||0)>=4)score+=20;
- if(d.mealNote||d.sodas===0)score+=20;
- if(d.workoutCompleted||d.lifeReason)score+=25;
- if(d.victory)score+=15;
- momentum.textContent=score+"%";momentumBar.style.width=score+"%";
-}
-function renderProgress(){
- workoutCount.textContent=state.workouts.length;
- victoryCount.textContent=state.victories.length;
- victoryHistory.innerHTML=state.victories.slice(0,8).map(v=>`<div class="success"><strong>${v.date}</strong><br>${v.text}</div>`).join("")||"No victories logged yet.";
- weightHistory.textContent=state.weights.slice(0,5).map(x=>`${x.date}: ${x.value} lb`).join(" • ")||"No weights saved yet.";
-}
-function saveWeight(){
- const value=Number(weightInput.value);if(!value)return alert("Enter a valid weight.");
- state.weights.unshift({date:todayKey(),value});save();weightInput.value="";renderProgress();
-}
-function saveProfile(){
- state.profile={...state.profile,name:profileName.value.trim(),goal:profileGoal.value,obstacle:profileObstacle.value,days:profileDays.value.trim()};
- save();init();alert("Profile saved.");
-}
-function saveLifeHappened(){
- if(!lifeReason.value)return alert("Choose a reason.");
- daily().lifeReason=lifeReason.value;save();coachMessage();updateMomentum();
- alert("Checked in. Today still counts.");
- showScreen("today");
-}
-function exportData(){
- const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`project-health-backup-${todayKey()}.json`;a.click();URL.revokeObjectURL(a.href);
-}
-function importData(event){
- const f=event.target.files[0];if(!f)return;
- const r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();init();alert("Backup imported.");}catch(e){alert("That file could not be imported.");}};r.readAsText(f);
-}
-if("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});
-init();
+let WORKOUTS={};const STORE="projectHealthV04";let state=JSON.parse(localStorage.getItem(STORE)||"null")||{profile:{name:"Joel",goal:"Build consistency",days:"Monday–Friday"},daily:{},sessions:[],meals:[],weights:[],victories:[]};let weekOffset=0,foodOffset=0,selectedDate=null,activeMode="full",editingMealId=null;
+const iso=d=>{let x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)},today=()=>iso(new Date()),save=()=>localStorage.setItem(STORE,JSON.stringify(state));
+const dayKey=d=>["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][new Date(d+"T12:00:00").getDay()];
+function daily(k=today()){state.daily[k] ||= {water:0};return state.daily[k]}
+async function boot(){try{WORKOUTS=await fetch("data/workouts.json").then(r=>r.json())}catch(e){alert("Workout data could not load.");return}init()}
+function greeting(){const h=new Date().getHours();return h<12?"Good morning":h<17?"Good afternoon":"Good evening"}
+function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));if(id==="week")renderWeek();if(id==="food")renderFood();if(id==="progress")renderProgress();window.scrollTo(0,0)}
+function init(){dateLabel.textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});greetingEl=document.getElementById("greeting");greetingEl.textContent=`${greeting()}${state.profile.name?", "+state.profile.name:""}`;let w=WORKOUTS[dayKey(today())];todayWorkout.textContent=w.name;todayFocus.textContent=w.focus;todayMinutes.textContent=`${w.minutes} min`;let d=daily();sleep.value=d.sleep||"";energy.value=d.energy||"";pain.value=d.pain||"";victory.value=d.victory||"";waterCount.textContent=d.water||0;profileName.value=state.profile.name||"";profileGoal.value=state.profile.goal||"Build consistency";profileDays.value=state.profile.days||"";coach();renderTodayMeals();updateMomentum()}
+function coach(){let d=daily(),m=`${greeting()}. You do not need a perfect day. Choose the next useful step.`;if(d.energy==="Exhausted"||d.sleep==="Under 4 hours")m="Recovery is low today. A short workout, five-minute minimum, or recovery session all count.";if(d.life)m="Life happened today. Protect the habit with something manageable.";coachMessage.textContent=m}
+function saveCheckin(){let d=daily();d.sleep=sleep.value;d.energy=energy.value;d.pain=pain.value.trim();save();coach();updateMomentum();alert("Check-in saved.")}
+function addWater(){daily().water=Math.min(20,(daily().water||0)+1);save();waterCount.textContent=daily().water;updateMomentum()}
+function saveVictory(){let v=victory.value.trim();if(!v)return alert("Write one victory.");daily().victory=v;state.victories=state.victories.filter(x=>x.date!==today());state.victories.unshift({date:today(),text:v});save();updateMomentum();alert("Victory saved.")}
+function updateMomentum(){let d=daily(),s=0;if(d.sleep||d.energy)s+=20;if((d.water||0)>=4)s+=20;if(state.meals.some(m=>m.date===today()))s+=20;if(state.sessions.some(x=>x.date===today()))s+=25;if(d.victory)s+=15;momentum.textContent=s+"%";momentumBar.style.width=s+"%"}
+function mondayOf(date){let d=new Date(date);let n=d.getDay()||7;d.setDate(d.getDate()-n+1);d.setHours(12,0,0,0);return d}
+function changeWeek(n){weekOffset+=n;renderWeek()}
+function renderWeek(){let start=mondayOf(new Date());start.setDate(start.getDate()+weekOffset*7);let end=new Date(start);end.setDate(end.getDate()+6);weekRange.textContent=`${start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${end.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;weekLabel.textContent=weekOffset===0?"This week":weekOffset<0?"Past week":"Upcoming week";weekList.innerHTML="";for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);let k=iso(d),w=WORKOUTS[dayKey(k)],session=state.sessions.find(s=>s.date===k),isToday=k===today(),past=k<today();let status=session?`<span class="status done">Completed</span>`:isToday?`<span class="status" style="color:var(--blue)">Today</span>`:past?`<span class="status missed">Not logged</span>`:`<span class="status upcoming">Upcoming</span>`;weekList.innerHTML+=`<div class="dayrow" onclick="openWorkout('${k}')"><div class="daynum ${isToday?"todaydot":""}">${d.toLocaleDateString(undefined,{day:"numeric"})}</div><div><strong>${d.toLocaleDateString(undefined,{weekday:"long"})} — ${w.name}</strong><div class="muted small">${w.focus} • ${w.minutes} min</div></div>${status}</div>`}}
+function changeFoodDay(n){foodOffset+=n;renderFood()}
+function foodDateKey(){let d=new Date();d.setDate(d.getDate()+foodOffset);return iso(d)}
+function renderFood(){let k=foodDateKey();foodDate.textContent=new Date(k+"T12:00:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});renderMealsInto(foodEntries,k)}
+function renderTodayMeals(){renderMealsInto(todayMeals,today(),true)}
+function renderMealsInto(el,k,compact=false){let list=state.meals.filter(m=>m.date===k).sort((a,b)=>a.time.localeCompare(b.time));if(!list.length){el.innerHTML=`<p class="muted">No meals or snacks logged yet.</p>`;return}el.innerHTML=list.map(m=>`<div class="meal-card"><div class="top" style="margin:0"><div><strong>${m.type}</strong><div class="muted small">${m.time}</div></div><span class="pill">${m.plan}</span></div><div>${m.description}</div>${compact?"":`<div class="muted small">Hunger: ${m.hunger||"—"} • Fullness: ${m.fullness||"—"}</div><div class="meal-actions"><button class="secondary" onclick="editMeal('${m.id}')">Edit</button><button class="danger" onclick="deleteMeal('${m.id}')">Delete</button></div>`}</div>`).join("")}
+function openMeal(){editingMealId=null;mealModalTitle.textContent="Add Meal or Snack";mealDescription.value="";mealHunger.value="";mealFullness.value="";mealPlan.value="About as planned";mealModal.classList.add("show")}
+function closeMeal(){mealModal.classList.remove("show")}
+function saveMeal(){let desc=mealDescription.value.trim();if(!desc)return alert("Describe what you had.");let date=foodOffset===0?today():foodDateKey();let item={id:editingMealId||crypto.randomUUID(),date,type:mealType.value,description:desc,hunger:mealHunger.value,fullness:mealFullness.value,plan:mealPlan.value,time:new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})};if(editingMealId)state.meals=state.meals.map(m=>m.id===editingMealId?{...m,...item}:m);else state.meals.push(item);save();closeMeal();renderTodayMeals();renderFood();updateMomentum();foodCoach.textContent=item.plan.includes("more")||item.plan.includes("Unplanned")?"Thanks for logging it honestly. Keep the next meal normal and improve one part—drink, portion, or side.":"Good. Repeat what worked without trying to make the whole day perfect."}
+function editMeal(id){let m=state.meals.find(x=>x.id===id);if(!m)return;editingMealId=id;mealModalTitle.textContent="Edit Entry";mealType.value=m.type;mealDescription.value=m.description;mealHunger.value=m.hunger;mealFullness.value=m.fullness;mealPlan.value=m.plan;mealModal.classList.add("show")}
+function deleteMeal(id){if(confirm("Delete this entry?")){state.meals=state.meals.filter(x=>x.id!==id);save();renderFood();renderTodayMeals();updateMomentum()}}
+function openWorkout(k=today()){selectedDate=k;activeMode="full";renderWorkoutModal();workoutModal.classList.add("show")}
+function closeWorkout(){workoutModal.classList.remove("show")}
+function setMode(m){activeMode=m;renderWorkoutModal()}
+function previousEntry(name){for(let i=state.sessions.length-1;i>=0;i--){let e=state.sessions[i].entries?.find(x=>x.name===name);if(e)return e}return null}
+function renderWorkoutModal(){let w=WORKOUTS[dayKey(selectedDate)];modalDate.textContent=new Date(selectedDate+"T12:00:00").toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});modalWorkoutTitle.textContent=`${w.name} — ${activeMode}`;let ex=[...w.exercises];if(activeMode==="short")ex=ex.slice(0,3);if(activeMode==="minimum")ex=[WORKOUTS.saturday.exercises[0]];if(activeMode==="recovery")ex=[WORKOUTS.sunday.exercises[0]];exerciseList.innerHTML=ex.map((e,i)=>{let last=previousEntry(e.name);return `<div class="card exercise-card"><div class="exercise-top"><img src="assets/exercises/${e.id}.svg" alt="${e.name} illustration"><div><div class="muted small">EXERCISE ${i+1}</div><h2>${e.name}</h2><div class="muted">${e.sets} sets × ${e.reps}</div><div class="pill" style="margin-top:8px">${last?`Last: ${last.sets.map(s=>`${s.weight||0}×${s.reps||0}`).join(", ")}`:"First time"}</div></div></div><div class="exercise-body"><div><strong>Muscles:</strong> ${e.muscles}</div><div class="instructions"><strong>Setup</strong><div>${e.setup}</div><ol>${e.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div><details><summary>Common mistakes & alternative</summary><p><strong>Avoid:</strong> ${e.mistakes}</p><p><strong>Alternative:</strong> ${e.alternative}</p></details><div class="small muted" style="margin-top:10px">Log each working set</div>${Array.from({length:e.sets},(_,j)=>`<div class="setrow"><strong>${j+1}</strong><input class="set-weight" data-ex="${i}" data-set="${j}" placeholder="lb" inputmode="decimal"><input class="set-reps" data-ex="${i}" data-set="${j}" placeholder="reps" inputmode="numeric"><button onclick="this.textContent=this.textContent==='✓'?'○':'✓'">○</button></div>`).join("")}<label>Pain or note</label><input class="exercise-note" data-ex="${i}" placeholder="Optional"></div></div>`}).join("")}
+function completeWorkout(){let w=WORKOUTS[dayKey(selectedDate)],cards=[...document.querySelectorAll("#exerciseList .exercise-card")];let entries=cards.map((c,i)=>({name:c.querySelector("h2").textContent,sets:[...c.querySelectorAll(".setrow")].map(r=>({weight:r.querySelector(".set-weight").value,reps:r.querySelector(".set-reps").value,done:r.querySelector("button").textContent==="✓"})),note:c.querySelector(".exercise-note").value}));state.sessions=state.sessions.filter(s=>s.date!==selectedDate);state.sessions.push({date:selectedDate,mode:activeMode,workout:w.name,entries,completedAt:new Date().toISOString()});save();closeWorkout();renderWeek();renderProgress();updateMomentum();alert("Workout saved. You completed what you chose.")}
+function renderProgress(){workoutCount.textContent=state.sessions.length;mealCount.textContent=state.meals.length;victoryCount.textContent=state.victories.length;weightHistory.textContent=state.weights.slice(0,6).map(x=>`${x.date}: ${x.value} lb`).join(" • ")||"No weights saved yet.";victoryHistory.innerHTML=state.victories.slice(0,8).map(v=>`<div class="meal-card"><strong>${v.date}</strong><div>${v.text}</div></div>`).join("")||"No victories yet."}
+function saveWeight(){let value=Number(weightInput.value);if(!value)return alert("Enter a valid weight.");state.weights.unshift({date:today(),value});save();weightInput.value="";renderProgress()}
+function saveProfile(){state.profile={...state.profile,name:profileName.value.trim(),goal:profileGoal.value,days:profileDays.value.trim()};save();init();alert("Profile saved.")}
+async function copyFeedback(){let report=`Project Health Beta v0.4\nCategory: ${feedbackCategory.value}\nDevice: ${navigator.userAgent}\nDate: ${new Date().toLocaleString()}\nFeedback: ${feedbackText.value.trim()}`;if(!feedbackText.value.trim())return alert("Enter feedback first.");try{await navigator.clipboard.writeText(report);feedbackResult.textContent="Feedback copied. Paste it into a text or email to Joel.";feedbackResult.classList.remove("hide")}catch(e){feedbackResult.textContent=report;feedbackResult.classList.remove("hide")}}
+function exportData(){let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`project-health-v04-${today()}.json`;a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();init();alert("Data imported.")}catch{alert("Import failed.")}};r.readAsText(f)}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});boot();

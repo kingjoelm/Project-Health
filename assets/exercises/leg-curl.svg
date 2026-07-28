@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+<rect width="220" height="220" rx="28" fill="#eef3fb"/>
+<g fill="none" stroke="#173b6c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><rect x="58" y="25" width="95" height="10" rx="5"/><path d="M70 35v25m70-25v25"/><circle cx="105" cy="83" r="15"/><path d="M105 98v43m0-28-28-28m28 28 28-28m-28 56-22 33m22-33 24 33"/><path d="M72 60h66"/></g>
+<text x="110" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#173b6c">Leg Curl</text>
+</svg>
