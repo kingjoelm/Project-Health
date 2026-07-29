@@ -8,7 +8,7 @@
         "id": "chest-press",
         "name": "Machine Chest Press",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Chest, triceps, front shoulders",
         "setup": "Adjust the seat so the handles line up with mid-chest. Keep feet flat and shoulder blades supported.",
         "steps": [
@@ -23,7 +23,7 @@
         "id": "shoulder-press",
         "name": "Machine Shoulder Press",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Shoulders and triceps",
         "setup": "Adjust the seat so the handles begin near ear level. Keep ribs down.",
         "steps": [
@@ -38,7 +38,7 @@
         "id": "pec-deck",
         "name": "Pec Deck",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Chest",
         "setup": "Set the seat so elbows are just below shoulder height.",
         "steps": [
@@ -53,7 +53,7 @@
         "id": "triceps-pressdown",
         "name": "Cable Triceps Pressdown",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Triceps",
         "setup": "Set the cable high and stand close to the stack.",
         "steps": [
@@ -63,19 +63,51 @@
         ],
         "mistakes": "Leaning heavily or swinging.",
         "alternative": "Machine triceps extension."
+      },
+      {
+        "id": "barbell-bench-press",
+        "name": "Barbell Bench Press",
+        "sets": 4,
+        "reps": "6–10",
+        "muscles": "Chest, triceps, front shoulders",
+        "setup": "Set eyes under the bar, feet planted, shoulder blades gently pulled back. Use safeties or a spotter.",
+        "steps": [
+          "Grip slightly wider than shoulder width.",
+          "Lower the bar with control to the lower chest.",
+          "Press up while keeping feet planted and wrists stacked."
+        ],
+        "mistakes": "Bouncing the bar, flaring elbows aggressively, or lifting without safeties.",
+        "alternative": "Dumbbell bench press or machine chest press.",
+        "met": 6.0
+      },
+      {
+        "id": "incline-dumbbell-press",
+        "name": "Incline Dumbbell Press",
+        "sets": 3,
+        "reps": "8–12",
+        "muscles": "Upper chest, shoulders, triceps",
+        "setup": "Set bench around 20–35 degrees and start with dumbbells near upper chest.",
+        "steps": [
+          "Plant feet.",
+          "Press upward and slightly inward.",
+          "Lower with control until comfortable."
+        ],
+        "mistakes": "Bench too steep or shoulders rolling forward.",
+        "alternative": "Incline machine press.",
+        "met": 5.5
       }
     ],
     "warmup": {
       "name": "5-Minute Incline Walk",
       "minutes": 5,
-      "incline": "5\u20136%",
+      "incline": "5–6%",
       "speed": "Comfortable brisk pace",
-      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature—not to tire yourself out."
     },
     "finisher": {
       "name": "15-Minute Incline Finish",
       "minutes": 15,
-      "incline": "4\u201310%",
+      "incline": "4–10%",
       "speed": "Steady pace you can sustain",
       "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
     }
@@ -89,7 +121,7 @@
         "id": "lat-pulldown",
         "name": "Lat Pulldown",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Lats and upper back",
         "setup": "Secure thighs under the pad and use a comfortable grip.",
         "steps": [
@@ -104,7 +136,7 @@
         "id": "seated-row",
         "name": "Seated Cable Row",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Mid-back and biceps",
         "setup": "Sit tall with knees slightly bent.",
         "steps": [
@@ -119,7 +151,7 @@
         "id": "rear-delt",
         "name": "Rear Delt Machine",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Rear shoulders and upper back",
         "setup": "Face the machine and set handles near shoulder height.",
         "steps": [
@@ -134,7 +166,7 @@
         "id": "cable-curl",
         "name": "Cable Curl",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Biceps",
         "setup": "Stand tall with the cable low.",
         "steps": [
@@ -144,19 +176,67 @@
         ],
         "mistakes": "Swinging or leaning back.",
         "alternative": "Machine curl."
+      },
+      {
+        "id": "deadlift",
+        "name": "Conventional Deadlift",
+        "sets": 3,
+        "reps": "4–8",
+        "muscles": "Glutes, hamstrings, back, core, grip",
+        "setup": "Bar over mid-foot, hips back, spine neutral, brace before lifting.",
+        "steps": [
+          "Grip just outside legs.",
+          "Push the floor away while keeping the bar close.",
+          "Stand tall without leaning back, then lower under control."
+        ],
+        "mistakes": "Rounded back, bar drifting forward, jerking from the floor.",
+        "alternative": "Trap-bar deadlift or rack pull.",
+        "met": 6.0
+      },
+      {
+        "id": "romanian-deadlift",
+        "name": "Romanian Deadlift",
+        "sets": 3,
+        "reps": "8–12",
+        "muscles": "Hamstrings, glutes, back",
+        "setup": "Hold bar or dumbbells at thighs, knees softly bent.",
+        "steps": [
+          "Push hips backward.",
+          "Keep weights close to legs.",
+          "Stop when hamstrings are loaded, then drive hips forward."
+        ],
+        "mistakes": "Squatting the movement or rounding the lower back.",
+        "alternative": "Cable pull-through or hip hinge with light dumbbells.",
+        "met": 5.5
+      },
+      {
+        "id": "barbell-row",
+        "name": "Barbell Row",
+        "sets": 3,
+        "reps": "6–10",
+        "muscles": "Upper back, lats, biceps",
+        "setup": "Hinge at hips with neutral spine and bar below knees.",
+        "steps": [
+          "Brace torso.",
+          "Pull bar toward lower ribs.",
+          "Lower under control without standing up between reps."
+        ],
+        "mistakes": "Using excessive body swing or rounding the back.",
+        "alternative": "Chest-supported row.",
+        "met": 5.5
       }
     ],
     "warmup": {
       "name": "5-Minute Incline Walk",
       "minutes": 5,
-      "incline": "5\u20136%",
+      "incline": "5–6%",
       "speed": "Comfortable brisk pace",
-      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature—not to tire yourself out."
     },
     "finisher": {
       "name": "15-Minute Incline Finish",
       "minutes": 15,
-      "incline": "4\u201310%",
+      "incline": "4–10%",
       "speed": "Steady pace you can sustain",
       "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
     }
@@ -170,7 +250,7 @@
         "id": "leg-press",
         "name": "Leg Press",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Quads, glutes, hamstrings",
         "setup": "Place feet shoulder-width on the platform and keep the lower back supported.",
         "steps": [
@@ -185,7 +265,7 @@
         "id": "leg-curl",
         "name": "Seated Leg Curl",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Hamstrings",
         "setup": "Align the knee joint with the machine pivot.",
         "steps": [
@@ -200,7 +280,7 @@
         "id": "leg-extension",
         "name": "Leg Extension",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Quads",
         "setup": "Align knees with the pivot and pad above the ankles.",
         "steps": [
@@ -215,7 +295,7 @@
         "id": "calf-raise",
         "name": "Calf Raise",
         "sets": 3,
-        "reps": "12\u201320",
+        "reps": "12–20",
         "muscles": "Calves",
         "setup": "Use a stable machine or platform.",
         "steps": [
@@ -225,19 +305,51 @@
         ],
         "mistakes": "Bouncing through the reps.",
         "alternative": "Standing bodyweight calf raise."
+      },
+      {
+        "id": "mobility-flow",
+        "name": "Full-Body Mobility Flow",
+        "sets": 2,
+        "reps": "6–8 each",
+        "muscles": "Hips, shoulders, spine, ankles",
+        "setup": "Use open floor space and move only through pain-free ranges.",
+        "steps": [
+          "Perform cat-cow and thoracic rotations.",
+          "Add hip-flexor and hamstring mobility.",
+          "Finish with ankle rocks and shoulder circles."
+        ],
+        "mistakes": "Forcing stretches or holding breath.",
+        "alternative": "Gentle walking and individual stretches.",
+        "met": 2.5
+      },
+      {
+        "id": "hamstring-stretch",
+        "name": "Hamstring Stretch",
+        "sets": 2,
+        "reps": "30 seconds each",
+        "muscles": "Hamstrings",
+        "setup": "Keep spine long and hinge at the hips.",
+        "steps": [
+          "Extend one leg.",
+          "Lean forward until a gentle stretch is felt.",
+          "Breathe slowly and avoid bouncing."
+        ],
+        "mistakes": "Rounding aggressively or stretching into pain.",
+        "alternative": "Supine hamstring stretch with strap.",
+        "met": 2.3
       }
     ],
     "warmup": {
       "name": "5-Minute Incline Walk",
       "minutes": 5,
-      "incline": "5\u20136%",
+      "incline": "5–6%",
       "speed": "Comfortable brisk pace",
-      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature—not to tire yourself out."
     },
     "finisher": {
       "name": "15-Minute Incline Finish",
       "minutes": 15,
-      "incline": "4\u201310%",
+      "incline": "4–10%",
       "speed": "Steady pace you can sustain",
       "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
     }
@@ -251,7 +363,7 @@
         "id": "incline-press",
         "name": "Incline Machine Press",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Upper chest, shoulders, triceps",
         "setup": "Set the seat so handles line up below the collarbone.",
         "steps": [
@@ -266,7 +378,7 @@
         "id": "chest-supported-row",
         "name": "Chest-Supported Row",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Mid-back and biceps",
         "setup": "Set the chest pad so arms reach comfortably.",
         "steps": [
@@ -281,7 +393,7 @@
         "id": "lateral-raise",
         "name": "Lateral Raise",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Side shoulders",
         "setup": "Choose a light weight and stand tall.",
         "steps": [
@@ -296,7 +408,7 @@
         "id": "arms-superset",
         "name": "Cable Arms Superset",
         "sets": 3,
-        "reps": "10\u201315",
+        "reps": "10–15",
         "muscles": "Biceps and triceps",
         "setup": "Use one curl and one pressdown attachment.",
         "steps": [
@@ -306,19 +418,67 @@
         ],
         "mistakes": "Rushing form.",
         "alternative": "Machine curl and extension."
+      },
+      {
+        "id": "back-squat",
+        "name": "Barbell Back Squat",
+        "sets": 4,
+        "reps": "5–10",
+        "muscles": "Quads, glutes, core",
+        "setup": "Bar secured on upper back, feet stable, safeties set.",
+        "steps": [
+          "Brace before descending.",
+          "Sit between the hips while knees track over toes.",
+          "Drive through the whole foot to stand."
+        ],
+        "mistakes": "Knees collapsing, heels lifting, or losing spinal position.",
+        "alternative": "Goblet squat or leg press.",
+        "met": 6.0
+      },
+      {
+        "id": "front-squat",
+        "name": "Front Squat",
+        "sets": 3,
+        "reps": "6–10",
+        "muscles": "Quads, glutes, core, upper back",
+        "setup": "Bar rests on front shoulders with elbows high.",
+        "steps": [
+          "Brace and keep chest tall.",
+          "Descend under control.",
+          "Stand while driving elbows upward."
+        ],
+        "mistakes": "Elbows dropping or heels lifting.",
+        "alternative": "Goblet squat.",
+        "met": 6.0
+      },
+      {
+        "id": "hip-thrust",
+        "name": "Hip Thrust",
+        "sets": 3,
+        "reps": "8–15",
+        "muscles": "Glutes, hamstrings",
+        "setup": "Upper back supported on bench, feet planted, pad the bar.",
+        "steps": [
+          "Brace ribs down.",
+          "Drive hips upward through heels.",
+          "Pause at full hip extension without over-arching."
+        ],
+        "mistakes": "Hyperextending lower back or feet too far away.",
+        "alternative": "Glute bridge.",
+        "met": 5.0
       }
     ],
     "warmup": {
       "name": "5-Minute Incline Walk",
       "minutes": 5,
-      "incline": "5\u20136%",
+      "incline": "5–6%",
       "speed": "Comfortable brisk pace",
-      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature—not to tire yourself out."
     },
     "finisher": {
       "name": "15-Minute Incline Finish",
       "minutes": 15,
-      "incline": "4\u201310%",
+      "incline": "4–10%",
       "speed": "Steady pace you can sustain",
       "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
     }
@@ -332,7 +492,7 @@
         "id": "goblet-squat",
         "name": "Goblet Squat or Leg Press",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Legs and glutes",
         "setup": "Hold one dumbbell at the chest or use the leg press.",
         "steps": [
@@ -347,7 +507,7 @@
         "id": "chest-press",
         "name": "Machine Chest Press",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Chest and triceps",
         "setup": "Handles at mid-chest, feet flat.",
         "steps": [
@@ -362,7 +522,7 @@
         "id": "lat-pulldown",
         "name": "Lat Pulldown",
         "sets": 3,
-        "reps": "8\u201312",
+        "reps": "8–12",
         "muscles": "Back and biceps",
         "setup": "Secure thighs and grip comfortably.",
         "steps": [
@@ -387,19 +547,51 @@
         ],
         "mistakes": "Holding the rails heavily.",
         "alternative": "Bike or elliptical."
+      },
+      {
+        "id": "overhead-press",
+        "name": "Standing Overhead Press",
+        "sets": 3,
+        "reps": "6–10",
+        "muscles": "Shoulders, triceps, core",
+        "setup": "Bar at upper chest, wrists stacked, feet stable.",
+        "steps": [
+          "Brace glutes and core.",
+          "Press bar overhead while moving head slightly back then through.",
+          "Lower to upper chest under control."
+        ],
+        "mistakes": "Excessive back arch or pressing around the face.",
+        "alternative": "Seated dumbbell press.",
+        "met": 5.5
+      },
+      {
+        "id": "pull-up",
+        "name": "Pull-Up or Assisted Pull-Up",
+        "sets": 3,
+        "reps": "5–10",
+        "muscles": "Lats, upper back, biceps",
+        "setup": "Use a stable bar or assistance machine.",
+        "steps": [
+          "Start from a controlled hang.",
+          "Pull chest toward bar.",
+          "Lower slowly to full comfortable extension."
+        ],
+        "mistakes": "Kipping unintentionally or shrugging shoulders.",
+        "alternative": "Lat pulldown.",
+        "met": 6.0
       }
     ],
     "warmup": {
       "name": "5-Minute Incline Walk",
       "minutes": 5,
-      "incline": "5\u20136%",
+      "incline": "5–6%",
       "speed": "Comfortable brisk pace",
-      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature\u2014not to tire yourself out."
+      "instructions": "Walk tall, keep your hands off the rails when safe, and use this to raise body temperature—not to tire yourself out."
     },
     "finisher": {
       "name": "15-Minute Incline Finish",
       "minutes": 15,
-      "incline": "4\u201310%",
+      "incline": "4–10%",
       "speed": "Steady pace you can sustain",
       "instructions": "Finish with controlled incline walking. You should be working, but still able to speak in short sentences."
     }
@@ -413,7 +605,7 @@
         "id": "treadmill-walk",
         "name": "Easy Walk",
         "sets": 1,
-        "reps": "15\u201320 minutes",
+        "reps": "15–20 minutes",
         "muscles": "Recovery and conditioning",
         "setup": "Choose a conversational pace.",
         "steps": [
@@ -438,6 +630,22 @@
         ],
         "mistakes": "Stretching into pain.",
         "alternative": "Short easy walk."
+      },
+      {
+        "id": "walking-lunge",
+        "name": "Walking Lunge",
+        "sets": 3,
+        "reps": "8–12 each leg",
+        "muscles": "Quads, glutes, core",
+        "setup": "Stand tall with clear floor space.",
+        "steps": [
+          "Step long enough for both knees to bend comfortably.",
+          "Lower under control.",
+          "Push through front foot and continue."
+        ],
+        "mistakes": "Front knee collapsing inward or stride too short.",
+        "alternative": "Reverse lunge or split squat.",
+        "met": 5.5
       }
     ],
     "warmup": null,
@@ -452,7 +660,7 @@
         "id": "mobility",
         "name": "Optional Mobility",
         "sets": 1,
-        "reps": "5\u201310 minutes",
+        "reps": "5–10 minutes",
         "muscles": "Recovery",
         "setup": "Choose only movements that feel good.",
         "steps": [
@@ -462,6 +670,22 @@
         ],
         "mistakes": "Feeling guilty for resting.",
         "alternative": "Complete rest."
+      },
+      {
+        "id": "recovery-stretch",
+        "name": "Recovery Stretch Sequence",
+        "sets": 1,
+        "reps": "8–12 minutes",
+        "muscles": "Full body",
+        "setup": "Choose a quiet space and keep intensity gentle.",
+        "steps": [
+          "Breathe slowly.",
+          "Hold each area 20–40 seconds.",
+          "Focus on hips, calves, chest, and upper back."
+        ],
+        "mistakes": "Pushing into sharp pain.",
+        "alternative": "Easy walk.",
+        "met": 2.3
       }
     ],
     "warmup": null,

@@ -1,34 +1,32 @@
 {
-  "release": "0.16.0",
-  "base_release": "0.14.0",
-  "original_files_preserved": 67,
-  "data_store_key": "projectHealthV014",
-  "profile_store_key": "projectHealthProfilesV09",
-  "cloud_url_preserved": true,
-  "cloud_publishable_key_preserved": true,
-  "features": [
-    "daily briefing",
-    "dedicated Coach PH chat",
-    "coach modes",
-    "user-controlled coach memory",
-    "all v0.14 features and assets"
-  ],
-  "javascript_checks": {
-    "app.js": {
-      "ok": true,
-      "error": ""
-    },
-    "service-worker.js": {
-      "ok": true,
-      "error": ""
-    },
-    "cloud/cloud-sync.js": {
-      "ok": true,
-      "error": ""
-    },
-    "cloud/config.js": {
-      "ok": true,
-      "error": ""
-    }
-  }
+  "version": "0.16.1",
+  "source": "v0.16.0 conversation-first",
+  "data_preservation": {
+    "localStorageKey": "projectHealthV014",
+    "profileDatabase": "projectHealthProfilesV09",
+    "activeProfile": "projectHealthActiveProfile",
+    "supabaseConfigPreserved": true,
+    "cloudSyncPreserved": true,
+    "originalV014BackupPreserved": true
+  },
+  "features": {
+    "gpsWalkingRunning": true,
+    "persistentTopTimer": true,
+    "timerPauseReset": true,
+    "treadmillSpeedIncline": true,
+    "undoComplete": true,
+    "itemizedFoods": true,
+    "separateDrinks": true,
+    "foodCalorieEstimates": true,
+    "mealMacroTotals": true,
+    "expandedExercises": true,
+    "deadlifts": true,
+    "stretchingMobility": true,
+    "exerciseCalorieEstimates": true
+  },
+  "limitations": [
+    "GPS works only while the PWA is open and location permission is granted.",
+    "Treadmill distance remains manual until wearable/HealthKit/Health Connect integration.",
+    "Food and calorie values are estimates and editable; package labels and clinician guidance take priority."
+  ]
 }

@@ -1,24 +1,16 @@
 # Changelog
 
-## v0.16.0 — The AI Coach Experience
+## v0.16.1 — Feature Completion
 
-### Added
-- Compact Daily Briefing with health score, hydration, meals, movement and latest weight.
-- Dedicated Coach PH conversation center with daily briefing, meal planning, workout guidance, reflection, weekly review and motivation.
-- Coach modes: General Wellness, Weight Loss, Muscle Building, Heart Health, Mental Wellness and Diabetes Support.
-- User-controlled Coach PH memory stored inside the existing profile/cloud snapshot.
-- Cleaner Coach PH message card and clearer app identity.
-
-### Preserved from v0.14
-- All workout data and exercise images.
-- Adaptive training and guided workouts.
-- Activity tracking and estimated calories.
-- Meal logging, recipe generation and grocery lists.
-- Programs and custom program builder.
-- Progress, measurements, reflections and victories.
-- Multiple local profiles.
-- Supabase account, feedback, sync and restore connections.
-- Existing storage keys and cloud schema.
-
-### Data migration
-No destructive migration is performed. v0.16 continues using `projectHealthV014`, `projectHealthProfilesV09`, the active-profile key, device identity and the current Supabase `user_state` snapshot. New Coach PH fields are added to the existing profile/state object.
+- Added live GPS tracking for outdoor walking, running, and cycling while the app is open.
+- Added live distance, pace, accuracy status, and calorie estimates with manual correction fallback.
+- Moved workout/rest/treadmill timer into a persistent top-of-app controller.
+- Added pause, resume, reset, +30 seconds, and finish controls.
+- Added treadmill speed and incline inputs with live calorie estimate.
+- Added reversible Mark Complete / Undo Complete behavior.
+- Added itemized food and drink logging with multiple rows.
+- Added common-food calorie and macro estimation with editable values.
+- Added meal totals and per-item calorie display.
+- Added compound lifts, deadlift variations, squats, presses, pull-ups, mobility, and stretching.
+- Added estimated calorie contribution for guided exercises.
+- Preserved the v0.14 local storage key, profile database, Supabase configuration, user_state sync, and beta_feedback connection.
