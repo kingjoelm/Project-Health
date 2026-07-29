@@ -1,21 +1,16 @@
-# Project Health v0.16.0 — The AI Coach Experience
+# Coach PH Beta 1.0 — Founding Testers
 
-This is the complete v0.14 application upgraded in place. It contains all 67 original files plus the v0.16 Coach PH experience.
+An inclusive, conversation-first adaptive health coach beta built from the existing Project Health codebase.
 
-## Safe upgrade
-1. Export a backup from the current app before deployment.
-2. Upload every file in this ZIP to the same GitHub Pages repository root.
-3. Do not delete or recreate the Supabase project/table.
-4. Open the site and allow the new service worker to activate.
-5. Verify your existing profile, meals, workouts, programs and progress before adding new data.
-6. Sign in and use **Sync Now** after verification.
+## Included in this beta
+- Existing profiles, cloud configuration, workouts, meals, GPS activity tracking, timers, and local data keys preserved
+- Multi-journey onboarding: walking, running, strength, mobility, yoga, meditation, sleep, nutrition, cycling, recovery, and general wellness
+- Flexible initial plan generator and three daily “Win Today” actions
+- Expanded 50-activity inclusive library, including deadlifts and squat variations
+- Founding-tester image/video submission queue and structured feedback categories
+- Itemized foods and drinks with estimated calories/macros from the previous release
 
-## Data and connection preservation
-- Local state key remains `projectHealthV014`.
-- Profile database remains `projectHealthProfilesV09`.
-- Active profile and device IDs remain unchanged.
-- The existing Supabase URL and publishable browser key remain unchanged.
-- The existing `user_state` and `beta_feedback` integration remains unchanged.
-- New Coach PH mode, memory and chat are included in the same existing cloud snapshot.
+## Important beta limitation
+Media files selected for exercise submissions are previewed locally. The beta saves a submission record for export, but does not silently upload large photos/videos. This avoids changing the existing Supabase schema or breaking connections.
 
-See `MIGRATION_AND_VALIDATION.md` before deployment.
+Upload the contents of this folder to the same GitHub Pages repository. Do not clear browser data or delete Supabase records.

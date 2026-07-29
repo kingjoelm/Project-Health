@@ -1,32 +1,40 @@
 {
-  "version": "0.16.1",
-  "source": "v0.16.0 conversation-first",
-  "data_preservation": {
-    "localStorageKey": "projectHealthV014",
-    "profileDatabase": "projectHealthProfilesV09",
-    "activeProfile": "projectHealthActiveProfile",
-    "supabaseConfigPreserved": true,
-    "cloudSyncPreserved": true,
-    "originalV014BackupPreserved": true
+  "index.html": {
+    "exists": true,
+    "bytes": 89198
   },
-  "features": {
-    "gpsWalkingRunning": true,
-    "persistentTopTimer": true,
-    "timerPauseReset": true,
-    "treadmillSpeedIncline": true,
-    "undoComplete": true,
-    "itemizedFoods": true,
-    "separateDrinks": true,
-    "foodCalorieEstimates": true,
-    "mealMacroTotals": true,
-    "expandedExercises": true,
-    "deadlifts": true,
-    "stretchingMobility": true,
-    "exerciseCalorieEstimates": true
+  "app.js": {
+    "exists": true,
+    "bytes": 130492
   },
-  "limitations": [
-    "GPS works only while the PWA is open and location permission is granted.",
-    "Treadmill distance remains manual until wearable/HealthKit/Health Connect integration.",
-    "Food and calorie values are estimates and editable; package labels and clinician guidance take priority."
-  ]
+  "service-worker.js": {
+    "exists": true,
+    "bytes": 2315
+  },
+  "cloud/config.js": {
+    "exists": true,
+    "bytes": 316
+  },
+  "cloud/cloud-sync.js": {
+    "exists": true,
+    "bytes": 13389
+  },
+  "data/workouts.json": {
+    "exists": true,
+    "bytes": 23079
+  },
+  "preserved_strings": {
+    "projectHealthV014": true,
+    "projectHealthProfilesV09": true,
+    "user_state": true,
+    "beta_feedback": true
+  },
+  "beta_features": {
+    "BETA_JOURNEYS": true,
+    "BETA_ACTIVITIES": true,
+    "Conventional Deadlift": true,
+    "Back Squat": true,
+    "saveBetaSubmission": true,
+    "Win Today": false
+  }
 }
