@@ -1,6 +1,6 @@
-# Project Health v0.15.0 — The AI Coach Experience
+# Project Health v0.16.0 — The AI Coach Experience
 
-This is the complete v0.14 application upgraded in place. It contains all 67 original files plus the v0.15 Coach PH experience.
+This is the complete v0.14 application upgraded in place. It contains all 67 original files plus the v0.16 Coach PH experience.
 
 ## Safe upgrade
 1. Export a backup from the current app before deployment.

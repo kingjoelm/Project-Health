@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.15.0 — The AI Coach Experience
+## v0.16.0 — The AI Coach Experience
 
 ### Added
 - Compact Daily Briefing with health score, hydration, meals, movement and latest weight.
@@ -21,4 +21,4 @@
 - Existing storage keys and cloud schema.
 
 ### Data migration
-No destructive migration is performed. v0.15 continues using `projectHealthV014`, `projectHealthProfilesV09`, the active-profile key, device identity and the current Supabase `user_state` snapshot. New Coach PH fields are added to the existing profile/state object.
+No destructive migration is performed. v0.16 continues using `projectHealthV014`, `projectHealthProfilesV09`, the active-profile key, device identity and the current Supabase `user_state` snapshot. New Coach PH fields are added to the existing profile/state object.

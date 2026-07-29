@@ -623,3 +623,38 @@ function renderV15Experience(){ensureV15State();renderV15Briefing();loadCoachPre
 const showScreenV14=showScreen;showScreen=function(id){showScreenV14(id);if(id==="today")renderV15Briefing();if(id==="programs")renderCoachChat();if(id==="more")loadCoachPreferences()};
 const initV14=init;init=function(){ensureV15State();initV14();renderV15Experience()};
 ensureV15State();save();setTimeout(renderV15Experience,0);
+
+/* Phase 16: conversation-first daily coaching. Additive only; existing storage and cloud schema remain unchanged. */
+let ph16Step=0, ph16Answers={};
+function ph16DateKey(){return new Date().toISOString().slice(0,10)}
+function ph16Profile(){state.profile=state.profile||{};return state.profile}
+function ph16Daily(){state.daily=state.daily||{};state.daily[ph16DateKey()]=state.daily[ph16DateKey()]||{};return state.daily[ph16DateKey()]}
+function ph16Open(force=false){
+ ph16Step=0;ph16Answers={};document.querySelectorAll('.ph16-step').forEach((x,i)=>x.classList.toggle('active',i===0));
+ let name=ph16Profile().name||'';let hour=new Date().getHours(),g=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+ if(window.ph16Hello)ph16Hello.textContent=`${g}${name?', '+name:''}. Ready to build today?`;
+ ph16UpdateProgress();ph16Launch.classList.add('show');
+}
+function ph16Close(){ph16Launch.classList.remove('show');renderPh16Today()}
+function ph16Next(){ph16Step=Math.min(5,ph16Step+1);ph16ShowStep()}
+function ph16ShowStep(){document.querySelectorAll('.ph16-step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===ph16Step));ph16UpdateProgress();if(ph16Step===5)ph16BuildPlan()}
+function ph16UpdateProgress(){document.querySelectorAll('#ph16Progress i').forEach((x,i)=>x.classList.toggle('on',i<Math.max(1,ph16Step)))}
+function ph16Pick(key,value,button){ph16Answers[key]=value;button.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));button.classList.add('selected');setTimeout(()=>{ph16Step++;ph16ShowStep()},120)}
+function ph16EstimateCalories(minutes,intensity){let kg=profileWeightKg?profileWeightKg():80;let met=intensity==='Recovery'?2.8:intensity==='Light'?4:intensity==='High'?7:5.5;return Math.max(40,Math.round(met*kg*(minutes/60)))}
+function ph16BuildPlan(){
+ let a=ph16Answers,d=ph16Daily(),low=['Poor','Okay'].includes(a.sleep)||['Exhausted','Low'].includes(a.energy),pain=a.soreness==='Pain',mins=Number(a.time||30),intensity=pain?'Recovery':low?'Light':a.energy==='High'?'High':'Moderate';
+ let title=pain?'Recovery & mobility':a.soreness==='Lower body'?'Upper-body strength':a.soreness==='Upper body'?'Lower-body strength':low?'Low-impact full body':'Personalized strength + conditioning';
+ let text=pain?'Today protects consistency without training through pain. Choose gentle walking and mobility, and stop if symptoms worsen.':low?`I shortened the session and reduced volume so you can finish strong instead of forcing a perfect workout.`:`Your recovery and available time support a ${mins}-minute session with controlled strength work and a short finish.`;
+ let cal=ph16EstimateCalories(mins,intensity);Object.assign(d,{sleep:a.sleep,energy:a.energy,pain:a.soreness,ph16CheckIn:{...a,date:ph16DateKey(),title,intensity,calories:cal}});save();
+ ph16PlanTitle.textContent=title;ph16PlanText.textContent=text;ph16PlanTime.textContent=`${mins} min`;ph16PlanIntensity.textContent=intensity;ph16PlanCalories.textContent=`~${cal} cal`;
+ let reasons=[`Sleep: ${a.sleep}`,`Energy: ${a.energy}`,`Soreness: ${a.soreness}`,`Available time: ${mins} minutes`, `Primary goal: ${ph16Profile().goal||ph16Profile().coachMode||'General wellness'}`];ph16Reasons.innerHTML=reasons.map(x=>`<li>✓ ${x}</li>`).join('');renderPh16Today();
+}
+function ph16StartWorkout(){ph16Close();if(typeof openAdaptiveAssessment==='function'){openAdaptiveAssessment();setTimeout(()=>{assessment.feel=['Exhausted','Low'].includes(ph16Answers.energy)?'tired':'good';assessment.time=String(ph16Answers.time||30);assessment.pain=ph16Answers.soreness==='Pain'?'Reported pain/limitation':ph16Answers.soreness||'';if(window.adaptivePain)adaptivePain.value=assessment.pain;previewAssessment?.()},80)}else if(typeof openWorkout==='function')openWorkout()}
+function ph16Nutrition(){ph16Close();showScreen('food');setTimeout(()=>{if(typeof openCoachRecipe==='function')openCoachRecipe()},100)}
+function renderPh16Today(){
+ if(!window.ph16TodayCard)return;let c=ph16Daily().ph16CheckIn;if(!c){ph16TodayHeadline.textContent="Check in to build today's plan";ph16TodayMessage.textContent='Tell Coach PH how your body and schedule feel today.';ph16TodaySleep.textContent='—';ph16TodayEnergy.textContent='—';ph16TodayTime.textContent='—';return}
+ ph16TodayHeadline.textContent=c.title;ph16TodayMessage.textContent=`Coach PH adjusted today to ${c.intensity.toLowerCase()} intensity. Estimated burn: about ${c.calories} calories.`;ph16TodaySleep.textContent=c.sleep;ph16TodayEnergy.textContent=c.energy;ph16TodayTime.textContent=`${c.time} min`;let b=ph16TodayCard.querySelector('button');if(b)b.textContent='Update today’s check-in';
+}
+function ph16ShouldLaunch(){let d=ph16Daily();return !d.ph16CheckIn&&!sessionStorage.getItem('ph16Skipped:'+ph16DateKey())}
+const ph16CloseOriginal=ph16Close;ph16Close=function(){if(!ph16Daily().ph16CheckIn)sessionStorage.setItem('ph16Skipped:'+ph16DateKey(),'1');ph16CloseOriginal()}
+const initPrePh16=init;init=function(){initPrePh16();renderPh16Today();setTimeout(()=>{if(ph16ShouldLaunch())ph16Open()},350)};
